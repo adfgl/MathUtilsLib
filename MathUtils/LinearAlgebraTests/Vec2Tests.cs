@@ -135,5 +135,20 @@ namespace LinearAlgebraTests
             Assert.Equal(3, actual.x);
             Assert.Equal(4, actual.y);
         }
+
+        [Fact]
+        public void MinMaxReturnsCorrectValue()
+        {
+            // Arrange
+            Vec2 v = new Vec2(3, 4);
+
+            // Act
+            double actualMin = v.Min();
+            double actualMax = v.Max();
+
+            // Assert
+            Assert.Equal(v.x, actualMin);
+            Assert.Equal(v.y, actualMax);
+        }
     }
 }

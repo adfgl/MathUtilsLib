@@ -47,20 +47,11 @@ namespace LinearAlgebraLib
         }
         public double this[int index] => Get(index);
 
-        public bool IsNaN()
-        {
-            return double.IsNaN(x) || double.IsNaN(y);
-        }
+        public bool IsNaN() => double.IsNaN(x) || double.IsNaN(y);
 
-        public double SquareLength()
-        {
-            return x * x + y * y;
-        }
+        public double SquareLength() => x * x + y * y;
 
-        public double Length()
-        {
-            return Math.Sqrt(x * x + y * y);
-        }
+        public double Length() => Math.Sqrt(x * x + y * y);
 
         public Vec2 Normalize()
         {
@@ -73,5 +64,8 @@ namespace LinearAlgebraLib
         {
             return new Vec2(Math.Abs(x), Math.Abs(y), 1, normalized);
         }
+
+        public double Min() => (x < y) ? x : y;
+        public double Max() => (x > y) ? x : y;
     }
 }
