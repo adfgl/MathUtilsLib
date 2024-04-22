@@ -240,5 +240,19 @@ namespace LinearAlgebraTests
             Assert.Equal(6, actual1.x);
             Assert.Equal(8, actual1.y);
         }
+
+        [Fact]
+        public void DivisionOperatorReturnsCorrectValue()
+        {
+            // Arrange
+            Vec2 v = new Vec2(3, 4);
+
+            // Act
+            Vec2 actual = v / 2;
+
+            // Assert
+            Assert.Equal(1.5, actual.x);
+            Assert.Equal(2, actual.y);
+        }
     }
 }
