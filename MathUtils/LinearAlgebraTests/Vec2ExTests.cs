@@ -23,5 +23,21 @@ namespace LinearAlgebraTests
             // Assert
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData(1, 0, 1, 0, true)]
+        [InlineData(1, 1, 0, 1, false)]
+        public void ParallelReturnsCorrectValue(double ax, double ay, double bx, double by, bool expected)
+        {
+            // Arrange
+            Vec2 a = new Vec2(ax, ay);
+            Vec2 b = new Vec2(bx, by);
+
+            // Act
+            bool actual = a.Parallel(b, 0.0001);
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
     }
 }
