@@ -68,9 +68,7 @@ namespace LinearAlgebraLib
         public double Min() => (x < y) ? x : y;
         public double Max() => (x > y) ? x : y;
 
-        public double Dot(Vec2 other)
-        {
-            return x * other.x + y * other.y;
-        }
+        public double Dot(Vec2 other) => x * other.x + y * other.y;
+        public double Cross(Vec2 other) => x * other.y - y * other.x;
     }
 }

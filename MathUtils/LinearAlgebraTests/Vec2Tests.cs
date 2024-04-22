@@ -164,5 +164,19 @@ namespace LinearAlgebraTests
             // Assert
             Assert.Equal(39, actual);
         }
+
+        [Fact]
+        public void CrossReturnsCorrectValue()
+        {
+            // Arrange
+            Vec2 v1 = new Vec2(3, 4);
+            Vec2 v2 = new Vec2(5, 6);
+
+            // Act
+            double actual = v1.Cross(v2);
+
+            // Assert
+            Assert.Equal(-2, actual);
+        }
     }
 }
