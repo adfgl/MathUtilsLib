@@ -21,7 +21,13 @@ namespace LinearAlgebraLib
             y = this.y;
         }
 
-        public double GetValue(int index)
+        /// <summary>
+        /// Returns the value of the vector at the specified index.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public double Get(int index)
         {
             switch (index)
             {
@@ -34,6 +40,6 @@ namespace LinearAlgebraLib
             }
         }
 
-        public double this[int index] => GetValue(index);
+        public double this[int index] => Get(index);
     }
 }

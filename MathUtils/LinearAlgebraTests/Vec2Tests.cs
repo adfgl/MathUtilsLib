@@ -25,7 +25,7 @@ namespace LinearAlgebraTests
             Vec2 v = new Vec2(12, 34, -2);
 
             // Act
-            Action act = () => v.GetValue(4);
+            Action act = () => v.Get(4);
 
             // Assert
             Assert.Throws<ArgumentOutOfRangeException>(act);
@@ -38,9 +38,9 @@ namespace LinearAlgebraTests
             Vec2 v = new Vec2(12, 34, -2);
 
             // Act
-            double actualX = v.GetValue(0);
-            double actualY = v.GetValue(1);
-            double actualW = v.GetValue(2);
+            double actualX = v.Get(0);
+            double actualY = v.Get(1);
+            double actualW = v.Get(2);
 
             // Assert
             Assert.Equal(v.x, actualX);
