@@ -150,5 +150,19 @@ namespace LinearAlgebraTests
             Assert.Equal(v.x, actualMin);
             Assert.Equal(v.y, actualMax);
         }
+
+        [Fact]
+        public void DotReturnsCorrectValue()
+        {
+            // Arrange
+            Vec2 v1 = new Vec2(3, 4);
+            Vec2 v2 = new Vec2(5, 6);
+
+            // Act
+            double actual = v1.Dot(v2);
+
+            // Assert
+            Assert.Equal(39, actual);
+        }
     }
 }
