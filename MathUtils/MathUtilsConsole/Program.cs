@@ -9,9 +9,9 @@ namespace MathUtilsConsole
         static void Main(string[] args)
         {
             var v = new Vec2(200, 200);
-            string json = JsonConvert.SerializeObject(v);
-            Console.WriteLine(json);
-            Vec2 person = JsonConvert.DeserializeObject<Vec2>(json);
+            var n = v.Normalize();
+            Console.WriteLine(n.Length());
+            Console.WriteLine(n.SquareLength());
         }
     }
 }

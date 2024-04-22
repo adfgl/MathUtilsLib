@@ -90,5 +90,36 @@ namespace LinearAlgebraTests
             // Assert
             Assert.Equal(5, actual);
         }
+
+        [Fact]
+        public void NormalizeReturnsCorrectValue()
+        {
+            // Arrange
+            Vec2 v = new Vec2(3, 4);
+
+            // Act
+            Vec2 actual = v.Normalize();
+
+            // Assert
+            Assert.True(actual.normalized);
+            Assert.Equal(0.6, actual.x, 6);
+            Assert.Equal(0.8, actual.y, 6);
+        }
+
+        [Fact]
+        public void NormalizeReturnsSameValueWhenAlreadyNormalized()
+        {
+            // Arrange
+            /* intentionally far from normalized to test the method */
+            Vec2 v = new Vec2(55, 144, 1, true); 
+
+            // Act
+            Vec2 actual = v.Normalize();
+
+            // Assert
+            Assert.True(actual.normalized);
+            Assert.Equal(v.x, actual.x, 6);
+            Assert.Equal(v.y, actual.y, 6);
+        }
     }
 }
