@@ -70,5 +70,10 @@ namespace LinearAlgebraLib
 
         public double Dot(Vec2 other) => x * other.x + y * other.y;
         public double Cross(Vec2 other) => x * other.y - y * other.x;
+
+        public static Vec2 operator +(Vec2 a, Vec2 b)
+        {
+            return new Vec2(a.x + b.x, a.y + b.y);
+        }
     }
 }
