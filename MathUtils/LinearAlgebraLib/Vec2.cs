@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Dynamic;
 
 namespace LinearAlgebraLib
 {
@@ -7,6 +6,11 @@ namespace LinearAlgebraLib
     public readonly struct Vec2
     {
         public readonly double x, y, w;
+
+        public static Vec2 Zero => new Vec2(0, 0);
+        public static Vec2 NaN => new Vec2(double.NaN, double.NaN, 1);
+        public static Vec2 UnitX => new Vec2(1, 0);
+        public static Vec2 UnitY => new Vec2(0, 1);
 
         public Vec2(double x, double y, double w = 1)
         {
@@ -38,6 +42,11 @@ namespace LinearAlgebraLib
                 default:
                     throw new ArgumentOutOfRangeException(nameof(index));
             }
+        }
+
+        public bool IsNaN()
+        {
+            return double.IsNaN(x) || double.IsNaN(y);
         }
 
         public double this[int index] => Get(index);
