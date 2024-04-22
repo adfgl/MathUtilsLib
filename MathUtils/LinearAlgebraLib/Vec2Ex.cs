@@ -12,5 +12,9 @@
             return MathHelper.IsZero(a.Cross(b), tolerance);
         }
 
+        public static bool Perpendicular(this Vec2 a, Vec2 b, double tolerance)
+        {
+            return MathHelper.IsZero(a.Dot(b), tolerance);
+        }
     }
 }
