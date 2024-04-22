@@ -1,6 +1,6 @@
 namespace LinearAlgebraTests
 {
-    public class UnitTest1
+    public class Vec2Tests
     {
         [Fact]
         public void Test1()
