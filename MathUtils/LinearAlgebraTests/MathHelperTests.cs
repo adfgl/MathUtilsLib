@@ -29,11 +29,9 @@ namespace LinearAlgebraTests
         }
 
         [Theory]
-        //[InlineData(1, 1, 0.1, true)]
-        [InlineData(1.1, 1.0, 0.1, true)]
-        //[InlineData(1, 1.2, 0.1, false)]
-        //[InlineData(2, 3, 1, true)]
-        //[InlineData(2, 3, 0.5, false)]
+        [InlineData(1, 1, 0.1, true)]
+        [InlineData(2, 3, 1, true)]
+        [InlineData(2, 3, 0.5, false)]
         public void AreEqualReturnsCorrectResults(double a, double b, double tolerance, bool expected)
         {
             bool result = MathHelper.AreEqual(a, b, tolerance);
