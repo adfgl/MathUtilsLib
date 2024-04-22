@@ -85,5 +85,14 @@ namespace LinearAlgebraLib
         {
             return new Vec2(-v.x, -v.y);
         }
+
+        public static Vec2 operator *(Vec2 v, double scalar)
+        {
+            return new Vec2(v.x * scalar, v.y * scalar);
+        }
+        public static Vec2 operator *(double scalar, Vec2 v)
+        {
+            return new Vec2(v.x * scalar, v.y * scalar);
+        }
     }
 }

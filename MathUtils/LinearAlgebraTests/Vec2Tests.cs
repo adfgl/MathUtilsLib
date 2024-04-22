@@ -222,5 +222,23 @@ namespace LinearAlgebraTests
             Assert.Equal(-3, actual.x);
             Assert.Equal(-4, actual.y);
         }
+
+        [Fact]
+        public void MultiplicationOperatorReturnsCorrectValue()
+        {
+            // Arrange
+            Vec2 v = new Vec2(3, 4);
+
+            // Act
+            Vec2 actual1 = v * 2;
+            Vec2 actual2 = 2 * v;
+
+            // Assert
+            Assert.Equal(actual1.x, actual2.x);
+            Assert.Equal(actual1.y, actual2.y);
+
+            Assert.Equal(6, actual1.x);
+            Assert.Equal(8, actual1.y);
+        }
     }
 }
