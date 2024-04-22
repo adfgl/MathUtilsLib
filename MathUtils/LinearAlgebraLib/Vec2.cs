@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Dynamic;
 
 namespace LinearAlgebraLib
 {
@@ -19,5 +20,20 @@ namespace LinearAlgebraLib
             x = this.x;
             y = this.y;
         }
+
+        public double GetValue(int index)
+        {
+            switch (index)
+            {
+                case 0: return x;
+                case 1: return y;
+                case 2: return w;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(index));
+            }
+        }
+
+        public double this[int index] => GetValue(index);
     }
 }
