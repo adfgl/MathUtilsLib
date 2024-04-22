@@ -43,12 +43,21 @@ namespace LinearAlgebraLib
                     throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
+        public double this[int index] => Get(index);
 
         public bool IsNaN()
         {
             return double.IsNaN(x) || double.IsNaN(y);
         }
 
-        public double this[int index] => Get(index);
+        public double SquareLength()
+        {
+            return x * x + y * y;
+        }
+
+        public double Length()
+        {
+            return Math.Sqrt(x * x + y * y);
+        }
     }
 }
