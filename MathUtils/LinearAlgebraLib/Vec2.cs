@@ -1,5 +1,8 @@
-﻿namespace LinearAlgebraLib
+﻿using System.Diagnostics;
+
+namespace LinearAlgebraLib
 {
+    [DebuggerDisplay("{x} {y}")]
     public readonly struct Vec2
     {
         public readonly double x, y, w;
