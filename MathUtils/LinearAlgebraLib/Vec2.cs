@@ -80,5 +80,10 @@ namespace LinearAlgebraLib
         {
             return new Vec2(a.x - b.x, a.y - b.y);
         }
+
+        public static Vec2 operator -(Vec2 v)
+        {
+            return new Vec2(-v.x, -v.y);
+        }
     }
 }

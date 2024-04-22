@@ -208,5 +208,19 @@ namespace LinearAlgebraTests
             Assert.Equal(-2, actual.x);
             Assert.Equal(-2, actual.y);
         }
+
+        [Fact]
+        public void UnaryMinusOperatorReturnsCorrectValue()
+        {
+            // Arrange
+            Vec2 v = new Vec2(3, 4);
+
+            // Act
+            Vec2 actual = -v;
+
+            // Assert
+            Assert.Equal(-3, actual.x);
+            Assert.Equal(-4, actual.y);
+        }
     }
 }
