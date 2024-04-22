@@ -7,6 +7,9 @@
             return number >= -tolerance && number <= tolerance;
         }
 
- 
+        public static bool IsOne(double number, double tolerance)
+        {
+            return IsZero(number - 1.0, tolerance);
+        }
     }
 }
