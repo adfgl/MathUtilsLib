@@ -16,5 +16,10 @@
         {
             return MathHelper.IsZero(a.Dot(b), tolerance);
         }
+
+        public static double Distance(this Vec2 a, Vec2 b)
+        {
+            return (b - a).Length();
+        }
     }
 }

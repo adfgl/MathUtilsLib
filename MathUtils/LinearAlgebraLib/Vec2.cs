@@ -78,6 +78,13 @@ namespace LinearAlgebraLib
         /// <returns></returns>
         public bool Equals(Vec2 other) => x == other.x && y == other.y;
 
+        public bool AlmostEquals(Vec2 other, double tolerance)
+        {
+            return
+                MathHelper.AreEqual(x, other.x, tolerance) &&
+                MathHelper.AreEqual(y, other.y, tolerance);
+        }
+
         public static Vec2 operator +(Vec2 a, Vec2 b) => new Vec2(a.x + b.x, a.y + b.y);
 
         public static Vec2 operator -(Vec2 a, Vec2 b) => new Vec2(a.x - b.x, a.y - b.y);
@@ -103,5 +110,10 @@ namespace LinearAlgebraLib
         /// <param name="b"></param>
         /// <returns></returns>
         public static bool operator !=(Vec2 a, Vec2 b) => false == a.Equals(b);
+
+        public override string ToString()
+        {
+            return $"{x} {y}";
+        }
     }
 }
