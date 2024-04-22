@@ -68,5 +68,10 @@ namespace LinearAlgebraLib
             double length = Length();
             return new Vec2(x / length, y / length, 1, true);
         }
+
+        public Vec2 Abs()
+        {
+            return new Vec2(Math.Abs(x), Math.Abs(y), 1, normalized);
+        }
     }
 }

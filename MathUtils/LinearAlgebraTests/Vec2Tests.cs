@@ -121,5 +121,19 @@ namespace LinearAlgebraTests
             Assert.Equal(v.x, actual.x, 6);
             Assert.Equal(v.y, actual.y, 6);
         }
+
+        [Fact]
+        public void AbsReturnsCorrectValue()
+        {
+            // Arrange
+            Vec2 v = new Vec2(-3, 4);
+
+            // Act
+            Vec2 actual = v.Abs();
+
+            // Assert
+            Assert.Equal(3, actual.x);
+            Assert.Equal(4, actual.y);
+        }
     }
 }
