@@ -254,5 +254,48 @@ namespace LinearAlgebraTests
             Assert.Equal(1.5, actual.x);
             Assert.Equal(2, actual.y);
         }
+
+        [Fact]
+        public void EqualityOperatorReturnsCorrectValue()
+        {
+            // Arrange
+            Vec2 v1 = new Vec2(3, 4);
+            Vec2 v2 = new Vec2(3, 4);
+
+            // Act
+            bool actual = v1 == v2;
+
+            // Assert
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public void InequalityOperatorReturnsCorrectValue()
+        {
+            // Arrange
+            Vec2 v1 = new Vec2(3, 4);
+            Vec2 v2 = new Vec2(5, 6);
+
+            // Act
+            bool actual = v1 != v2;
+
+            // Assert
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public void EqualsAccountsForFloatingPointError()
+        {
+            // Arrange
+            double disturbance = 1e16;
+            Vec2 v1 = new Vec2(0.1, 0.2);
+            Vec2 v2 = new Vec2(v1.x + disturbance, v1.y + disturbance);
+
+            // Act
+            bool actual = v1.Equals(v2);
+
+            // Assert
+            Assert.False(actual);
+        }
     }
 }

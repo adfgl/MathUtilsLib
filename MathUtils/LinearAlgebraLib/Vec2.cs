@@ -71,6 +71,13 @@ namespace LinearAlgebraLib
         public double Dot(Vec2 other) => x * other.x + y * other.y;
         public double Cross(Vec2 other) => x * other.y - y * other.x;
 
+        /// <summary>
+        /// Verifies whether <see cref="x"/> and <see cref="y"/> are <i><b>exactly</b></i> equal to the corresponding values of <paramref name="other"/>.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(Vec2 other) => x == other.x && y == other.y;
+
         public static Vec2 operator +(Vec2 a, Vec2 b) => new Vec2(a.x + b.x, a.y + b.y);
 
         public static Vec2 operator -(Vec2 a, Vec2 b) => new Vec2(a.x - b.x, a.y - b.y);
@@ -81,5 +88,21 @@ namespace LinearAlgebraLib
         public static Vec2 operator *(double scalar, Vec2 v) => new Vec2(v.x * scalar, v.y * scalar);
 
         public static Vec2 operator /(Vec2 v, double scalar) => new Vec2(v.x / scalar, v.y / scalar);
+
+        /// <summary>
+        /// Uses <see cref="Equals(Vec2)"/> to compare the two vectors. Verifies whether components <see cref="x"/> and <see cref="y"/> are <i><b>exactly</b></i> equal. 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator ==(Vec2 a, Vec2 b) => a.Equals(b);
+
+        /// <summary>
+        /// Uses <see cref="Equals(Vec2)"/> to compare the two vectors. Verifies whether <see cref="x"/> and <see cref="y"/> are <i><b>exactly</b></i> unequal.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator !=(Vec2 a, Vec2 b) => false == a.Equals(b);
     }
 }
