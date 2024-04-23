@@ -1,6 +1,4 @@
-﻿using System.Security.Principal;
-
-namespace LinearAlgebraLib
+﻿namespace LinearAlgebraLib
 {
     public readonly struct Mat3
     {
@@ -90,6 +88,16 @@ namespace LinearAlgebraLib
                     m12, m22, m32,
                     m13, m23, m33);
         }
+
+        /* 
+        1.000.000 iterations indicate that using 'in' keyword for passing parameters offers slight performance improvement over passing by value.
+        Is it worth the hustle? not really. The performance difference is negligible.
+
+        | Method    | Mean     | Error    | StdDev   | Gen0     | Gen1     | Gen2     | Allocated |
+        |---------- |---------:|---------:|---------:|---------:|---------:|---------:|----------:|
+        | Normal    | 16.83 ms | 53.93 ms | 2.956 ms | 296.8750 | 296.8750 | 296.8750 |  38.15 MB |
+        | Reference | 14.03 ms | 16.43 ms | 0.900 ms | 312.5000 | 312.5000 | 312.5000 |  38.15 MB |
+         */
 
         public static Mat3 Multiply(Mat3 a, Mat3 b)
         {
