@@ -70,5 +70,27 @@ namespace LinearAlgebraTests
             Assert.Equal(expectedMaxX, expanded.maxX, 3);
             Assert.Equal(expectedMaxY, expanded.maxY, 3);
         }
+
+        [Theory]
+        [InlineData(-200, -300, 100, 400, -200, -300, 100, 400)] // does not expand
+        [InlineData(-302.234, 347.991, -158.282, 509.035, -302.234, -300, 100, 509.035)] // expand top left
+        [InlineData(49.11, 326.032, 193.061, 487.076, -200, -300, 193.061, 487.076)] // expand top right
+        [InlineData(-13.107, -387.635, 130.844, -226.591, -200, -387.635, 130.844, 400)] // expand bottom right
+        [InlineData(-263.806, -345.547, -119.854, -184.503, -263.806, -345.547, 100, 400)] // expand bottom left
+        public void ExpandBoundingBoxReturnsCorrectValue(double minX, double minY, double maxX, double maxY, double expectedMinX, double expectedMinY, double expectedMaxX, double expectedMaxY)
+        {
+            // Arrange
+            BoundingBox2 box = new BoundingBox2(-200, -300, 100, 400);
+            BoundingBox2 other = new BoundingBox2(minX, minY, maxX, maxY);
+
+            // Act
+            BoundingBox2 expanded = box.Expand(other);
+
+            // Assert
+            Assert.Equal(expectedMinX, expanded.minX, 3);
+            Assert.Equal(expectedMinY, expanded.minY, 3);
+            Assert.Equal(expectedMaxX, expanded.maxX, 3);
+            Assert.Equal(expectedMaxY, expanded.maxY, 3);
+        }
     }
 }
