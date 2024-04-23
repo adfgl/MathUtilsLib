@@ -93,5 +93,26 @@ namespace LinearAlgebraTests
                 }
             }
         }
+
+        [Fact]
+        public void MultiplyVectorReturnsCorrectValue()
+        {
+            // Arrange
+            Mat3 m1 = new Mat3(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            Mat3 m2 = new Mat3(9, 8, 7, 6, 5, 4, 3, 2, 1);
+            Mat3 expected = new Mat3(30, 24, 18, 84, 69, 54, 138, 114, 90);
+
+            // Act
+            Mat3 actual = m1 * m2;
+
+            // Assert
+            for (int r = 0; r < 3; r++)
+            {
+                for (int c = 0; c < 3; c++)
+                {
+                    Assert.Equal(expected[r, c], actual[r, c], 6);
+                }
+            }
+        }
     }
 }

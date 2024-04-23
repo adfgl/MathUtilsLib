@@ -90,5 +90,23 @@ namespace LinearAlgebraLib
                     m12, m22, m32,
                     m13, m23, m33);
         }
+
+        public static Mat3 Multiply(Mat3 a, Mat3 b)
+        {
+            return new Mat3(
+                a.m11 * b.m11 + a.m12 * b.m21 + a.m13 * b.m31,
+                a.m11 * b.m12 + a.m12 * b.m22 + a.m13 * b.m32,
+                a.m11 * b.m13 + a.m12 * b.m23 + a.m13 * b.m33,
+
+                a.m21 * b.m11 + a.m22 * b.m21 + a.m23 * b.m31,
+                a.m21 * b.m12 + a.m22 * b.m22 + a.m23 * b.m32,
+                a.m21 * b.m13 + a.m22 * b.m23 + a.m23 * b.m33,
+
+                a.m31 * b.m11 + a.m32 * b.m21 + a.m33 * b.m31,
+                a.m31 * b.m12 + a.m32 * b.m22 + a.m33 * b.m32,
+                a.m31 * b.m13 + a.m32 * b.m23 + a.m33 * b.m33);
+        }
+
+        public static Mat3 operator *(Mat3 a, Mat3 b) => Multiply(a, b);
     }
 }
