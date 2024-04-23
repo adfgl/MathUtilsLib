@@ -7,6 +7,23 @@ namespace LinearAlgebraTests
         /* https://www.wolframalpha.com/input?i2d=true&i=%7B%7B1%2C2%2C3%7D%2C%7B0%2C1%2C4%7D%2C%7B5%2C6%2C0%7D%7D */
 
         [Fact]
+        public void IdentityReturnsCorrectValue()
+        {
+            Mat3 m = Mat3.Identity;
+            Assert.Equal(1, m.m11);
+            Assert.Equal(0, m.m12);
+            Assert.Equal(0, m.m13);
+
+            Assert.Equal(0, m.m21);
+            Assert.Equal(1, m.m22);
+            Assert.Equal(0, m.m23);
+
+            Assert.Equal(0, m.m31);
+            Assert.Equal(0, m.m32);
+            Assert.Equal(1, m.m33);
+        }
+
+        [Fact]
         public void GetThrowsIndexOutOfRangeException()
         {
             var m = new Mat3(1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -136,6 +153,31 @@ namespace LinearAlgebraTests
                 Assert.Equal(expected[i], actual[i], 6);
                 Assert.Equal(expected[i], actualOperator1[i], 6);
                 Assert.Equal(expected[i], actualOperator2[i], 6);
+            }
+        }
+
+        [Fact]
+        public void MultiplyByScalarReturnsCorrectValue()
+        {
+            // Arrange
+            Mat3 m = new Mat3(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            double scalar = 2;
+            Mat3 expected = new Mat3(2, 4, 6, 8, 10, 12, 14, 16, 18);
+
+            // Act
+            Mat3 actual = Mat3.Multiply(m, scalar);
+            Mat3 actualOperator1 = m * scalar;
+            Mat3 actualOperator2 = scalar * m;
+
+            // Assert
+            for (int r = 0; r < 3; r++)
+            {
+                for (int c = 0; c < 3; c++)
+                {
+                    Assert.Equal(expected[r, c], actual[r, c], 6);
+                    Assert.Equal(expected[r, c], actualOperator1[r, c], 6);
+                    Assert.Equal(expected[r, c], actualOperator2[r, c], 6);
+                }
             }
         }
     }

@@ -115,8 +115,18 @@ namespace LinearAlgebraLib
                 w: v.x * m.m31 + v.y * m.m32 + v.w * m.m33);
         }
 
+        public static Mat3 Multiply(Mat3 m, double scalar)
+        {
+             return new Mat3(
+                 m.m11 * scalar, m.m12 * scalar, m.m13 * scalar,
+                 m.m21 * scalar, m.m22 * scalar, m.m23 * scalar,
+                 m.m31 * scalar, m.m32 * scalar, m.m33 * scalar);
+        }
+
         public static Mat3 operator *(Mat3 a, Mat3 b) => Multiply(a, b);
         public static Vec2 operator *(Mat3 m, Vec2 v) => Multiply(m, v);
         public static Vec2 operator *(Vec2 v, Mat3 m) => Multiply(m, v);
+        public static Mat3 operator *(Mat3 m, double scalar) => Multiply(m, scalar);
+        public static Mat3 operator *(double scalar, Mat3 m) => Multiply(m, scalar);
     }
 }
