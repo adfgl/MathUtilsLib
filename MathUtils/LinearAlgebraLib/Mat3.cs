@@ -1,4 +1,6 @@
-﻿namespace LinearAlgebraLib
+﻿using System.Security.Principal;
+
+namespace LinearAlgebraLib
 {
     public readonly struct Mat3
     {
@@ -54,6 +56,31 @@
                 m11 * (m22 * m33 - m23 * m32) -
                 m12 * (m21 * m33 - m23 * m31) +
                 m13 * (m21 * m32 - m22 * m31);
+        }
+
+        public bool Inverse(out Mat3 inverse)
+        {
+            double det = Determinant();
+            if (det == 0)
+            {
+                inverse = new Mat3();
+                return false;
+            }
+
+            det = 1.0 / det;
+            inverse = new Mat3(
+                det * (m22 * m33 - m23 * m32),
+                det * (m13 * m32 - m12 * m33),
+                det * (m12 * m23 - m13 * m22),
+
+                det * (m23 * m31 - m21 * m33),
+                det * (m11 * m33 - m13 * m31),
+                det * (m13 * m21 - m11 * m23),
+
+                det * (m21 * m32 - m22 * m31),
+                det * (m12 * m31 - m11 * m32),
+                det * (m11 * m22 - m12 * m21));
+            return true;
         }
     }
 }
