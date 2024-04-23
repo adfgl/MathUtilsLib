@@ -4,6 +4,16 @@ namespace LinearAlgebraTests
 {
     public class BoundingBoxTests
     {
+        [Fact]
+        public void ConstructorThrowsOnInvalidBounds()
+        {
+            // Arrange
+            Action act = () => new BoundingBox2(100, 200, -100, -200);
+
+            // Act and assert
+            ArgumentException ex = Assert.Throws<ArgumentException>(act);
+        }
+
         [Theory]
         [InlineData(0, 0, true)] // actually inside
         [InlineData(100, 200, true)] // on border
