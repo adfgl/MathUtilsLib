@@ -107,6 +107,16 @@ namespace LinearAlgebraLib
                 a.m31 * b.m13 + a.m32 * b.m23 + a.m33 * b.m33);
         }
 
+        public static Vec2 Multiply(Mat3 m, Vec2 v)
+        {
+            return new Vec2(
+                x: v.x * m.m11 + v.y * m.m12 + v.w * m.m13,
+                y: v.x * m.m21 + v.y * m.m22 + v.w * m.m23,
+                w: v.x * m.m31 + v.y * m.m32 + v.w * m.m33);
+        }
+
         public static Mat3 operator *(Mat3 a, Mat3 b) => Multiply(a, b);
+        public static Vec2 operator *(Mat3 m, Vec2 v) => Multiply(m, v);
+        public static Vec2 operator *(Vec2 v, Mat3 m) => Multiply(m, v);
     }
 }

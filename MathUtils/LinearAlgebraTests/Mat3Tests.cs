@@ -103,7 +103,8 @@ namespace LinearAlgebraTests
             Mat3 expected = new Mat3(30, 24, 18, 84, 69, 54, 138, 114, 90);
 
             // Act
-            Mat3 actual = m1 * m2;
+            Mat3 actual = Mat3.Multiply(m1, m2);
+            Mat3 actualOperator = m1 * m2;
 
             // Assert
             for (int r = 0; r < 3; r++)
@@ -111,7 +112,30 @@ namespace LinearAlgebraTests
                 for (int c = 0; c < 3; c++)
                 {
                     Assert.Equal(expected[r, c], actual[r, c], 6);
+                    Assert.Equal(expected[r, c], actualOperator[r, c], 6);
                 }
+            }
+        }
+
+        [Fact]
+        public void MultiplyVectorReturnsCorrectValue2()
+        {
+            // Arrange
+            Mat3 m = new Mat3(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            Vec2 v = new Vec2(9, 8, 7);
+            Vec2 expected = new Vec2(46, 118, 190);
+
+            // Act
+            Vec2 actual = Mat3.Multiply(m, v);
+            Vec2 actualOperator1 = m * v;
+            Vec2 actualOperator2 = v * m;
+
+            // Assert
+            for (int i = 0; i < 3; i++)
+            {
+                Assert.Equal(expected[i], actual[i], 6);
+                Assert.Equal(expected[i], actualOperator1[i], 6);
+                Assert.Equal(expected[i], actualOperator2[i], 6);
             }
         }
     }
