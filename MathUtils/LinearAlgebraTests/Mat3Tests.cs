@@ -180,5 +180,28 @@ namespace LinearAlgebraTests
                 }
             }
         }
+
+        [Fact]
+        public void DivisionByScalarReturnsCorrectValue()
+        {
+            // Arrange
+            Mat3 m = new Mat3(2, 4, 6, 8, 10, 12, 14, 16, 18);
+            double scalar = 2;
+            Mat3 expected = new Mat3(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+            // Act
+            Mat3 actual = Mat3.Divide(m, scalar);
+            Mat3 actualOperator = m / scalar;
+
+            // Assert
+            for (int r = 0; r < 3; r++)
+            {
+                for (int c = 0; c < 3; c++)
+                {
+                    Assert.Equal(expected[r, c], actual[r, c], 6);
+                    Assert.Equal(expected[r, c], actualOperator[r, c], 6);
+                }
+            }
+        }
     }
 }
