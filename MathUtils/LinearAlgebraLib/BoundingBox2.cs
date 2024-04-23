@@ -46,5 +46,12 @@
                 minX <= x && x <= maxX && 
                 minY <= y && y <= maxY;
         }
+
+        public bool Contains(BoundingBox2 other)
+        {
+            return
+                minX <= other.minX && other.maxX <= maxX &&
+                minY <= other.minY && other.maxY <= maxY;
+        }
     }
 }
