@@ -20,5 +20,12 @@
             maxX = this.maxX;
             maxY = this.maxY;
         }
+
+        public bool Contains(double x, double y)
+        {
+            return 
+                minX <= x && x <= maxX && 
+                minY <= y && y <= maxY;
+        }
     }
 }
