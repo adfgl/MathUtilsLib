@@ -49,5 +49,26 @@ namespace LinearAlgebraTests
             // Assert
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData(0, 0, -200, -300, 100, 400)] // does not expand
+        [InlineData(-300, 500, -300, -300, 100, 500)] // expand top left
+        [InlineData(213.583, 558.505, -200, -300, 213.583, 558.505)] // expand top right
+        [InlineData(295.929, -450.438, -200, -450.438, 295.929, 400)] // expand bottom right
+        [InlineData(-496.424, -508.995, -496.424, -508.995, 100, 400)] // expand bottom left
+        public void ExpandReturnsCorrectValue(double x, double y, double expectedMinX, double expectedMinY, double expectedMaxX, double expectedMaxY)
+        {
+            // Arrange
+            BoundingBox2 box = new BoundingBox2(-200, -300, 100, 400);
+
+            // Act
+            BoundingBox2 expanded = box.Expand(x, y);
+
+            // Assert
+            Assert.Equal(expectedMinX, expanded.minX, 3);
+            Assert.Equal(expectedMinY, expanded.minY, 3);
+            Assert.Equal(expectedMaxX, expanded.maxX, 3);
+            Assert.Equal(expectedMaxY, expanded.maxY, 3);
+        }
     }
 }

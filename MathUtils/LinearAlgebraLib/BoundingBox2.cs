@@ -53,5 +53,14 @@
                 minX <= other.minX && other.maxX <= maxX &&
                 minY <= other.minY && other.maxY <= maxY;
         }
+
+        public BoundingBox2 Expand(double x, double y)
+        {
+            return new BoundingBox2(
+                x < this.minX ? x : this.minX,
+                y < this.minY ? y : this.minY,
+                x > this.maxX ? x : this.maxX,
+                y > this.maxY ? y : this.maxY);
+        }
     }
 }
