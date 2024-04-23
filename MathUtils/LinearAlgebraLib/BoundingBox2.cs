@@ -5,6 +5,18 @@
         public readonly double minX, minY;
         public readonly double maxX, maxY;
 
+        /// <summary>
+        /// Inverted constructor to create a bounding box with invalid bounds.
+        /// Useful for initializing a bounding box that will be expanded by a series of points.
+        /// </summary>
+        public BoundingBox2()
+        {
+            minX = double.MaxValue;
+            minY = double.MaxValue;
+            maxX = double.MinValue;
+            maxY = double.MinValue;
+        }
+
         public BoundingBox2(double minX, double minY, double maxX, double maxY)
         {
 #if DEBUG
