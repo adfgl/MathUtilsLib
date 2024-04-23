@@ -73,5 +73,25 @@ namespace LinearAlgebraTests
                 }
             }
         }
+
+        [Fact]
+        public void TransposeReturnsCorrectValue()
+        {
+            // Arrange
+            Mat3 m = new Mat3(1, 2, 3, 0, 1, 4, 5, 6, 0);
+            Mat3 expected = new Mat3(1, 0, 5, 2, 1, 6, 3, 4, 0);
+
+            // Act
+            Mat3 actual = m.Transpose();
+
+            // Assert
+            for (int r = 0; r < 3; r++)
+            {
+                for (int c = 0; c < 3; c++)
+                {
+                    Assert.Equal(expected[r, c], actual[r, c], 6);
+                }
+            }
+        }
     }
 }

@@ -82,5 +82,13 @@ namespace LinearAlgebraLib
                 det * (m11 * m22 - m12 * m21));
             return true;
         }
+
+        public Mat3 Transpose()
+        {
+            return new Mat3(
+                    m11, m21, m31,
+                    m12, m22, m32,
+                    m13, m23, m33);
+        }
     }
 }
