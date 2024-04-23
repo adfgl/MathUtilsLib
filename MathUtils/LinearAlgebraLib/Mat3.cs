@@ -46,6 +46,7 @@
                 _ => throw new IndexOutOfRangeException($"Invalid row index {row}. Valid row indices are 0, 1, and 2."),
             };
         }
+        public double this[int row, int col] => Get(row, col);
 
         public double Determinant()
         {
