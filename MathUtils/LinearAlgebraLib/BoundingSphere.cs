@@ -36,5 +36,16 @@
             double distance = Math.Sqrt(dx * dx + dy * dy + dz * dz);
             return distance + other.radius <= radius;
         }
+
+        public BoundingSphere Expand(double x, double y, double z)
+        {
+            double dx = x - cx;
+            double dy = y - cy;
+            double dz = z - cz;
+
+            double squareDistance = dx * dx + dy * dy + dz * dz;
+            if (squareDistance <= radius * radius) return this;
+            return new BoundingSphere(cx, cy, cz, Math.Sqrt(squareDistance));
+        }
     }
 }

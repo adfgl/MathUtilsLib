@@ -36,5 +36,21 @@ namespace LinearAlgebraTests
             // Assert
             Assert.Equal(expected, actual);
         }
+
+        [Theory]
+        [InlineData(0, 20, 0, 100)] // fully inside
+        [InlineData(0, 0, 100, 100)] // intersects border
+        [InlineData(0, 0, 150, 150)] // on border
+        public void ExpansionWorksCorrectly(double x, double y, double z, double expectedRadius)
+        {
+            // Arrange
+            BoundingSphere sphere = new BoundingSphere(0, 0, 0, 100);
+            
+            // Act
+            BoundingSphere expanded = sphere.Expand(x, y, z);
+            
+            // Assert
+            Assert.Equal(expectedRadius, expanded.radius, 6);
+        }   
     }
 }
