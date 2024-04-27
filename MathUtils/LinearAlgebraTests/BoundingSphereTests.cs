@@ -39,8 +39,8 @@ namespace LinearAlgebraTests
 
         [Theory]
         [InlineData(0, 20, 0, 100)] // fully inside
-        [InlineData(0, 0, 100, 100)] // intersects border
-        [InlineData(0, 0, 150, 150)] // on border
+        [InlineData(0, 0, 100, 100)] // on border
+        [InlineData(0, 0, 150, 150)] // intersects border
         public void ExpansionWorksCorrectly(double x, double y, double z, double expectedRadius)
         {
             // Arrange
@@ -51,6 +51,23 @@ namespace LinearAlgebraTests
             
             // Assert
             Assert.Equal(expectedRadius, expanded.radius, 6);
-        }   
+        }
+
+        [Theory]
+        [InlineData(22, 33, 0, 20, 100)] // fully inside
+        [InlineData(0, 0, 50, 50, 100)] // on border
+        [InlineData(0, 0, 100, 25, 125)] // on border
+        public void ExpansionUsingOtherWorksCorrectly(double cx, double cy, double cz, double radius, double expectedRadius)
+        {
+            // Arrange
+            BoundingSphere sphere = new BoundingSphere(0, 0, 0, 100);
+            BoundingSphere other = new BoundingSphere(cx, cy, cz, radius);
+            
+            // Act
+            BoundingSphere expanded = sphere.Expand(other);
+            
+            // Assert
+            Assert.Equal(expectedRadius, expanded.radius, 6);
+        }
     }
 }

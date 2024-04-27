@@ -47,5 +47,17 @@
             if (squareDistance <= radius * radius) return this;
             return new BoundingSphere(cx, cy, cz, Math.Sqrt(squareDistance));
         }
+
+        public BoundingSphere Expand(BoundingSphere other)
+        {
+            double dx = other.cx - cx;
+            double dy = other.cy - cy;
+            double dz = other.cz - cz;
+
+            double squareDistance = dx * dx + dy * dy + dz * dz;
+            double distance = Math.Sqrt(squareDistance);
+            double newRadius = Math.Max(radius, distance + other.radius);
+            return new BoundingSphere(cx, cy, cz, newRadius);
+        }
     }
 }
