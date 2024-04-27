@@ -2,7 +2,7 @@
 
 namespace LinearAlgebraTests
 {
-    public class BoundingSphereTests
+    public class SphereTests
     {
         [Theory]
         [InlineData(100, 100, 100, false)]

@@ -2,7 +2,7 @@
 
 namespace LinearAlgebraTests
 {
-    public class BoundingBoxTests
+    public class RectangleTests
     {
         [Fact]
         public void ConstructorThrowsOnInvalidBounds()
