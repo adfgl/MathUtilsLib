@@ -39,5 +39,45 @@ namespace LinearAlgebraTests
             Assert.Equal(expected, actual);
         }
 
+        [Fact]
+        public void SingleRotationWorksCorrectly()
+        {
+            // Arrange
+            Vec2 v = new Vec2(20, 30);
+            Vec2 expected = new Vec2(-30, 20);
+
+            // Act
+            Trans2 t = new Trans2().Rotate(Math.PI / 2);
+            Vec2 actual = t.Forward(v);
+
+            // Assert
+            Assert.True(t.IsDirty);
+            for (int i = 0; i < 2; i++)
+            {
+                Assert.Equal(expected[i], actual[i], 3);
+            }
+        }
+
+        [Fact]
+        public void ChainedRotationWorksCorrectly()
+        {
+            // Arrange
+            Vec2 v = new Vec2(-30, 20);
+            Vec2 expected = new Vec2(-11.554, -34.154);
+
+            // Act
+            Trans2 t = new Trans2()
+                .Rotate(Math.PI / 2)
+                .Rotate(-Math.PI / 4)
+                .Rotate(Math.PI / 3);
+            Vec2 actual = t.Forward(v);
+
+            // Assert
+            Assert.True(t.IsDirty);
+            for (int i = 0; i < 2; i++)
+            {
+                Assert.Equal(expected[i], actual[i], 3);
+            }
+        }
     }
 }
