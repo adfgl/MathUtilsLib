@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LinearAlgebraLib
+﻿namespace LinearAlgebraLib
 {
-    public readonly struct Mat4
+    public readonly struct Mat4 : ILinearAlgebraObject
     {
         public readonly double m11, m12, m13, m14;
         public readonly double m21, m22, m23, m24;

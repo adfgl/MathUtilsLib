@@ -3,7 +3,7 @@
 namespace LinearAlgebraLib
 {
     [DebuggerDisplay("{x} {y}")]
-    public readonly struct Vec2
+    public readonly struct Vec2 : ILinearAlgebraObject
     {
         public readonly double x, y, w;
         public readonly bool normalized;
@@ -27,22 +27,16 @@ namespace LinearAlgebraLib
             y = this.y;
         }
 
-        /// <summary>
-        /// Returns the value of the vector at the specified index.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public double Get(int index)
+        public double Get(int row, int col = 0)
         {
-            switch (index)
+            switch (row)
             {
                 case 0: return x;
                 case 1: return y;
                 case 2: return w;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(index));
+                    throw new ArgumentOutOfRangeException(nameof(row));
             }
         }
         public double this[int index] => Get(index);

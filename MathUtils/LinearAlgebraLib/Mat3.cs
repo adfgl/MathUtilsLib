@@ -1,6 +1,6 @@
 ﻿namespace LinearAlgebraLib
 {
-    public readonly struct Mat3
+    public readonly struct Mat3 : ILinearAlgebraObject
     {
         public readonly double m11, m12, m13;
         public readonly double m21, m22, m23;

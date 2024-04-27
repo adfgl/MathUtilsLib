@@ -3,7 +3,7 @@
 namespace LinearAlgebraLib
 {
     [DebuggerDisplay("{x}, {y}, {z}")]
-    public readonly struct Vec3
+    public readonly struct Vec3 : ILinearAlgebraObject
     {
         public readonly double x, y, z, w;
         public readonly bool normalized;
@@ -30,9 +30,9 @@ namespace LinearAlgebraLib
             z = this.z;
         }
 
-        public double Get(int index)
+        public double Get(int row, int col = 0)
         {
-            switch (index)
+            switch (row)
             {
                 case 0: return x;
                 case 1: return y;
@@ -40,7 +40,7 @@ namespace LinearAlgebraLib
                 case 3: return w;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(index));
+                    throw new ArgumentOutOfRangeException(nameof(row));
             }
         }
 
