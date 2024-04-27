@@ -253,5 +253,33 @@ namespace LinearAlgebraTests
             Assert.Equal(1, actual.y);
             Assert.Equal(1.5, actual.z);
         }
+
+        [Fact]
+        public void EqualityOperatorReturnsTrueWhenVectorsAreEqual()
+        {
+            // Arrange
+            Vec3 a = new Vec3(1, 2, 3);
+            Vec3 b = new Vec3(1, 2, 3);
+
+            // Act
+            bool actual = a == b;
+
+            // Assert
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public void InequalityOperatorReturnsTrueWhenVectorsAreNotEqual()
+        {
+            // Arrange
+            Vec3 a = new Vec3(1, 2, 3);
+            Vec3 b = new Vec3(4, 5, 6);
+
+            // Act
+            bool actual = a != b;
+
+            // Assert
+            Assert.True(actual);
+        }
     }
 }

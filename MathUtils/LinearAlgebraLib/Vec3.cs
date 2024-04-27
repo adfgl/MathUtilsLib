@@ -91,5 +91,21 @@ namespace LinearAlgebraLib
         public static Vec3 operator *(double scalar, Vec3 v) => new Vec3(v.x * scalar, v.y * scalar, v.z * scalar);
 
         public static Vec3 operator /(Vec3 v, double scalar) => new Vec3(v.x / scalar, v.y / scalar, v.z / scalar);
+
+        /// <summary>
+        /// Uses <see cref="Equals(Vec3)"/> to compare the two vectors. Verifies whether components <see cref="x"/>, <see cref="y"/> and <see cref="z"/> are <i><b>exactly</b></i> equal. 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator ==(Vec3 a, Vec3 b) => a.Equals(b);
+
+        /// <summary>
+        /// Uses <see cref="Equals(Vec3)"/> to compare the two vectors. Verifies whether <see cref="x"/>, <see cref="y"/> and <see cref="z"/> are <i><b>exactly</b></i> unequal.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static bool operator !=(Vec3 a, Vec3 b) => false == a.Equals(b);
     }
 }
