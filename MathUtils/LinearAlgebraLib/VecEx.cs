@@ -1,7 +1,12 @@
 ﻿namespace LinearAlgebraLib
 {
-    public static class Vec2Ex
+    public static class VecEx
     {
+        public static Vec3 Between(this Vec3 a, Vec3 b)
+        {
+            return new Vec3((a.x + b.x) / 2, (a.y + b.y) / 2, (a.z + b.z) / 2);
+        }
+
         public static Vec2 Between(this Vec2 a, Vec2 b)
         {
             return new Vec2((a.x + b.x) / 2, (a.y + b.y) / 2);

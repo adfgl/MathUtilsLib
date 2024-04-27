@@ -1,16 +1,11 @@
 ﻿using LinearAlgebraLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinearAlgebraTests
 {
-    public class Vec2ExTests
+    public class VecExTests
     {
         [Fact]
-        public void BetweenReturnsCorrectValue()
+        public void Vec2BetweenReturnsCorrectValue()
         {
             // Arrange
             Vec2 a = new Vec2(0, 0);
@@ -19,6 +14,21 @@ namespace LinearAlgebraTests
 
             // Act
             Vec2 actual = a.Between(b);
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Vec3BetweenReturnsCorrectValue()
+        {
+            // Arrange
+            Vec3 a = new Vec3(0, 0, 0);
+            Vec3 b = new Vec3(80, 80, 80);
+            Vec3 expected = new Vec3(40, 40, 40);
+
+            // Act
+            Vec3 actual = a.Between(b);
 
             // Assert
             Assert.Equal(expected, actual);
