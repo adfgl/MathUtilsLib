@@ -120,5 +120,43 @@ namespace LinearAlgebraTests
                 Assert.Equal(expected[i], actual[i], 3);
             }
         }
+
+        [Fact]
+        public void RotateAtWorksCorrectly()
+        {
+            // Arrange
+            Vec2 v = new Vec2(30, 45);
+            Vec2 expected = new Vec2(-35, 80);
+
+            // Act
+            Trans2 t = new Trans2().RotateAt(Math.PI / 2, -20, 30);
+            Vec2 actual = t.Forward(v);
+
+            // Assert
+            Assert.True(t.IsDirty);
+            for (int i = 0; i < 2; i++)
+            {
+                Assert.Equal(expected[i], actual[i], 3);
+            }
+        }
+
+        [Fact]
+        public void ScaleAtWorksCorrectly()
+        {
+            // Arrange
+            Vec2 v = new Vec2(-35, 80);
+            Vec2 expected = new Vec2(-57.5, 245);
+
+            // Act
+            Trans2 t = new Trans2().ScaleAt(-20, -30, 2.5, 2.5);
+            Vec2 actual = t.Forward(v);
+
+            // Assert
+            Assert.True(t.IsDirty);
+            for (int i = 0; i < 2; i++)
+            {
+                Assert.Equal(expected[i], actual[i], 3);
+            }
+        }
     }
 }
