@@ -81,5 +81,18 @@ namespace LinearAlgebraTests
             // Assert
             Assert.Equal(50, actual);
         }
+
+        [Fact]
+        public void LengthReturnsCorrectValue()
+        {
+            // Arrange
+            Vec3 v = new Vec3(3, 4, 5);
+
+            // Act
+            double actual = v.Length();
+
+            // Assert
+            Assert.Equal(7.071, actual, 3);
+        }
     }
 }

@@ -49,5 +49,7 @@ namespace LinearAlgebraLib
         public bool IsNaN() => double.IsNaN(x) || double.IsNaN(y) || double.IsNaN(z);
 
         public double SquareLength() => x * x + y * y + z * z;
+
+        public double Length() => Math.Sqrt(x * x + y * y + z * z);
     }
 }
