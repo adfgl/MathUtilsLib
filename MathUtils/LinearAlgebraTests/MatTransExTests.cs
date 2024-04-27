@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinearAlgebraLib
+namespace LinearAlgebraTests
 {
-    public static class MatEx
+    public class MatTransExTests
     {
     }
 }

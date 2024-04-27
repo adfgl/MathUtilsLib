@@ -14,6 +14,32 @@
             0, 1, 0,
             0, 0, 1);
 
+        public static Mat3 Translation(double x, double y)
+        {
+            return new(
+                1, 0, x,
+                0, 1, y,
+                0, 0, 1);
+        }
+
+        public static Mat3 Rotation(double rad)
+        {
+            double cos = Math.Cos(rad);
+            double sin = Math.Sin(rad);
+            return new(
+                cos, -sin, 0,
+                sin, cos, 0,
+                0, 0, 1);
+        }
+
+        public static Mat3 Scale(double x, double y)
+        {
+            return new(
+                x, 0, 0,
+                0, y, 0,
+                0, 0, 1);
+        }
+
         public Mat3(double m11, double m12, double m13, double m21, double m22, double m23, double m31, double m32, double m33)
         {
             this.m11 = m11; this.m12 = m12; this.m13 = m13;
