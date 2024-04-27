@@ -34,6 +34,9 @@
 
         public static Mat3 Scale(double x, double y)
         {
+            if (x < 0 || y < 0)
+                throw new ArgumentException("Scaling factors must be non-negative.");
+
             return new(
                 x, 0, 0,
                 0, y, 0,

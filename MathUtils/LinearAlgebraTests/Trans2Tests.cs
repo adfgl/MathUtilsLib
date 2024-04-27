@@ -79,5 +79,46 @@ namespace LinearAlgebraTests
                 Assert.Equal(expected[i], actual[i], 3);
             }
         }
+
+        [Fact]
+        public void SingleScalingWorksCorrectly()
+        {
+            // Arrange
+            Vec2 v = new Vec2(20, 30);
+            Vec2 expected = new Vec2(40, 60);
+
+            // Act
+            Trans2 t = new Trans2().Scale(2, 2);
+            Vec2 actual = t.Forward(v);
+
+            // Assert
+            Assert.True(t.IsDirty);
+            for (int i = 0; i < 2; i++)
+            {
+                Assert.Equal(expected[i], actual[i], 3);
+            }
+        }
+
+        [Fact]
+        public void ChainedScalingWorksCorrectly()
+        {
+            // Arrange
+            Vec2 v = new Vec2(20, 30);
+            Vec2 expected = new Vec2(30, 45);
+
+            // Act
+            Trans2 t = new Trans2()
+                .Scale(2, 2)
+                .Scale(0.25, 0.25)
+                .Scale(3, 3);
+            Vec2 actual = t.Forward(v);
+
+            // Assert
+            Assert.True(t.IsDirty);
+            for (int i = 0; i < 2; i++)
+            {
+                Assert.Equal(expected[i], actual[i], 3);
+            }
+        }
     }
 }

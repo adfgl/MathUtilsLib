@@ -19,12 +19,10 @@
 
         public BoundingBox2(double minX, double minY, double maxX, double maxY)
         {
-#if DEBUG
             if (minX > maxX || minY > maxY)
             {
                 throw new ArgumentException("Minimum bounds must be less than or equal to maximum bounds.");
             }
-#endif
 
             this.minX = minX;
             this.minY = minY;
