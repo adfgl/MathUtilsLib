@@ -51,5 +51,12 @@ namespace LinearAlgebraLib
         public double SquareLength() => x * x + y * y + z * z;
 
         public double Length() => Math.Sqrt(x * x + y * y + z * z);
+
+        public Vec3 Normalize()
+        {
+            if (normalized) return this;
+            double length = Length();
+            return new Vec3(x / length, y / length, z / length, 1, true);
+        }
     }
 }
