@@ -8,7 +8,7 @@ namespace LinearAlgebraLib
         public readonly double x, y, z, w;
         public readonly bool normalized;
 
-        public int Rows => 3;
+        public int Rows => 4;
         public int Columns => 1;
 
         public static Vec3 Zero => new Vec3(0, 0, 0, 1, true);

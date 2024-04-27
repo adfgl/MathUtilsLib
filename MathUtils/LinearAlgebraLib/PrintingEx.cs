@@ -33,10 +33,10 @@ namespace LinearAlgebraLib
                 sb.Append("| ");
                 for (int col = 0; col < cols; col++)
                 {
-                    string v = obj.Get(row, col).ToString(format).PadLeft(maxColumnWidth);
+                    string v = obj.Get(row, col).ToString(format).PadLeft(maxColumnWidth) + " ";
                     sb.Append(v);
                 }
-                sb.Append(" |\n");
+                sb.Append("|\n");
             }
 
             string result = sb.ToString();
