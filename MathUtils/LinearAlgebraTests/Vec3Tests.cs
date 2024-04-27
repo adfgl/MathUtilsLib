@@ -237,5 +237,21 @@ namespace LinearAlgebraTests
             Assert.Equal(actual1.y, actual2.y);
             Assert.Equal(actual1.z, actual2.z);
         }
+
+        [Fact]
+        public void ScalarDivisionOperatorReturnsCorrectValue()
+        {
+            // Arrange
+            Vec3 a = new Vec3(1, 2, 3);
+            double scalar = 2;
+
+            // Act
+            Vec3 actual = a / scalar;
+
+            // Assert
+            Assert.Equal(0.5, actual.x);
+            Assert.Equal(1, actual.y);
+            Assert.Equal(1.5, actual.z);
+        }
     }
 }
