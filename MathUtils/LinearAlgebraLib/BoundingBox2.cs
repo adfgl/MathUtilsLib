@@ -11,23 +11,29 @@
         /// </summary>
         public BoundingBox2()
         {
-            minX = double.MaxValue;
-            minY = double.MaxValue;
-            maxX = double.MinValue;
-            maxY = double.MinValue;
+            minX = minY = double.MaxValue;
+            maxX = maxY = double.MinValue;
         }
 
         public BoundingBox2(double minX, double minY, double maxX, double maxY)
         {
-            if (minX > maxX || minY > maxY)
+            this.minX = minX;
+            this.maxX = maxX;
+            if (minX > maxX)
             {
-                throw new ArgumentException("Minimum bounds must be less than or equal to maximum bounds.");
+                double t = minX;
+                this.minX = maxX;
+                this.maxX = t;
             }
 
-            this.minX = minX;
             this.minY = minY;
-            this.maxX = maxX;
             this.maxY = maxY;
+            if (minY > maxY)
+            {
+                double t = minY;
+                this.minY = maxY;
+                this.maxY = t;
+            }
         }
 
         public void Deconstruct(out double minX, out double minY, out double maxX, out double maxY)
