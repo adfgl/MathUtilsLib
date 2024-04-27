@@ -62,7 +62,6 @@
                 minY <= other.minY && other.maxY <= maxY;
         }
 
-
         public BoundingBox Expand(double x, double y)
         {
             return new BoundingBox(
