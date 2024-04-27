@@ -118,103 +118,89 @@ namespace LinearAlgebraTests
                 9, 10, 11, 12, 
                 13, 14, 15, 16);
             
+            Mat4 expected = new Mat4(
+                0.01851851852, 0.0, -0.05555555556, 0.03703703704,
+                0.0, -0.1666666667, 0.3333333333, -0.1666666667,
+                -0.05555555556, 0.3333333333, -4.500000000, 3.222222222,
+                0.03703703704, -0.1666666667, 3.972222222, -2.842592593);
+
             // Act
-            bool managedToInvert = m.Inverse(out Mat4 inverse);
+            bool managedToInvert = m.Inverse(out Mat4 actual);
 
             // Assert
             Assert.True(managedToInvert);
 
-            double det = 1.0 / 108;
-
-            Assert.Equal(det * 2, inverse.m11);
-            Assert.Equal(det * 0, inverse.m12);
-            Assert.Equal(det * -6, inverse.m13);
-            Assert.Equal(det * 4, inverse.m14);
-
-            Assert.Equal(det * 0, inverse.m21);
-            Assert.Equal(det * -18, inverse.m22);
-            Assert.Equal(det * 36, inverse.m23);
-            Assert.Equal(det * -18, inverse.m24);
-
-            Assert.Equal(det * -6, inverse.m31);
-            Assert.Equal(det * 36, inverse.m32);
-            Assert.Equal(det * -486, inverse.m33);
-            Assert.Equal(det * 348, inverse.m34);
-
-            Assert.Equal(det * 4, inverse.m41);
-            Assert.Equal(det * -18, inverse.m42);
-            Assert.Equal(det * 429, inverse.m43);
-            Assert.Equal(det * -307, inverse.m44);
+            for (int r = 0; r < 4; r++)
+            {
+                for (int c = 0; c < 4; c++)
+                {
+                    Assert.Equal(expected[r, c], actual[r, c], 6);
+                }
+            }
         }
 
         [Fact]
         public void TransposeReturnsCorrectValue()
         {
+            // Arrange
             Mat4 m = new Mat4(
                 1, 5, 9, 13, 
                 2, 6, 10, 14, 
                 3, 7, 11, 15, 
                 4, 8, 12, 16);
 
-            Mat4 transposed = Mat4.Transpose(m);
-
-            Assert.Equal(m.m11, transposed.m11);
-            Assert.Equal(m.m12, transposed.m21);
-            Assert.Equal(m.m13, transposed.m31);
-            Assert.Equal(m.m14, transposed.m41);
-
-            Assert.Equal(m.m21, transposed.m12);
-            Assert.Equal(m.m22, transposed.m22);
-            Assert.Equal(m.m23, transposed.m32);
-            Assert.Equal(m.m24, transposed.m42);
-
-            Assert.Equal(m.m31, transposed.m13);
-            Assert.Equal(m.m32, transposed.m23);
-            Assert.Equal(m.m33, transposed.m33);
-            Assert.Equal(m.m34, transposed.m43);
-
-            Assert.Equal(m.m41, transposed.m14);
-            Assert.Equal(m.m42, transposed.m24);
-            Assert.Equal(m.m43, transposed.m34);
-            Assert.Equal(m.m44, transposed.m44);
-        }
-
-        [Fact]
-        public void MatrixMultiplicationReturnsCorrectValue()
-        {
-            Mat4 a = new Mat4(
+            Mat4 expected = new Mat4(
                     1, 2, 3, 4, 
                     5, 6, 7, 8, 
                     9, 10, 11, 12, 
                     13, 14, 15, 16);
 
+            // Act
+            Mat4 actual = Mat4.Transpose(m);
 
-            Mat4 c = Mat4.Multiply(a, a);
+            // Assert
+            for (int r = 0; r < 4; r++)
+            {
+                for (int c = 0; c < 4; c++)
+                {
+                    Assert.Equal(expected[r, c], actual[r, c], 6);
+                }
+            }
+        }
 
-            Assert.Equal(90, c.m11);
-            Assert.Equal(100, c.m12);
-            Assert.Equal(110, c.m13);
-            Assert.Equal(120, c.m14);
+        [Fact]
+        public void MatrixMultiplicationReturnsCorrectValue()
+        {
+            // Arrange
+            Mat4 a = new Mat4(
+                1, 2, 3, 4, 
+                5, 6, 7, 8, 
+                9, 10, 11, 12, 
+                13, 14, 15, 16);
 
-            Assert.Equal(202, c.m21);
-            Assert.Equal(228, c.m22);
-            Assert.Equal(254, c.m23);
-            Assert.Equal(280, c.m24);
+            Mat4 expected = new Mat4(
+                90, 100, 110, 120, 
+                202, 228, 254, 280, 
+                314, 356, 398, 440, 
+                426, 484, 542, 600);
 
-            Assert.Equal(314, c.m31);
-            Assert.Equal(356, c.m32);
-            Assert.Equal(398, c.m33);
-            Assert.Equal(440, c.m34);
+            // Act
+            Mat4 actual = Mat4.Multiply(a, a);
 
-            Assert.Equal(426, c.m41);
-            Assert.Equal(484, c.m42);
-            Assert.Equal(542, c.m43);
-            Assert.Equal(600, c.m44);
+            // Assert
+            for (int r = 0; r < 4; r++)
+            {
+                for (int c = 0; c < 4; c++)
+                {
+                    Assert.Equal(expected[r, c], actual[r, c], 6);
+                }
+            }
         }
 
         [Fact]
         public void VectorMultiplicationReturnsCorrectValue()
         {
+            // Arrange
             Mat4 a = new Mat4(
                 1, 2, 3, 4, 
                 5, 6, 7, 8, 
@@ -223,8 +209,10 @@ namespace LinearAlgebraTests
 
             Vec3 v = new Vec3(1, 2, 3, 4);
 
+            // Act
             Vec3 actual = Mat4.Multiply(a, v);
 
+            // Assert
             Assert.Equal(30, actual.x);
             Assert.Equal(70, actual.y);
             Assert.Equal(110, actual.z);
@@ -234,65 +222,59 @@ namespace LinearAlgebraTests
         [Fact]
         public void ScalarMultiplicationReturnsCorrectValue()
         {
+            // Arrange
             Mat4 a = new Mat4(
                 1, 2, 3, 4, 
                 5, 6, 7, 8, 
                 9, 10, 11, 12, 
                 13, 14, 15, 16);
 
+            Mat4 expected = new Mat4(
+                2, 4, 6, 8, 
+                10, 12, 14, 16, 
+                18, 20, 22, 24, 
+                26, 28, 30, 32);
+
+            // Act
             Mat4 actual = Mat4.Multiply(a, 2);
 
-            Assert.Equal(2, actual.m11);
-            Assert.Equal(4, actual.m12);
-            Assert.Equal(6, actual.m13);
-            Assert.Equal(8, actual.m14);
-
-            Assert.Equal(10, actual.m21);
-            Assert.Equal(12, actual.m22);
-            Assert.Equal(14, actual.m23);
-            Assert.Equal(16, actual.m24);
-
-            Assert.Equal(18, actual.m31);
-            Assert.Equal(20, actual.m32);
-            Assert.Equal(22, actual.m33);
-            Assert.Equal(24, actual.m34);
-
-            Assert.Equal(26, actual.m41);
-            Assert.Equal(28, actual.m42);
-            Assert.Equal(30, actual.m43);
-            Assert.Equal(32, actual.m44);
+            // Assert
+            for (int r = 0; r < 4; r++)
+            {
+                for (int c = 0; c < 4; c++)
+                {
+                    Assert.Equal(expected[r, c], actual[r, c], 6);
+                }
+            }
         }
 
         [Fact]
         public void ScalarDivisionReturnsCorrectValue()
         {
+            // Arrange
             Mat4 a = new Mat4(
                 2, 4, 6, 8, 
                 10, 12, 14, 16, 
                 18, 20, 22, 24, 
                 26, 28, 30, 32);
 
+            Mat4 expected = new Mat4(
+                1, 2, 3, 4, 
+                5, 6, 7, 8, 
+                9, 10, 11, 12, 
+                13, 14, 15, 16);
+
+            // Act
             Mat4 actual = Mat4.Divide(a, 2);
 
-            Assert.Equal(1, actual.m11);
-            Assert.Equal(2, actual.m12);
-            Assert.Equal(3, actual.m13);
-            Assert.Equal(4, actual.m14);
-
-            Assert.Equal(5, actual.m21);
-            Assert.Equal(6, actual.m22);
-            Assert.Equal(7, actual.m23);
-            Assert.Equal(8, actual.m24);
-
-            Assert.Equal(9, actual.m31);
-            Assert.Equal(10, actual.m32);
-            Assert.Equal(11, actual.m33);
-            Assert.Equal(12, actual.m34);
-
-            Assert.Equal(13, actual.m41);
-            Assert.Equal(14, actual.m42);
-            Assert.Equal(15, actual.m43);
-            Assert.Equal(16, actual.m44);
+            // Assert
+            for (int r = 0; r < 4; r++)
+            {
+                for (int c = 0; c < 4; c++)
+                {
+                    Assert.Equal(expected[r, c], actual[r, c], 6);
+                }
+            }
         }
     }
 }
