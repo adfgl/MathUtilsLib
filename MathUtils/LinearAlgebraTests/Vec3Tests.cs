@@ -139,5 +139,19 @@ namespace LinearAlgebraTests
             Assert.Equal(4, actual.y);
             Assert.Equal(5, actual.z);
         }
+
+        [Fact]
+        public void DotReturnsCorrectValue()
+        {
+            // Arrange
+            Vec3 a = new Vec3(1, 2, 3);
+            Vec3 b = new Vec3(4, 5, 6);
+
+            // Act
+            double actual = a.Dot(b);
+
+            // Assert
+            Assert.Equal(32, actual);
+        }
     }
 }

@@ -63,5 +63,7 @@ namespace LinearAlgebraLib
         {
             return new Vec3(Math.Abs(x), Math.Abs(y), Math.Abs(z), 1, normalized);
         }
+
+        public double Dot(Vec3 other) => x * other.x + y * other.y + z * other.z;
     }
 }
