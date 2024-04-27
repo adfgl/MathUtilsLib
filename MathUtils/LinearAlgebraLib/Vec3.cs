@@ -8,6 +8,12 @@ namespace LinearAlgebraLib
         public readonly double x, y, z, w;
         public readonly bool normalized;
 
+        public static Vec3 Zero => new Vec3(0, 0, 0, 1, true);
+        public static Vec3 NaN => new Vec3(double.NaN, double.NaN, double.NaN);
+        public static Vec3 UnitX => new Vec3(1, 0, 0, 1, true);
+        public static Vec3 UnitY => new Vec3(0, 1, 0, 1, true);
+        public static Vec3 UnitZ => new Vec3(0, 0, 1, 1, true);
+
         public Vec3(double x, double y, double z, double w = 1, bool normalized = false)
         {
             this.x = x;
@@ -39,5 +45,7 @@ namespace LinearAlgebraLib
         }
 
         public double this[int index] => Get(index);
+
+        public bool IsNaN() => double.IsNaN(x) || double.IsNaN(y) || double.IsNaN(z);
     }
 }

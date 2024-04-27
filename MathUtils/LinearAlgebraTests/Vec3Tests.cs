@@ -50,5 +50,23 @@ namespace LinearAlgebraTests
             Assert.Equal(v.z, actualZ);
             Assert.Equal(v.w, actualW);
         }
+
+        [Theory]
+        [InlineData(0, 0, 0, false)]
+        [InlineData(double.NaN, 0, 0, true)]
+        [InlineData(0, double.NaN, 0, true)]
+        [InlineData(0, 0, double.NaN, true)]
+        [InlineData(double.NaN, double.NaN, double.NaN, true)]
+        public void IsNaNReturnsCorrectValue(double x, double y, double z, bool expected)
+        {
+            // Arrange
+            Vec3 v = new Vec3(x, y, z);
+
+            // Act
+            bool actual = v.IsNaN();
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
     }
 }
