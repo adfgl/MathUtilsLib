@@ -83,12 +83,68 @@ namespace LinearAlgebraTests
         public void DeterminantReturnsCorrectValue()
         {
             Mat4 m = new Mat4(
+                55, 2, 3, 4, 
+                5, 556, 7, 8, 
+                9, 10, 11, 12, 
+                13, 14, 15, 16);
+
+            Assert.Equal(-118800, m.Determinant());
+        }
+
+        [Fact]
+        public void InverseDoesNotThrow()
+        {
+            // Arrange
+            Mat4 m = new Mat4(
                 1, 2, 3, 4, 
                 5, 6, 7, 8, 
                 9, 10, 11, 12, 
                 13, 14, 15, 16);
+            
+            // Act
+            bool managedToInvert = m.Inverse(out Mat4 inverse);
 
-            Assert.Equal(0, m.Determinant());
+            // Assert
+            Assert.False(managedToInvert);
+        }
+
+        [Fact]
+        public void InverseReturnsCorrectValue()
+        {
+            // Arrange
+            Mat4 m = new Mat4(
+                55, 2, 3, 4, 
+                5, 0, 7, 8, 
+                9, 10, 11, 12, 
+                13, 14, 15, 16);
+            
+            // Act
+            bool managedToInvert = m.Inverse(out Mat4 inverse);
+
+            // Assert
+            Assert.True(managedToInvert);
+
+            double det = 1.0 / 108;
+
+            Assert.Equal(det * 2, inverse.m11);
+            Assert.Equal(det * 0, inverse.m12);
+            Assert.Equal(det * -6, inverse.m13);
+            Assert.Equal(det * 4, inverse.m14);
+
+            Assert.Equal(det * 0, inverse.m21);
+            Assert.Equal(det * -18, inverse.m22);
+            Assert.Equal(det * 36, inverse.m23);
+            Assert.Equal(det * -18, inverse.m24);
+
+            Assert.Equal(det * -6, inverse.m31);
+            Assert.Equal(det * 36, inverse.m32);
+            Assert.Equal(det * -486, inverse.m33);
+            Assert.Equal(det * 348, inverse.m34);
+
+            Assert.Equal(det * 4, inverse.m41);
+            Assert.Equal(det * -18, inverse.m42);
+            Assert.Equal(det * 429, inverse.m43);
+            Assert.Equal(det * -307, inverse.m44);
         }
     }
 }
