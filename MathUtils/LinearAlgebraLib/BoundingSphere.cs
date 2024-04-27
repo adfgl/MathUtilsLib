@@ -27,5 +27,14 @@
             double dz = z - cz;
             return dx * dx + dy * dy + dz * dz <= radius * radius;
         }
+
+        public bool Contains(BoundingSphere other)
+        {
+            double dx = other.cx - cx;
+            double dy = other.cy - cy;
+            double dz = other.cz - cz;
+            double distance = Math.Sqrt(dx * dx + dy * dy + dz * dz);
+            return distance + other.radius <= radius;
+        }
     }
 }
