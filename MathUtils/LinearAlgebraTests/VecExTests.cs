@@ -69,11 +69,27 @@ namespace LinearAlgebraTests
         [Theory]
         [InlineData(1, 0, 0, 1, true)]
         [InlineData(1, 1, 0, 1, false)]
-        public void PerpendicularReturnsCorrectValue(double ax, double ay, double bx, double by, bool expected)
+        public void Vec2PerpendicularReturnsCorrectValue(double ax, double ay, double bx, double by, bool expected)
         {
             // Arrange
             Vec2 a = new Vec2(ax, ay);
             Vec2 b = new Vec2(bx, by);
+
+            // Act
+            bool actual = a.Perpendicular(b, 0.0001);
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory]
+        [InlineData(1, 0, 0, 1, 0, 0, false)]
+        [InlineData(0, 1, 0, 1, 0, 0, true)]
+        public void Vec3PerpendicularReturnsCorrectValue(double ax, double ay, double az, double bx, double by, double bz, bool expected)
+        {
+            // Arrange
+            Vec3 a = new Vec3(ax, ay, az);
+            Vec3 b = new Vec3(bx, by, bz);
 
             // Act
             bool actual = a.Perpendicular(b, 0.0001);

@@ -24,6 +24,10 @@
         {
             return MathHelper.IsZero(a.Dot(b), tolerance);
         }
+        public static bool Perpendicular(this Vec3 a, Vec3 b, double tolerance)
+        {
+            return MathHelper.IsZero(a.Dot(b), tolerance);
+        }
 
         public static double Distance(this Vec2 a, Vec2 b)
         {
