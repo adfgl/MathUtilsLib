@@ -16,6 +16,7 @@ namespace LinearAlgebraTests
             Vec2 actual = t.Forward(v);
 
             // Assert
+            Assert.True(t.IsDirty);
             Assert.Equal(expected, actual);
         }
 
@@ -34,6 +35,7 @@ namespace LinearAlgebraTests
             Vec2 actual = t.Forward(v);
 
             // Assert
+            Assert.True(t.IsDirty);
             Assert.Equal(expected, actual);
         }
 

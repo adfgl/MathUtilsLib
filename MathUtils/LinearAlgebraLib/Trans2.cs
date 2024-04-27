@@ -17,6 +17,15 @@
         }
 
         public bool IsDirty => _isDirty;
+        
+        public Mat3 Source
+        {
+            get
+            {
+                UpdateForward();
+                return _source;
+            }
+        }
 
         public void Reset()
         {
