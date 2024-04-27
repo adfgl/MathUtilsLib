@@ -78,5 +78,17 @@ namespace LinearAlgebraTests
             Assert.Equal(m.m43, m.Get(3, 2));
             Assert.Equal(m.m44, m.Get(3, 3));
         }
+
+        [Fact]
+        public void DeterminantReturnsCorrectValue()
+        {
+            Mat4 m = new Mat4(
+                1, 2, 3, 4, 
+                5, 6, 7, 8, 
+                9, 10, 11, 12, 
+                13, 14, 15, 16);
+
+            Assert.Equal(0, m.Determinant());
+        }
     }
 }
