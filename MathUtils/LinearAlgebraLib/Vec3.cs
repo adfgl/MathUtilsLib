@@ -23,5 +23,21 @@ namespace LinearAlgebraLib
             y = this.y;
             z = this.z;
         }
+
+        public double Get(int index)
+        {
+            switch (index)
+            {
+                case 0: return x;
+                case 1: return y;
+                case 2: return z;
+                case 3: return w;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(index));
+            }
+        }
+
+        public double this[int index] => Get(index);
     }
 }
