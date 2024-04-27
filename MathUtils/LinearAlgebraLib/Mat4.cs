@@ -176,5 +176,13 @@ namespace LinearAlgebraLib
                 m.m31 / scalar, m.m32 / scalar, m.m33 / scalar, m.m34 / scalar,
                 m.m41 / scalar, m.m42 / scalar, m.m43 / scalar, m.m44 / scalar);
         }
+
+        public static Mat4 operator *(Mat4 a, Mat4 b) => Multiply(a, b);
+        public static Vec3 operator *(Mat4 m, Vec3 v) => Multiply(m, v);
+        public static Vec3 operator *(Vec3 v, Mat4 m) => Multiply(m, v);
+
+        public static Mat4 operator *(Mat4 m, double scalar) => Multiply(m, scalar);
+        public static Mat4 operator *(double scalar, Mat4 m) => Multiply(m, scalar);
+        public static Mat4 operator /(Mat4 m, double scalar) => Divide(m, scalar);
     }
 }
