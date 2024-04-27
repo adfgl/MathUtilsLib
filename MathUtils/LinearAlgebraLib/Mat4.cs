@@ -167,5 +167,14 @@ namespace LinearAlgebraLib
                 m.m31 * scalar, m.m32 * scalar, m.m33 * scalar, m.m34 * scalar,
                 m.m41 * scalar, m.m42 * scalar, m.m43 * scalar, m.m44 * scalar);
         }
+
+        public static Mat4 Divide(Mat4 m, double scalar)
+        {
+            return new Mat4(
+                m.m11 / scalar, m.m12 / scalar, m.m13 / scalar, m.m14 / scalar,
+                m.m21 / scalar, m.m22 / scalar, m.m23 / scalar, m.m24 / scalar,
+                m.m31 / scalar, m.m32 / scalar, m.m33 / scalar, m.m34 / scalar,
+                m.m41 / scalar, m.m42 / scalar, m.m43 / scalar, m.m44 / scalar);
+        }
     }
 }

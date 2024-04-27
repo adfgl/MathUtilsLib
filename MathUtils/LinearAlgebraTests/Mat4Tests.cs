@@ -262,5 +262,37 @@ namespace LinearAlgebraTests
             Assert.Equal(30, actual.m43);
             Assert.Equal(32, actual.m44);
         }
+
+        [Fact]
+        public void ScalarDivisionReturnsCorrectValue()
+        {
+            Mat4 a = new Mat4(
+                2, 4, 6, 8, 
+                10, 12, 14, 16, 
+                18, 20, 22, 24, 
+                26, 28, 30, 32);
+
+            Mat4 actual = Mat4.Divide(a, 2);
+
+            Assert.Equal(1, actual.m11);
+            Assert.Equal(2, actual.m12);
+            Assert.Equal(3, actual.m13);
+            Assert.Equal(4, actual.m14);
+
+            Assert.Equal(5, actual.m21);
+            Assert.Equal(6, actual.m22);
+            Assert.Equal(7, actual.m23);
+            Assert.Equal(8, actual.m24);
+
+            Assert.Equal(9, actual.m31);
+            Assert.Equal(10, actual.m32);
+            Assert.Equal(11, actual.m33);
+            Assert.Equal(12, actual.m34);
+
+            Assert.Equal(13, actual.m41);
+            Assert.Equal(14, actual.m42);
+            Assert.Equal(15, actual.m43);
+            Assert.Equal(16, actual.m44);
+        }
     }
 }
