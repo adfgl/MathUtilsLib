@@ -1,17 +1,17 @@
-﻿namespace LinearAlgebraLib
+﻿namespace LinearAlgebraLib.Geometry
 {
-    public readonly struct BoundingBox3
+    public readonly struct Box
     {
         public readonly double minX, minY, minZ;
         public readonly double maxX, maxY, maxZ;
 
-        public BoundingBox3()
+        public Box()
         {
             minX = minY = minZ = double.MaxValue;
             maxX = maxY = maxZ = double.MinValue;
         }
 
-        public BoundingBox3(double minX, double minY, double minZ, double maxX, double maxY, double maxZ)
+        public Box(double minX, double minY, double minZ, double maxX, double maxY, double maxZ)
         {
             this.minX = minX;
             this.maxX = maxX;
@@ -47,9 +47,9 @@
             max = new Vec3(maxX, maxY, maxZ);
         }
 
-        public static BoundingBox3 FromPoints(IEnumerable<Vec3> points)
+        public static Box FromPoints(IEnumerable<Vec3> points)
         {
-            BoundingBox3 box = new BoundingBox3();
+            Box box = new Box();
             foreach (Vec3 point in points)
             {
                 box = box.Expand(point.x, point.y, point.z);
@@ -65,7 +65,7 @@
                  minZ <= z && z <= maxZ;
         }
 
-        public bool Contains(BoundingBox3 other)
+        public bool Contains(Box other)
         {
             return
                 minX <= other.minX &&
@@ -76,40 +76,40 @@
                 maxZ >= other.maxZ;
         }
 
-        public BoundingBox3 Expand(double x, double y, double z)
+        public Box Expand(double x, double y, double z)
         {
-            return new BoundingBox3(
-                x < this.minX ? x : this.minX,
-                y < this.minY ? y : this.minY,
-                z < this.minZ ? z : this.minZ,
+            return new Box(
+                x < minX ? x : minX,
+                y < minY ? y : minY,
+                z < minZ ? z : minZ,
 
-                x > this.maxX ? x : this.maxX,
-                y > this.maxY ? y : this.maxY,
-                z > this.maxZ ? z : this.maxZ);
+                x > maxX ? x : maxX,
+                y > maxY ? y : maxY,
+                z > maxZ ? z : maxZ);
         }
 
-        public BoundingBox3 Expand(BoundingBox3 other)
+        public Box Expand(Box other)
         {
-            return new BoundingBox3(
-              other.minX < this.minX ? other.minX : this.minX,
-              other.minY < this.minY ? other.minY : this.minY,
-              other.minZ < this.minZ ? other.minZ : this.minZ,
+            return new Box(
+              other.minX < minX ? other.minX : minX,
+              other.minY < minY ? other.minY : minY,
+              other.minZ < minZ ? other.minZ : minZ,
 
-              other.maxX > this.maxX ? other.maxX : this.maxX,
-              other.maxY > this.maxY ? other.maxY : this.maxY,
-              other.maxZ > this.maxZ ? other.maxZ : this.maxZ);
+              other.maxX > maxX ? other.maxX : maxX,
+              other.maxY > maxY ? other.maxY : maxY,
+              other.maxZ > maxZ ? other.maxZ : maxZ);
         }
 
-        public BoundingBox3 Intersect(BoundingBox3 other)
+        public Box Intersect(Box other)
         {
-            return new BoundingBox3(
-                other.minX > this.minX ? other.minX : this.minX,
-                other.minY > this.minY ? other.minY : this.minY,
-                other.minZ > this.minZ ? other.minZ : this.minZ,
+            return new Box(
+                other.minX > minX ? other.minX : minX,
+                other.minY > minY ? other.minY : minY,
+                other.minZ > minZ ? other.minZ : minZ,
 
-                other.maxX < this.maxX ? other.maxX : this.maxX,
-                other.maxY < this.maxY ? other.maxY : this.maxY,
-                other.maxZ < this.maxZ ? other.maxZ : this.maxZ);
+                other.maxX < maxX ? other.maxX : maxX,
+                other.maxY < maxY ? other.maxY : maxY,
+                other.maxZ < maxZ ? other.maxZ : maxZ);
         }
     }
 }

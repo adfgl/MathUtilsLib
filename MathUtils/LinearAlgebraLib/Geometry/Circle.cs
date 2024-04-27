@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinearAlgebraLib
+namespace LinearAlgebraLib.Geometry
 {
-    public readonly struct BoundingCircle
+    public readonly struct Circle
     {
     }
 }

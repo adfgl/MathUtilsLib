@@ -1,4 +1,4 @@
-﻿using LinearAlgebraLib;
+﻿using LinearAlgebraLib.Geometry;
 
 namespace LinearAlgebraTests
 {
@@ -11,7 +11,7 @@ namespace LinearAlgebraTests
         public void ContainsWorksCorrectly(double x, double y, double z, bool expected)
         {
             // Arrange
-            BoundingSphere sphere = new BoundingSphere(0, 0, 0, 100);
+            Sphere sphere = new Sphere(0, 0, 0, 100);
             
             // Act
             bool actual = sphere.Contains(x, y, z);
@@ -27,8 +27,8 @@ namespace LinearAlgebraTests
         public void ContainsOtherWorksCorrectly(double cx, double cy, double cz, double radius, bool expected)
         {
             // Arrange
-            BoundingSphere sphere = new BoundingSphere(0, 0, 0, 100);
-            BoundingSphere other = new BoundingSphere(cx, cy, cz, radius);
+            Sphere sphere = new Sphere(0, 0, 0, 100);
+            Sphere other = new Sphere(cx, cy, cz, radius);
             
             // Act
             bool actual = sphere.Contains(other);
@@ -44,10 +44,10 @@ namespace LinearAlgebraTests
         public void ExpansionWorksCorrectly(double x, double y, double z, double expectedRadius)
         {
             // Arrange
-            BoundingSphere sphere = new BoundingSphere(0, 0, 0, 100);
+            Sphere sphere = new Sphere(0, 0, 0, 100);
             
             // Act
-            BoundingSphere expanded = sphere.Expand(x, y, z);
+            Sphere expanded = sphere.Expand(x, y, z);
             
             // Assert
             Assert.Equal(expectedRadius, expanded.radius, 6);
@@ -60,11 +60,11 @@ namespace LinearAlgebraTests
         public void ExpansionUsingOtherWorksCorrectly(double cx, double cy, double cz, double radius, double expectedRadius)
         {
             // Arrange
-            BoundingSphere sphere = new BoundingSphere(0, 0, 0, 100);
-            BoundingSphere other = new BoundingSphere(cx, cy, cz, radius);
+            Sphere sphere = new Sphere(0, 0, 0, 100);
+            Sphere other = new Sphere(cx, cy, cz, radius);
             
             // Act
-            BoundingSphere expanded = sphere.Expand(other);
+            Sphere expanded = sphere.Expand(other);
             
             // Assert
             Assert.Equal(expectedRadius, expanded.radius, 6);
@@ -78,8 +78,8 @@ namespace LinearAlgebraTests
         public void IntersectWorksCorrectly(double cx, double cy, double cz, double radius, bool expected)
         {
             // Arrange
-            BoundingSphere sphere = new BoundingSphere(0, 0, 0, 100);
-            BoundingSphere other = new BoundingSphere(cx, cy, cz, radius);
+            Sphere sphere = new Sphere(0, 0, 0, 100);
+            Sphere other = new Sphere(cx, cy, cz, radius);
             
             // Act
             bool actual = sphere.Intersects(other);

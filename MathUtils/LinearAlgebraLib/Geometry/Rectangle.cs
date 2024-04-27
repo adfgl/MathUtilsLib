@@ -1,6 +1,6 @@
-﻿namespace LinearAlgebraLib
+﻿namespace LinearAlgebraLib.Geometry
 {
-    public readonly struct BoundingBox2
+    public readonly struct Rectangle
     {
         public readonly double minX, minY;
         public readonly double maxX, maxY;
@@ -9,13 +9,13 @@
         /// Inverted constructor to create a bounding box with invalid bounds.
         /// Useful for initializing a bounding box that will be expanded by a series of points.
         /// </summary>
-        public BoundingBox2()
+        public Rectangle()
         {
             minX = minY = double.MaxValue;
             maxX = maxY = double.MinValue;
         }
 
-        public BoundingBox2(double minX, double minY, double maxX, double maxY)
+        public Rectangle(double minX, double minY, double maxX, double maxY)
         {
             this.minX = minX;
             this.maxX = maxX;
@@ -42,9 +42,9 @@
             max = new Vec2(maxX, maxY);
         }
 
-        public static BoundingBox2 FromPoints(IEnumerable<Vec2> points)
+        public static Rectangle FromPoints(IEnumerable<Vec2> points)
         {
-            BoundingBox2 box = new BoundingBox2();
+            Rectangle box = new Rectangle();
             foreach (Vec2 point in points)
             {
                 box = box.Expand(point.x, point.y);
@@ -54,43 +54,43 @@
 
         public bool Contains(double x, double y)
         {
-            return 
-                minX <= x && x <= maxX && 
+            return
+                minX <= x && x <= maxX &&
                 minY <= y && y <= maxY;
         }
 
-        public bool Contains(BoundingBox2 other)
+        public bool Contains(Rectangle other)
         {
             return
                 minX <= other.minX && other.maxX <= maxX &&
                 minY <= other.minY && other.maxY <= maxY;
         }
 
-        public BoundingBox2 Expand(double x, double y)
+        public Rectangle Expand(double x, double y)
         {
-            return new BoundingBox2(
-                x < this.minX ? x : this.minX,
-                y < this.minY ? y : this.minY,
-                x > this.maxX ? x : this.maxX,
-                y > this.maxY ? y : this.maxY);
+            return new Rectangle(
+                x < minX ? x : minX,
+                y < minY ? y : minY,
+                x > maxX ? x : maxX,
+                y > maxY ? y : maxY);
         }
 
-        public BoundingBox2 Expand(BoundingBox2 other)
+        public Rectangle Expand(Rectangle other)
         {
-            return new BoundingBox2(
-                other.minX < this.minX ? other.minX : this.minX,
-                other.minY < this.minY ? other.minY : this.minY,
-                other.maxX > this.maxX ? other.maxX : this.maxX,
-                other.maxY > this.maxY ? other.maxY : this.maxY);
+            return new Rectangle(
+                other.minX < minX ? other.minX : minX,
+                other.minY < minY ? other.minY : minY,
+                other.maxX > maxX ? other.maxX : maxX,
+                other.maxY > maxY ? other.maxY : maxY);
         }
 
-        public BoundingBox2 Intersect(BoundingBox2 other)
+        public Rectangle Intersect(Rectangle other)
         {
-            return new BoundingBox2(
-                other.minX > this.minX ? other.minX : this.minX,
-                other.minY > this.minY ? other.minY : this.minY,
-                other.maxX < this.maxX ? other.maxX : this.maxX,
-                other.maxY < this.maxY ? other.maxY : this.maxY);
+            return new Rectangle(
+                other.minX > minX ? other.minX : minX,
+                other.minY > minY ? other.minY : minY,
+                other.maxX < maxX ? other.maxX : maxX,
+                other.maxY < maxY ? other.maxY : maxY);
         }
     }
 }

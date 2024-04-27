@@ -1,11 +1,11 @@
-﻿namespace LinearAlgebraLib
+﻿namespace LinearAlgebraLib.Geometry
 {
-    public readonly struct BoundingSphere
+    public readonly struct Sphere
     {
         public readonly double cx, cy, cz;
         public readonly double radius;
 
-        public BoundingSphere(double cx, double cy, double cz, double radius)
+        public Sphere(double cx, double cy, double cz, double radius)
         {
             this.cx = cx;
             this.cy = cy;
@@ -20,9 +20,9 @@
             radius = this.radius;
         }
 
-        public static BoundingSphere FromPoints(IEnumerable<Vec3> points, Vec3 center)
+        public static Sphere FromPoints(IEnumerable<Vec3> points, Vec3 center)
         {
-            BoundingSphere box = new BoundingSphere(center.x, center.y, center.z, 0);
+            Sphere box = new Sphere(center.x, center.y, center.z, 0);
             foreach (Vec3 point in points)
             {
                 box = box.Expand(point.x, point.y, point.z);
@@ -38,7 +38,7 @@
             return dx * dx + dy * dy + dz * dz <= radius * radius;
         }
 
-        public bool Contains(BoundingSphere other)
+        public bool Contains(Sphere other)
         {
             double dx = other.cx - cx;
             double dy = other.cy - cy;
@@ -47,7 +47,7 @@
             return distance + other.radius <= radius;
         }
 
-        public BoundingSphere Expand(double x, double y, double z)
+        public Sphere Expand(double x, double y, double z)
         {
             double dx = x - cx;
             double dy = y - cy;
@@ -55,10 +55,10 @@
 
             double squareDistance = dx * dx + dy * dy + dz * dz;
             if (squareDistance <= radius * radius) return this;
-            return new BoundingSphere(cx, cy, cz, Math.Sqrt(squareDistance));
+            return new Sphere(cx, cy, cz, Math.Sqrt(squareDistance));
         }
 
-        public BoundingSphere Expand(BoundingSphere other)
+        public Sphere Expand(Sphere other)
         {
             double dx = other.cx - cx;
             double dy = other.cy - cy;
@@ -67,10 +67,10 @@
             double squareDistance = dx * dx + dy * dy + dz * dz;
             double distance = Math.Sqrt(squareDistance);
             double newRadius = Math.Max(radius, distance + other.radius);
-            return new BoundingSphere(cx, cy, cz, newRadius);
+            return new Sphere(cx, cy, cz, newRadius);
         }
 
-        public bool Intersects(BoundingSphere other)
+        public bool Intersects(Sphere other)
         {
             double dx = other.cx - cx;
             double dy = other.cy - cy;
