@@ -20,6 +20,16 @@
             radius = this.radius;
         }
 
+        public static BoundingSphere FromPoints(IEnumerable<Vec3> points, Vec3 center)
+        {
+            BoundingSphere box = new BoundingSphere(center.x, center.y, center.z, 0);
+            foreach (Vec3 point in points)
+            {
+                box = box.Expand(point.x, point.y, point.z);
+            }
+            return box;
+        }
+
         public bool Contains(double x, double y, double z)
         {
             double dx = x - cx;

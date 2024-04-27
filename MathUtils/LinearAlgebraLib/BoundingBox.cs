@@ -30,6 +30,14 @@
             this.maxY = maxY;
         }
 
+        public void Deconstruct(out double minX, out double minY, out double maxX, out double maxY)
+        {
+            minX = this.minX;
+            minY = this.minY;
+            maxX = this.maxX;
+            maxY = this.maxY;
+        }
+
         public static BoundingBox FromPoints(IEnumerable<Vec2> points)
         {
             BoundingBox box = new BoundingBox();
@@ -38,14 +46,6 @@
                 box = box.Expand(point.x, point.y);
             }
             return box;
-        }
-
-        public void Deconstruct(out double minX, out double minY, out double maxX, out double maxY)
-        {
-            minX = this.minX;
-            minY = this.minY;
-            maxX = this.maxX;
-            maxY = this.maxY;
         }
 
         public bool Contains(double x, double y)
