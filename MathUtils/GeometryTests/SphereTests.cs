@@ -1,4 +1,5 @@
-﻿using LinearAlgebraLib.Geometry;
+﻿
+using GeometryLib;
 
 namespace LinearAlgebraTests
 {

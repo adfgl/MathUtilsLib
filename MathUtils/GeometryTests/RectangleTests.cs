@@ -1,17 +1,23 @@
-﻿using LinearAlgebraLib.Geometry;
+﻿using GeometryLib;
 
-namespace LinearAlgebraTests
+namespace GeometryTests
 {
     public class RectangleTests
     {
         [Fact]
-        public void ConstructorThrowsOnInvalidBounds()
+        public void ConstructorHandlesInputCorrectly()
         {
             // Arrange
-            Action act = () => new Rectangle(100, 200, -100, -200);
+            Rectangle expected = new Rectangle(-100, -200, 100, 200);
 
-            // Act and assert
-            ArgumentException ex = Assert.Throws<ArgumentException>(act);
+            // Act
+            Rectangle actual = new Rectangle(100, 200, -100, -200);
+
+            // Assert
+            Assert.Equal(expected.minX, actual.minX);   
+            Assert.Equal(expected.minY, actual.minY);
+            Assert.Equal(expected.maxX, actual.maxX);
+            Assert.Equal(expected.maxY, actual.maxY);
         }
 
         [Theory]
