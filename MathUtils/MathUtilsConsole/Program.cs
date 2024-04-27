@@ -8,11 +8,12 @@ namespace MathUtilsConsole
     {
         static void Main(string[] args)
         {
-            var m = Mat4.Identity;
-            m.ToConsole();
+            Vec2[] vertices = [new Vec2(95.831, 48.003), new Vec2(170.185, 165.529)];
 
-            var v = Vec3.UnitY;
-            v.ToConsole();
+            foreach (var item in vertices)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
