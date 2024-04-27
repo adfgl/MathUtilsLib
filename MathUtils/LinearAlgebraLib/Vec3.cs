@@ -74,5 +74,14 @@ namespace LinearAlgebraLib
                 x * other.y - y * other.x
             );
         }
+
+        public static Vec3 operator +(Vec3 a, Vec3 b) => new Vec3(a.x + b.x, a.y + b.y, a.z + b.z);
+
+        /// <summary>
+        /// Verifies whether <see cref="x"/>, <see cref="y"/> and <see cref="z"/> are <i><b>exactly</b></i> equal to the corresponding values of <paramref name="other"/>.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(Vec3 other) => x == other.x && y == other.y && z == other.z;
     }
 }

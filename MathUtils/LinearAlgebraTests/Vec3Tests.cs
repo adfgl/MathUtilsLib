@@ -169,5 +169,21 @@ namespace LinearAlgebraTests
             Assert.Equal(6, actual.y);
             Assert.Equal(-3, actual.z);
         }
+
+        [Fact]
+        public void SummationOperatorReturnsCorrectValue()
+        {
+            // Arrange
+            Vec3 a = new Vec3(1, 2, 3);
+            Vec3 b = new Vec3(4, 5, 6);
+
+            // Act
+            Vec3 actual = a + b;
+
+            // Assert
+            Assert.Equal(5, actual.x);
+            Assert.Equal(7, actual.y);
+            Assert.Equal(9, actual.z);
+        }
     }
 }
