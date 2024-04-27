@@ -10,6 +10,59 @@
         public int Rows => 4;
         public int Columns => 4;
 
+        public static Mat4 Translation(double tx, double ty, double tz)
+        {
+            return new Mat4(1, 0, 0, tx,
+                            0, 1, 0, ty,
+                            0, 0, 1, tz,
+                            0, 0, 0, 1);
+        }
+
+        public static Mat4 Scaling(double sx, double sy, double sz)
+        {
+            return new Mat4(
+                sx, 0, 0, 0,
+                0, sy, 0, 0,
+                0, 0, sz, 0,
+                0, 0, 0, 1);
+        }
+
+        public static Mat4 RotationX(double rad)
+        {
+            double cos = Math.Cos(rad);
+            double sin = Math.Sin(rad);
+
+            return new Mat4(
+                1, 0, 0, 0,
+                0, cos, sin, 0,
+                0, -sin, cos, 0,
+                0, 0, 0, 1);
+        }
+
+        public static Mat4 RotationY(double rad)
+        {
+            double cos = Math.Cos(rad);
+            double sin = Math.Sin(rad);
+
+            return new Mat4(
+                cos, 0, -sin, 0,
+                0, 1, 0, 0,
+                sin, 0, cos, 0,
+                0, 0, 0, 1);
+        }
+
+        public static Mat4 RotationZ(double rad)
+        {
+            double cos = Math.Cos(rad);
+            double sin = Math.Sin(rad);
+
+            return new Mat4(
+                cos, -sin, 0, 0,
+                sin, cos, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1);
+        }
+
         public static Mat4 Identity => new(
             1, 0, 0, 0,
             0, 1, 0, 0,
