@@ -211,5 +211,24 @@ namespace LinearAlgebraTests
             Assert.Equal(542, c.m43);
             Assert.Equal(600, c.m44);
         }
+
+        [Fact]
+        public void VectorMultiplicationReturnsCorrectValue()
+        {
+            Mat4 a = new Mat4(
+                1, 2, 3, 4, 
+                5, 6, 7, 8, 
+                9, 10, 11, 12, 
+                13, 14, 15, 16);
+
+            Vec3 v = new Vec3(1, 2, 3, 4);
+
+            Vec3 actual = Mat4.Multiply(a, v);
+
+            Assert.Equal(30, actual.x);
+            Assert.Equal(70, actual.y);
+            Assert.Equal(110, actual.z);
+            Assert.Equal(150, actual.w);
+        }
     }
 }

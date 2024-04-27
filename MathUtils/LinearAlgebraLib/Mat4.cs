@@ -149,5 +149,14 @@ namespace LinearAlgebraLib
                 (a.m41 * b.m13) + (a.m42 * b.m23) + (a.m43 * b.m33) + (a.m44 * b.m43),
                 (a.m41 * b.m14) + (a.m42 * b.m24) + (a.m43 * b.m34) + (a.m44 * b.m44));
         }
+
+        public static Vec3 Multiply(Mat4 m, Vec3 v)
+        {
+            return new Vec3(
+                m.m11 * v.x + m.m12 * v.y + m.m13 * v.z + m.m14 * v.w, 
+                m.m21 * v.x + m.m22 * v.y + m.m23 * v.z + m.m24 * v.w, 
+                m.m31 * v.x + m.m32 * v.y + m.m33 * v.z + m.m34 * v.w,
+                m.m41 * v.x + m.m42 * v.y + m.m43 * v.z + m.m44 * v.w);
+        }
     }
 }
