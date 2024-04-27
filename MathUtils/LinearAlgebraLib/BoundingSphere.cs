@@ -11,5 +11,12 @@
             this.cy = cy;
             this.radius = radius;
         }
+
+        public void Deconstruct(out double cx, out double cy, out double radius)
+        {
+            cx = this.cx;
+            cy = this.cy;
+            radius = this.radius;
+        }
     }
 }
