@@ -69,5 +69,23 @@ namespace LinearAlgebraTests
             // Assert
             Assert.Equal(expectedRadius, expanded.radius, 6);
         }
+
+        [Theory]
+        [InlineData(22, 33, 0, 20, false)] // fully inside
+        [InlineData(0, 0, 50, 50, true)] // on border
+        [InlineData(0, 0, 100, 25, true)] // on border
+        [InlineData(0, 0, 550, 50, false)] // fully outside
+        public void IntersectWorksCorrectly(double cx, double cy, double cz, double radius, bool expected)
+        {
+            // Arrange
+            BoundingSphere sphere = new BoundingSphere(0, 0, 0, 100);
+            BoundingSphere other = new BoundingSphere(cx, cy, cz, radius);
+            
+            // Act
+            bool actual = sphere.Intersects(other);
+            
+            // Assert
+            Assert.Equal(expected, actual);
+        }
     }
 }
