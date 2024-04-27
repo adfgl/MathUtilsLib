@@ -115,5 +115,14 @@ namespace LinearAlgebraLib
                 det * +(m11 * (m22 * m33 - m23 * m32) - m12 * (m21 * m33 - m23 * m31) + m13 * (m21 * m32 - m22 * m31)));
             return true;
         }
+
+        public static Mat4 Transpose(Mat4 m)
+        {
+            return new Mat4(
+                m.m11, m.m21, m.m31, m.m41,
+                m.m12, m.m22, m.m32, m.m42,
+                m.m13, m.m23, m.m33, m.m43,
+                m.m14, m.m24, m.m34, m.m44);
+        }
     }
 }

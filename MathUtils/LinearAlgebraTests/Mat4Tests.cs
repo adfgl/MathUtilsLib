@@ -146,5 +146,37 @@ namespace LinearAlgebraTests
             Assert.Equal(det * 429, inverse.m43);
             Assert.Equal(det * -307, inverse.m44);
         }
+
+        [Fact]
+        public void TransposeReturnsCorrectValue()
+        {
+            Mat4 m = new Mat4(
+                1, 5, 9, 13, 
+                2, 6, 10, 14, 
+                3, 7, 11, 15, 
+                4, 8, 12, 16);
+
+            Mat4 transposed = Mat4.Transpose(m);
+
+            Assert.Equal(m.m11, transposed.m11);
+            Assert.Equal(m.m12, transposed.m21);
+            Assert.Equal(m.m13, transposed.m31);
+            Assert.Equal(m.m14, transposed.m41);
+
+            Assert.Equal(m.m21, transposed.m12);
+            Assert.Equal(m.m22, transposed.m22);
+            Assert.Equal(m.m23, transposed.m32);
+            Assert.Equal(m.m24, transposed.m42);
+
+            Assert.Equal(m.m31, transposed.m13);
+            Assert.Equal(m.m32, transposed.m23);
+            Assert.Equal(m.m33, transposed.m33);
+            Assert.Equal(m.m34, transposed.m43);
+
+            Assert.Equal(m.m41, transposed.m14);
+            Assert.Equal(m.m42, transposed.m24);
+            Assert.Equal(m.m43, transposed.m34);
+            Assert.Equal(m.m44, transposed.m44);
+        }
     }
 }
