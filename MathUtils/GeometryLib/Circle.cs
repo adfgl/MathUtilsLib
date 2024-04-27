@@ -1,4 +1,6 @@
-﻿namespace LinearAlgebraLib.Geometry
+﻿using LinearAlgebraLib;
+
+namespace GeometryLib
 {
     public readonly struct Circle
     {
