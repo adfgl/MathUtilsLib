@@ -68,5 +68,18 @@ namespace LinearAlgebraTests
             // Assert
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void SquareLengthReturnsCorrectValue()
+        {
+            // Arrange
+            Vec3 v = new Vec3(3, 4, 5);
+
+            // Act
+            double actual = v.SquareLength();
+
+            // Assert
+            Assert.Equal(50, actual);
+        }
     }
 }
