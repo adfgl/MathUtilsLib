@@ -15,10 +15,9 @@ namespace GeometryLib
             this.radius = radius;
         }
 
-        public void Deconstruct(out double cx, out double cy, out double radius)
+        public void Deconstruct(out Vec3 center, out double radius)
         {
-            cx = this.cx;
-            cy = this.cy;
+            center = new Vec3(cx, cy, cz);
             radius = this.radius;
         }
 
