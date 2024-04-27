@@ -77,7 +77,7 @@
             OnSourceMatrixChanged();
             return this;
         }
-        public Trans2 RotateAt(double rad, double x, double y)
+        public Trans2 RotateAt(double x, double y, double rad)
         {
             s_matrices.Push(Mat3.Translation(-x, -y));
             s_matrices.Push(Mat3.Rotation(rad));
@@ -86,20 +86,24 @@
             return this;
         }
 
-        public Trans2 Scale(double x, double y)
+        public Trans2 Scale(double sx, double sy)
         {
-            s_matrices.Push(Mat3.Scale(x, y));
+            s_matrices.Push(Mat3.Scale(sx, sy));
             OnSourceMatrixChanged();
             return this;
         }
-        public Trans2 ScaleAt(double x, double y, double scaleX, double scaleY)
+
+        public Trans2 ScaleAt(double x, double y, double sx, double sy)
         {
             s_matrices.Push(Mat3.Translation(-x, -y));
-            s_matrices.Push(Mat3.Scale(scaleX, scaleY));
+            s_matrices.Push(Mat3.Scale(sx, sy));
             s_matrices.Push(Mat3.Translation(x, y));
             OnSourceMatrixChanged();
             return this;
         }
+
+        public Trans2 Scale(double s) => Scale(s, s);
+        public Trans2 ScaleAt(double x, double y, double s) => ScaleAt(x, y, s, s);
 
         public Vec2 Forward(Vec2 v)
         {

@@ -70,5 +70,56 @@ namespace LinearAlgebraLib
             s_backwardIsValid = true;
         }
 
+        public Trans3 Translate(double x, double y, double z)
+        {
+            s_matrices.Push(Mat4.Translation(x, y, z));
+            OnSourceMatrixChanged();
+            return this;
+        }
+
+        public Trans3 RotateX(double rad)
+        {
+            s_matrices.Push(Mat4.RotationX(rad));
+            OnSourceMatrixChanged();
+            return this;
+        }
+
+        public Trans3 RotateY(double rad)
+        {
+            s_matrices.Push(Mat4.RotationY(rad));
+            OnSourceMatrixChanged();
+            return this;
+        }
+
+        public Trans3 RotateZ(double rad)
+        {
+            s_matrices.Push(Mat4.RotationZ(rad));
+            OnSourceMatrixChanged();
+            return this;
+        }
+
+        public Trans3 Scale(double scaleX, double scaleY, double scaleZ)
+        {
+            s_matrices.Push(Mat4.Scale(scaleX, scaleY, scaleZ));
+            OnSourceMatrixChanged();
+            return this;
+        }
+
+        public Trans3 Scale(double scale) => Scale(scale, scale, scale);
+
+        public Vec3 Forward(Vec3 v)
+        {
+            if (false == _isDirty) return v;
+            UpdateForward();
+            return _source * v;
+        }
+
+        public Vec3 Backward(Vec3 v)
+        {
+            if (false == _isDirty) return v;
+            UpdateForward();
+            UpdateBackward();
+            return _inverse * v;
+        }
     }
 }

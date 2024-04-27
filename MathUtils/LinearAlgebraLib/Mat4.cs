@@ -18,7 +18,7 @@
                             0, 0, 0, 1);
         }
 
-        public static Mat4 Scaling(double sx, double sy, double sz)
+        public static Mat4 Scale(double sx, double sy, double sz)
         {
             return new Mat4(
                 sx, 0, 0, 0,

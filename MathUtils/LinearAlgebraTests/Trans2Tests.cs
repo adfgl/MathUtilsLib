@@ -129,7 +129,7 @@ namespace LinearAlgebraTests
             Vec2 expected = new Vec2(-35, 80);
 
             // Act
-            Trans2 t = new Trans2().RotateAt(Math.PI / 2, -20, 30);
+            Trans2 t = new Trans2().RotateAt(-20, 30, Math.PI / 2);
             Vec2 actual = t.Forward(v);
 
             // Assert
@@ -169,7 +169,7 @@ namespace LinearAlgebraTests
             // Act
             Trans2 t = new Trans2()
                 .Translate(50, 80)
-                .RotateAt(Math.PI / 4, -25, 30)
+                .RotateAt(-25, 30, Math.PI / 4)
                 .Scale(2, 2)
                 .Rotate(-Math.PI / 3)
                 .ScaleAt(50, 77, 0.3, 0.3);
@@ -190,7 +190,7 @@ namespace LinearAlgebraTests
             Vec2 v = new Vec2(55, 55);
             Trans2 t = new Trans2()
                 .Translate(50, 80)
-                .RotateAt(Math.PI / 4, -25, 30)
+                .RotateAt(-25, 30, Math.PI / 4)
                 .Scale(2, 2)
                 .Rotate(-Math.PI / 3)
                 .ScaleAt(50, 77, 0.3, 0.3);
