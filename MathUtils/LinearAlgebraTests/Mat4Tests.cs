@@ -178,5 +178,38 @@ namespace LinearAlgebraTests
             Assert.Equal(m.m43, transposed.m34);
             Assert.Equal(m.m44, transposed.m44);
         }
+
+        [Fact]
+        public void MatrixMultiplicationReturnsCorrectValue()
+        {
+            Mat4 a = new Mat4(
+                    1, 2, 3, 4, 
+                    5, 6, 7, 8, 
+                    9, 10, 11, 12, 
+                    13, 14, 15, 16);
+
+
+            Mat4 c = Mat4.Multiply(a, a);
+
+            Assert.Equal(90, c.m11);
+            Assert.Equal(100, c.m12);
+            Assert.Equal(110, c.m13);
+            Assert.Equal(120, c.m14);
+
+            Assert.Equal(202, c.m21);
+            Assert.Equal(228, c.m22);
+            Assert.Equal(254, c.m23);
+            Assert.Equal(280, c.m24);
+
+            Assert.Equal(314, c.m31);
+            Assert.Equal(356, c.m32);
+            Assert.Equal(398, c.m33);
+            Assert.Equal(440, c.m34);
+
+            Assert.Equal(426, c.m41);
+            Assert.Equal(484, c.m42);
+            Assert.Equal(542, c.m43);
+            Assert.Equal(600, c.m44);
+        }
     }
 }
