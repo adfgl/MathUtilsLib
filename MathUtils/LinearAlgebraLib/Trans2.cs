@@ -111,6 +111,7 @@
         public Vec2 Backward(Vec2 v)
         {
             if (false == _isDirty) return v;
+            UpdateForward();
             UpdateBackward();
             return _inverse * v;
         }

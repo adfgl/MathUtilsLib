@@ -158,5 +158,50 @@ namespace LinearAlgebraTests
                 Assert.Equal(expected[i], actual[i], 3);
             }
         }
+
+        [Fact]
+        public void BackwardWorksCorrectly()
+        {
+            // Arrange
+            Vec2 v = new Vec2(135.721, 131.821);
+            Vec2 expected = new Vec2(50, 80);
+
+            // Act
+            Trans2 t = new Trans2()
+                .Translate(50, 80)
+                .RotateAt(Math.PI / 4, -25, 30)
+                .Scale(2, 2)
+                .Rotate(-Math.PI / 3)
+                .ScaleAt(50, 77, 0.3, 0.3);
+            Vec2 actual = t.Backward(v);
+
+            // Assert
+            Assert.True(t.IsDirty);
+            for (int i = 0; i < 2; i++)
+            {
+                Assert.Equal(expected[i], actual[i], 3);
+            }
+        }
+
+        [Fact]
+        public void ResetsCorrectly()
+        {
+            // Arrange
+            Vec2 v = new Vec2(55, 55);
+            Trans2 t = new Trans2()
+                .Translate(50, 80)
+                .RotateAt(Math.PI / 4, -25, 30)
+                .Scale(2, 2)
+                .Rotate(-Math.PI / 3)
+                .ScaleAt(50, 77, 0.3, 0.3);
+
+            // Act
+            t.Reset();
+            Vec2 actual = t.Forward(v);
+
+            // Assert
+            Assert.False(t.IsDirty);
+            Assert.Equal(v, actual);
+        }
     }
 }
