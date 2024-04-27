@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 
 namespace LinearAlgebraLib
@@ -33,7 +34,7 @@ namespace LinearAlgebraLib
                 sb.Append("| ");
                 for (int col = 0; col < cols; col++)
                 {
-                    string v = obj.Get(row, col).ToString(format).PadLeft(maxColumnWidth) + " ";
+                    string v = obj.Get(row, col).ToString(format, CultureInfo.InvariantCulture).PadLeft(maxColumnWidth) + " ";
                     sb.Append(v);
                 }
                 sb.Append("|\n");
