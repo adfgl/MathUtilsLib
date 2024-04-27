@@ -33,5 +33,9 @@
         {
             return (b - a).Length();
         }
+        public static double Distance(this Vec3 a, Vec3 b)
+        {
+            return (b - a).Length();
+        }
     }
 }

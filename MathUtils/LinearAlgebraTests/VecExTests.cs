@@ -99,11 +99,26 @@ namespace LinearAlgebraTests
         }
 
         [Fact]
-        public void DistanceReturnsCorrectValue()
+        public void Vec2DistanceReturnsCorrectValue()
         {
             // Arrange
             Vec2 a = new Vec2(0, 0);
             Vec2 b = new Vec2(3, 4);
+            double expected = 5;
+
+            // Act
+            double actual = a.Distance(b);
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void Vec3DistanceReturnsCorrectValue()
+        {
+            // Arrange
+            Vec3 a = new Vec3(0, 0, 0);
+            Vec3 b = new Vec3(3, 4, 0);
             double expected = 5;
 
             // Act
