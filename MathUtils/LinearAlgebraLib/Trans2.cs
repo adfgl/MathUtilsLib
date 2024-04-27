@@ -2,16 +2,17 @@
 {
     public class Trans2
     {
-        bool s_backwardIsValid = false;
-        bool s_forwardIsValid = false;
-        Stack<Mat3> s_matrices = new Stack<Mat3>();
+        bool s_backwardIsValid;
+        bool s_forwardIsValid;
+        Stack<Mat3> s_matrices;
 
         Mat3 _source;
         Mat3 _inverse;
         bool _isDirty;
 
-        public Trans2()
+        public Trans2(int capacity = 5)
         {
+            s_matrices = new Stack<Mat3>(capacity);
             Reset();
         }
 
@@ -23,6 +24,8 @@
             _inverse = Mat3.Identity;
             _isDirty = false;
             s_matrices.Clear();
+            s_backwardIsValid = true;
+            s_forwardIsValid = true;
         }
 
         void OnSourceMatrixChanged()
@@ -65,19 +68,42 @@
             OnSourceMatrixChanged();
             return this;
         }
-
-        public Vec2 Forward(Vec2 vec)
+        public Trans2 RotateAt(double rad, double x, double y)
         {
-            if (false == _isDirty) return vec;
-            UpdateForward();
-            return _source * vec;
+            s_matrices.Push(Mat3.Translation(-x, -y));
+            s_matrices.Push(Mat3.Rotation(rad));
+            s_matrices.Push(Mat3.Translation(x, y));
+            OnSourceMatrixChanged();
+            return this;
         }
 
-        public Vec2 Backward(Vec2 vec)
+        public Trans2 Scale(double x, double y)
         {
-            if (false == _isDirty) return vec;
+            s_matrices.Push(Mat3.Scale(x, y));
+            OnSourceMatrixChanged();
+            return this;
+        }
+        public Trans2 ScaleAt(double x, double y, double scaleX, double scaleY)
+        {
+            s_matrices.Push(Mat3.Translation(-x, -y));
+            s_matrices.Push(Mat3.Scale(scaleX, scaleY));
+            s_matrices.Push(Mat3.Translation(x, y));
+            OnSourceMatrixChanged();
+            return this;
+        }
+
+        public Vec2 Forward(Vec2 v)
+        {
+            if (false == _isDirty) return v;
+            UpdateForward();
+            return _source * v;
+        }
+
+        public Vec2 Backward(Vec2 v)
+        {
+            if (false == _isDirty) return v;
             UpdateBackward();
-            return _inverse * vec;
+            return _inverse * v;
         }
     }
 }

@@ -8,13 +8,13 @@ namespace MathUtilsConsole
     {
         static void Main(string[] args)
         {
-            Vec2[] vertices = [new Vec2(95.831, 48.003), new Vec2(170.185, 165.529)];
+            Vec2[] vertices = [new Vec2(-35.468, 187.877)];
             foreach (var item in vertices)
             {
                 Console.WriteLine(item);
             }
 
-            Trans2 trans2 = new Trans2().Translate(-136.94, -98.076).Rotate(Math.PI / 4);
+            Trans2 trans2 = new Trans2().RotateAt(Math.PI / 4, 176.275, 249.714);
 
             Console.WriteLine();
 
