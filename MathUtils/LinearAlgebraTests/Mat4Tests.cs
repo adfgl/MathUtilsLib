@@ -230,5 +230,37 @@ namespace LinearAlgebraTests
             Assert.Equal(110, actual.z);
             Assert.Equal(150, actual.w);
         }
+
+        [Fact]
+        public void ScalarMultiplicationReturnsCorrectValue()
+        {
+            Mat4 a = new Mat4(
+                1, 2, 3, 4, 
+                5, 6, 7, 8, 
+                9, 10, 11, 12, 
+                13, 14, 15, 16);
+
+            Mat4 actual = Mat4.Multiply(a, 2);
+
+            Assert.Equal(2, actual.m11);
+            Assert.Equal(4, actual.m12);
+            Assert.Equal(6, actual.m13);
+            Assert.Equal(8, actual.m14);
+
+            Assert.Equal(10, actual.m21);
+            Assert.Equal(12, actual.m22);
+            Assert.Equal(14, actual.m23);
+            Assert.Equal(16, actual.m24);
+
+            Assert.Equal(18, actual.m31);
+            Assert.Equal(20, actual.m32);
+            Assert.Equal(22, actual.m33);
+            Assert.Equal(24, actual.m34);
+
+            Assert.Equal(26, actual.m41);
+            Assert.Equal(28, actual.m42);
+            Assert.Equal(30, actual.m43);
+            Assert.Equal(32, actual.m44);
+        }
     }
 }

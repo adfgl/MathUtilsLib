@@ -158,5 +158,14 @@ namespace LinearAlgebraLib
                 m.m31 * v.x + m.m32 * v.y + m.m33 * v.z + m.m34 * v.w,
                 m.m41 * v.x + m.m42 * v.y + m.m43 * v.z + m.m44 * v.w);
         }
+
+        public static Mat4 Multiply(Mat4 m, double scalar)
+        {
+            return new Mat4(
+                m.m11 * scalar, m.m12 * scalar, m.m13 * scalar, m.m14 * scalar,
+                m.m21 * scalar, m.m22 * scalar, m.m23 * scalar, m.m24 * scalar,
+                m.m31 * scalar, m.m32 * scalar, m.m33 * scalar, m.m34 * scalar,
+                m.m41 * scalar, m.m42 * scalar, m.m43 * scalar, m.m44 * scalar);
+        }
     }
 }
