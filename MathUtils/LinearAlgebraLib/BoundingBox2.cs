@@ -32,6 +32,16 @@
             this.maxY = maxY;
         }
 
+        public static BoundingBox2 FromPoints(IEnumerable<Vec2> points)
+        {
+            BoundingBox2 box = new BoundingBox2();
+            foreach (Vec2 point in points)
+            {
+                box = box.Expand(point.x, point.y);
+            }
+            return box;
+        }
+
         public void Deconstruct(out double minX, out double minY, out double maxX, out double maxY)
         {
             minX = this.minX;
@@ -71,6 +81,15 @@
                 other.minY < this.minY ? other.minY : this.minY,
                 other.maxX > this.maxX ? other.maxX : this.maxX,
                 other.maxY > this.maxY ? other.maxY : this.maxY);
+        }
+
+        public BoundingBox2 Intersect(BoundingBox2 other)
+        {
+            return new BoundingBox2(
+                other.minX > this.minX ? other.minX : this.minX,
+                other.minY > this.minY ? other.minY : this.minY,
+                other.maxX < this.maxX ? other.maxX : this.maxX,
+                other.maxY < this.maxY ? other.maxY : this.maxY);
         }
     }
 }

@@ -92,5 +92,23 @@ namespace LinearAlgebraTests
             Assert.Equal(expectedMaxX, expanded.maxX, 3);
             Assert.Equal(expectedMaxY, expanded.maxY, 3);
         }
+
+        [Theory]
+        [InlineData(118.857, 27.855, 176.901, 83.98, 118.857, 27.855, 145.72, 83.98)] 
+        public void IntersectReturnsCorrectValue(double minX, double minY, double maxX, double maxY, double expectedMinX, double expectedMinY, double expectedMaxX, double expectedMaxY)
+        {
+            // Arrange
+            BoundingBox2 box = new BoundingBox2(71.366, -0.927, 145.72, 116.6);
+            BoundingBox2 other = new BoundingBox2(minX, minY, maxX, maxY);
+
+            // Act
+            BoundingBox2 intersected = box.Intersect(other);
+
+            // Assert
+            Assert.Equal(expectedMinX, intersected.minX, 3);
+            Assert.Equal(expectedMinY, intersected.minY, 3);
+            Assert.Equal(expectedMaxX, intersected.maxX, 3);
+            Assert.Equal(expectedMaxY, intersected.maxY, 3);
+        }
     }
 }
