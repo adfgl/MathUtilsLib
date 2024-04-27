@@ -6,6 +6,9 @@
         public readonly double m21, m22, m23;
         public readonly double m31, m32, m33;
 
+        public int Rows => 3;
+        public int Columns => 3;
+
         public static Mat3 Identity => new Mat3(
             1, 0, 0,
             0, 1, 0,

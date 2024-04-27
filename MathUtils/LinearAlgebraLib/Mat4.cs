@@ -7,6 +7,9 @@
         public readonly double m31, m32, m33, m34;
         public readonly double m41, m42, m43, m44;
 
+        public int Rows => 4;
+        public int Columns => 4;
+
         public static Mat4 Identity => new(
             1, 0, 0, 0,
             0, 1, 0, 0,

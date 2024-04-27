@@ -8,6 +8,9 @@ namespace LinearAlgebraLib
         public readonly double x, y, z, w;
         public readonly bool normalized;
 
+        public int Rows => 3;
+        public int Columns => 1;
+
         public static Vec3 Zero => new Vec3(0, 0, 0, 1, true);
         public static Vec3 NaN => new Vec3(double.NaN, double.NaN, double.NaN);
         public static Vec3 UnitX => new Vec3(1, 0, 0, 1, true);

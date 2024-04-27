@@ -9,5 +9,8 @@
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public double Get(int row, int col);
+
+        int Rows { get; }
+        int Columns { get; }
     }
 }
