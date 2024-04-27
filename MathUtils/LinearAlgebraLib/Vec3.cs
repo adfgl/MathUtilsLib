@@ -65,5 +65,14 @@ namespace LinearAlgebraLib
         }
 
         public double Dot(Vec3 other) => x * other.x + y * other.y + z * other.z;
+
+        public Vec3 Cross(Vec3 other)
+        {
+            return new Vec3(
+                y * other.z - z * other.y,
+                z * other.x - x * other.z,
+                x * other.y - y * other.x
+            );
+        }
     }
 }

@@ -153,5 +153,21 @@ namespace LinearAlgebraTests
             // Assert
             Assert.Equal(32, actual);
         }
+
+        [Fact]
+        public void CrossReturnsCorrectValue()
+        {
+            // Arrange
+            Vec3 a = new Vec3(1, 2, 3);
+            Vec3 b = new Vec3(4, 5, 6);
+
+            // Act
+            Vec3 actual = a.Cross(b);
+
+            // Assert
+            Assert.Equal(-3, actual.x);
+            Assert.Equal(6, actual.y);
+            Assert.Equal(-3, actual.z);
+        }
     }
 }
