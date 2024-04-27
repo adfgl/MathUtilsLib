@@ -30,5 +30,46 @@ namespace LinearAlgebraLib
             this.m31 = m31; this.m32 = m32; this.m33 = m33; this.m34 = m34;
             this.m41 = m41; this.m42 = m42; this.m43 = m43; this.m44 = m44;
         }
+
+        public double Get(int row, int col)
+        {
+            return row switch
+            {
+                0 => col switch
+                {
+                    0 => m11,
+                    1 => m12,
+                    2 => m13,
+                    3 => m14,
+                    _ => throw new IndexOutOfRangeException($"Invalid column index {col}. Valid column indices are 0, 1, 2 and 3."),
+                },
+                1 => col switch
+                {
+                    0 => m21,
+                    1 => m22,
+                    2 => m23,
+                    3 => m24,
+                    _ => throw new IndexOutOfRangeException($"Invalid column index {col}. Valid column indices are 0, 1, 2 and 3."),
+                },
+                2 => col switch
+                {
+                    0 => m31,
+                    1 => m32,
+                    2 => m33,
+                    3 => m34,
+                    _ => throw new IndexOutOfRangeException($"Invalid column index {col}. Valid column indices are 0, 1, 2 and 3."),
+                },
+                3 => col switch
+                {
+                    0 => m41,
+                    1 => m42,
+                    2 => m43,
+                    3 => m44,
+                    _ => throw new IndexOutOfRangeException($"Invalid column index {col}. Valid column indices are 0, 1, 2 and 3."),
+                },
+                _ => throw new IndexOutOfRangeException($"Invalid row index {row}. Valid row indices are 0, 1, 2 and 3."),
+            };
+        }
+        public double this[int row, int col] => Get(row, col);
     }
 }
