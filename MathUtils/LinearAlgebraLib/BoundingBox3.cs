@@ -40,5 +40,76 @@
                 this.maxZ = t;
             }
         }
+
+        public void Deconstruct(out Vec3 min, out Vec3 max)
+        {
+            min = new Vec3(minX, minY, minZ);
+            max = new Vec3(maxX, maxY, maxZ);
+        }
+
+        public static BoundingBox3 FromPoints(IEnumerable<Vec3> points)
+        {
+            BoundingBox3 box = new BoundingBox3();
+            foreach (Vec3 point in points)
+            {
+                box = box.Expand(point.x, point.y, point.z);
+            }
+            return box;
+        }
+
+        public bool Contains(double x, double y, double z)
+        {
+            return
+                 minX <= x && x <= maxX &&
+                 minY <= y && y <= maxY &&
+                 minZ <= z && z <= maxZ;
+        }
+
+        public bool Contains(BoundingBox3 other)
+        {
+            return
+                minX <= other.minX &&
+                minY <= other.minY &&
+                minZ <= other.minZ &&
+                maxX >= other.maxX &&
+                maxY >= other.maxY &&
+                maxZ >= other.maxZ;
+        }
+
+        public BoundingBox3 Expand(double x, double y, double z)
+        {
+            return new BoundingBox3(
+                x < this.minX ? x : this.minX,
+                y < this.minY ? y : this.minY,
+                z < this.minZ ? z : this.minZ,
+
+                x > this.maxX ? x : this.maxX,
+                y > this.maxY ? y : this.maxY,
+                z > this.maxZ ? z : this.maxZ);
+        }
+
+        public BoundingBox3 Expand(BoundingBox3 other)
+        {
+            return new BoundingBox3(
+              other.minX < this.minX ? other.minX : this.minX,
+              other.minY < this.minY ? other.minY : this.minY,
+              other.minZ < this.minZ ? other.minZ : this.minZ,
+
+              other.maxX > this.maxX ? other.maxX : this.maxX,
+              other.maxY > this.maxY ? other.maxY : this.maxY,
+              other.maxZ > this.maxZ ? other.maxZ : this.maxZ);
+        }
+
+        public BoundingBox3 Intersect(BoundingBox3 other)
+        {
+            return new BoundingBox3(
+                other.minX > this.minX ? other.minX : this.minX,
+                other.minY > this.minY ? other.minY : this.minY,
+                other.minZ > this.minZ ? other.minZ : this.minZ,
+
+                other.maxX < this.maxX ? other.maxX : this.maxX,
+                other.maxY < this.maxY ? other.maxY : this.maxY,
+                other.maxZ < this.maxZ ? other.maxZ : this.maxZ);
+        }
     }
 }

@@ -36,12 +36,10 @@
             }
         }
 
-        public void Deconstruct(out double minX, out double minY, out double maxX, out double maxY)
+        public void Deconstruct(out Vec2 min, out Vec2 max)
         {
-            minX = this.minX;
-            minY = this.minY;
-            maxX = this.maxX;
-            maxY = this.maxY;
+            min = new Vec2(minX, minY);
+            max = new Vec2(maxX, maxY);
         }
 
         public static BoundingBox2 FromPoints(IEnumerable<Vec2> points)
