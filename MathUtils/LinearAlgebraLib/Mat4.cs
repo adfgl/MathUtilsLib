@@ -13,6 +13,12 @@ namespace LinearAlgebraLib
         public readonly double m31, m32, m33, m34;
         public readonly double m41, m42, m43, m44;
 
+        public static Mat4 Identity => new(
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1);
+
         public Mat4(
               double m11, double m12, double m13, double m14,
               double m21, double m22, double m23, double m24,
