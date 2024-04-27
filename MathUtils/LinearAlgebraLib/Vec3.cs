@@ -80,6 +80,9 @@ namespace LinearAlgebraLib
         public static Vec3 operator -(Vec3 a, Vec3 b) => new Vec3(a.x - b.x, a.y - b.y, a.z - b.z);
         public static Vec3 operator -(Vec3 v) => new Vec3(-v.x, -v.y, -v.z);
 
+        public static Vec3 operator *(Vec3 v, double scalar) => new Vec3(v.x * scalar, v.y * scalar, v.z * scalar);
+        public static Vec3 operator *(double scalar, Vec3 v) => new Vec3(v.x * scalar, v.y * scalar, v.z * scalar);
+
         /// <summary>
         /// Verifies whether <see cref="x"/>, <see cref="y"/> and <see cref="z"/> are <i><b>exactly</b></i> equal to the corresponding values of <paramref name="other"/>.
         /// </summary>

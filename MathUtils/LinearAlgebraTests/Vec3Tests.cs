@@ -216,5 +216,26 @@ namespace LinearAlgebraTests
             Assert.Equal(-2, actual.y);
             Assert.Equal(-3, actual.z);
         }
+
+        [Fact]
+        public void ScalarMultiplicationOperatorReturnsCorrectValue()
+        {
+            // Arrange
+            Vec3 a = new Vec3(1, 2, 3);
+            double scalar = 2;
+
+            // Act
+            Vec3 actual1 = a * scalar;
+            Vec3 actual2 = scalar * a;
+
+            // Assert
+            Assert.Equal(2, actual1.x);
+            Assert.Equal(4, actual1.y);
+            Assert.Equal(6, actual1.z);
+      
+            Assert.Equal(actual1.x, actual2.x);
+            Assert.Equal(actual1.y, actual2.y);
+            Assert.Equal(actual1.z, actual2.z);
+        }
     }
 }
