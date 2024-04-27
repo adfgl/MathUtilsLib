@@ -107,5 +107,10 @@ namespace LinearAlgebraLib
         /// <param name="b"></param>
         /// <returns></returns>
         public static bool operator !=(Vec3 a, Vec3 b) => false == a.Equals(b);
+
+        public override string ToString()
+        {
+            return $"{x} {y} {z}";
+        }
     }
 }

@@ -281,5 +281,20 @@ namespace LinearAlgebraTests
             // Assert
             Assert.True(actual);
         }
+
+        [Fact]
+        public void EqualsAccountsForFloatingPointError()
+        {
+            // Arrange
+            double disturbance = 1e16;
+            Vec3 v1 = new Vec3(0.1, 0.2, 0.3);
+            Vec3 v2 = new Vec3(v1.x + disturbance, v1.y + disturbance, v1.z + disturbance);
+
+            // Act
+            bool actual = v1.Equals(v2);
+
+            // Assert
+            Assert.False(actual);
+        }
     }
 }
