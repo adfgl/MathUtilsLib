@@ -58,5 +58,10 @@ namespace LinearAlgebraLib
             double length = Length();
             return new Vec3(x / length, y / length, z / length, 1, true);
         }
+
+        public Vec3 Abs()
+        {
+            return new Vec3(Math.Abs(x), Math.Abs(y), Math.Abs(z), 1, normalized);
+        }
     }
 }
