@@ -1,6 +1,6 @@
 ﻿namespace LinearAlgebraLib
 {
-    public readonly struct BoundingBox
+    public readonly struct BoundingBox2
     {
         public readonly double minX, minY;
         public readonly double maxX, maxY;
@@ -9,7 +9,7 @@
         /// Inverted constructor to create a bounding box with invalid bounds.
         /// Useful for initializing a bounding box that will be expanded by a series of points.
         /// </summary>
-        public BoundingBox()
+        public BoundingBox2()
         {
             minX = double.MaxValue;
             minY = double.MaxValue;
@@ -17,7 +17,7 @@
             maxY = double.MinValue;
         }
 
-        public BoundingBox(double minX, double minY, double maxX, double maxY)
+        public BoundingBox2(double minX, double minY, double maxX, double maxY)
         {
             if (minX > maxX || minY > maxY)
             {
@@ -38,9 +38,9 @@
             maxY = this.maxY;
         }
 
-        public static BoundingBox FromPoints(IEnumerable<Vec2> points)
+        public static BoundingBox2 FromPoints(IEnumerable<Vec2> points)
         {
-            BoundingBox box = new BoundingBox();
+            BoundingBox2 box = new BoundingBox2();
             foreach (Vec2 point in points)
             {
                 box = box.Expand(point.x, point.y);
@@ -55,34 +55,34 @@
                 minY <= y && y <= maxY;
         }
 
-        public bool Contains(BoundingBox other)
+        public bool Contains(BoundingBox2 other)
         {
             return
                 minX <= other.minX && other.maxX <= maxX &&
                 minY <= other.minY && other.maxY <= maxY;
         }
 
-        public BoundingBox Expand(double x, double y)
+        public BoundingBox2 Expand(double x, double y)
         {
-            return new BoundingBox(
+            return new BoundingBox2(
                 x < this.minX ? x : this.minX,
                 y < this.minY ? y : this.minY,
                 x > this.maxX ? x : this.maxX,
                 y > this.maxY ? y : this.maxY);
         }
 
-        public BoundingBox Expand(BoundingBox other)
+        public BoundingBox2 Expand(BoundingBox2 other)
         {
-            return new BoundingBox(
+            return new BoundingBox2(
                 other.minX < this.minX ? other.minX : this.minX,
                 other.minY < this.minY ? other.minY : this.minY,
                 other.maxX > this.maxX ? other.maxX : this.maxX,
                 other.maxY > this.maxY ? other.maxY : this.maxY);
         }
 
-        public BoundingBox Intersect(BoundingBox other)
+        public BoundingBox2 Intersect(BoundingBox2 other)
         {
-            return new BoundingBox(
+            return new BoundingBox2(
                 other.minX > this.minX ? other.minX : this.minX,
                 other.minY > this.minY ? other.minY : this.minY,
                 other.maxX < this.maxX ? other.maxX : this.maxX,

@@ -8,7 +8,7 @@ namespace LinearAlgebraTests
         public void ConstructorThrowsOnInvalidBounds()
         {
             // Arrange
-            Action act = () => new BoundingBox(100, 200, -100, -200);
+            Action act = () => new BoundingBox2(100, 200, -100, -200);
 
             // Act and assert
             ArgumentException ex = Assert.Throws<ArgumentException>(act);
@@ -22,7 +22,7 @@ namespace LinearAlgebraTests
         public void ContainsReturnsCorrectValue(double x, double y, bool expected)
         {
             // Arrange
-            BoundingBox box = new BoundingBox(-200, -300, 100, 400);
+            BoundingBox2 box = new BoundingBox2(-200, -300, 100, 400);
 
             // Act
             bool actual = box.Contains(x, y);
@@ -40,8 +40,8 @@ namespace LinearAlgebraTests
         public void ContainsBoundingBoxReturnsCorrectValue(double minX, double minY, double maxX, double maxY, bool expected)
         {
             // Arrange
-            BoundingBox box = new BoundingBox(-200, -300, 100, 400);
-            BoundingBox other = new BoundingBox(minX, minY, maxX, maxY);
+            BoundingBox2 box = new BoundingBox2(-200, -300, 100, 400);
+            BoundingBox2 other = new BoundingBox2(minX, minY, maxX, maxY);
 
             // Act
             bool actual = box.Contains(other);
@@ -59,10 +59,10 @@ namespace LinearAlgebraTests
         public void ExpandReturnsCorrectValue(double x, double y, double expectedMinX, double expectedMinY, double expectedMaxX, double expectedMaxY)
         {
             // Arrange
-            BoundingBox box = new BoundingBox(-200, -300, 100, 400);
+            BoundingBox2 box = new BoundingBox2(-200, -300, 100, 400);
 
             // Act
-            BoundingBox expanded = box.Expand(x, y);
+            BoundingBox2 expanded = box.Expand(x, y);
 
             // Assert
             Assert.Equal(expectedMinX, expanded.minX, 3);
@@ -80,11 +80,11 @@ namespace LinearAlgebraTests
         public void ExpandBoundingBoxReturnsCorrectValue(double minX, double minY, double maxX, double maxY, double expectedMinX, double expectedMinY, double expectedMaxX, double expectedMaxY)
         {
             // Arrange
-            BoundingBox box = new BoundingBox(-200, -300, 100, 400);
-            BoundingBox other = new BoundingBox(minX, minY, maxX, maxY);
+            BoundingBox2 box = new BoundingBox2(-200, -300, 100, 400);
+            BoundingBox2 other = new BoundingBox2(minX, minY, maxX, maxY);
 
             // Act
-            BoundingBox expanded = box.Expand(other);
+            BoundingBox2 expanded = box.Expand(other);
 
             // Assert
             Assert.Equal(expectedMinX, expanded.minX, 3);
@@ -98,11 +98,11 @@ namespace LinearAlgebraTests
         public void IntersectReturnsCorrectValue(double minX, double minY, double maxX, double maxY, double expectedMinX, double expectedMinY, double expectedMaxX, double expectedMaxY)
         {
             // Arrange
-            BoundingBox box = new BoundingBox(71.366, -0.927, 145.72, 116.6);
-            BoundingBox other = new BoundingBox(minX, minY, maxX, maxY);
+            BoundingBox2 box = new BoundingBox2(71.366, -0.927, 145.72, 116.6);
+            BoundingBox2 other = new BoundingBox2(minX, minY, maxX, maxY);
 
             // Act
-            BoundingBox intersected = box.Intersect(other);
+            BoundingBox2 intersected = box.Intersect(other);
 
             // Assert
             Assert.Equal(expectedMinX, intersected.minX, 3);
