@@ -64,6 +64,37 @@ namespace GeometryLib
             return true;
         }
 
+        public static bool Intersect(this Plane plane, Vec3 start, Vec3 end, out Vec3 intersection, double tolerance = 0)
+        {
+            intersection = Vec3.NaN;
+
+            double startDistance = plane.SignedDistanceTo(start);
+            if (MathHelper.IsZero(startDistance, tolerance))
+            {
+                intersection = start;
+                return true;
+            }
+
+            double endDistance = plane.SignedDistanceTo(end);
+            if (MathHelper.IsZero(endDistance, tolerance))
+            {
+                intersection = end;
+                return true;
+            }
+
+            if (Math.Sign(startDistance) == Math.Sign(endDistance))
+            {
+                return false;
+            }
+
+            Vec3 lineDir = (end - start).Normalize();
+            double dot = plane.normal.Dot(lineDir);
+
+            double t = -startDistance / dot;
+            intersection = start + lineDir * t;
+            return true;
+        }
+
         public static bool Intersect(this Ray ray1, Ray ray2, out Vec3 intersection, double tolerance = 0)
         {
             /* 
@@ -122,5 +153,7 @@ namespace GeometryLib
             intersection = Vec3.NaN;
             return false;
         }
+
+
     }
 }

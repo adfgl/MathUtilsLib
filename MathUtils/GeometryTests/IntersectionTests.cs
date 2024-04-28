@@ -41,9 +41,9 @@ namespace GeometryTests
 
         [Theory]
         // parallel
-        //[InlineData(50, 50, 50, 0, 1, 0, false, 0, 0, 0)]
-        //[InlineData(50, 50, 50, 0, -1, 0, false, 0, 0, 0)]
-        //[InlineData(0, 50, 0, 1, 1, 0, true, 0, 50, 0)] // coincide
+        [InlineData(50, 50, 50, 0, 1, 0, false, 0, 0, 0)]
+        [InlineData(50, 50, 50, 0, -1, 0, false, 0, 0, 0)]
+        [InlineData(0, 50, 0, 1, 1, 0, true, 0, 50, 0)] // coincide
 
         // perpendicular
         [InlineData(-50, 50, 0, 1, 0, 0, true, 0, 50, 0)]
@@ -57,6 +57,33 @@ namespace GeometryTests
 
             // Act
             bool actual = ray1.Intersect(ray2, out Vec3 intersection);
+
+            // Assert
+            Assert.Equal(expected, actual);
+            if (expected)
+            {
+                Assert.Equal(x, intersection.x, 6);
+                Assert.Equal(y, intersection.y, 6);
+                Assert.Equal(z, intersection.z, 6);
+            }
+        }
+
+        [Theory]
+        [InlineData(50, 100, 50, -60, 200, 30, false, 0, 0, 0)] // both in front
+        [InlineData(50, -100, 50, -60, -200, 30, false, 0, 0, 0)] // both behind
+        [InlineData(50, 100, 50, 50, -200, 50, true, 50, 50, 50)] // one in front, one behind
+        [InlineData(100, 200, 300, 0, 50, 0, true, 0, 50, 0)] // one in front, one directly on
+        [InlineData(100, -200, 300, 0, 50, 0, true, 0, 50, 0)] // one behind, one directly on
+        [InlineData(0, 50, 0, 100, 50, 300, true, 0, 50, 0)] // both directly on
+        public void PlaneLineIntersection_UnitY_50_Plane(double x1, double y1, double z1, double x2, double y2, double z2, bool expected, double x, double y, double z)
+        {
+            // Arrange
+            Plane plane = new Plane(Vec3.UnitY, 50);
+            Vec3 start = new Vec3(x1, y1, z1);
+            Vec3 end = new Vec3(x2, y2, z2);
+
+            // Act
+            bool actual = plane.Intersect(start, end, out Vec3 intersection);
 
             // Assert
             Assert.Equal(expected, actual);
