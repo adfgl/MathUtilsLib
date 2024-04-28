@@ -35,6 +35,10 @@ namespace GeometryLib
             return normal.Dot(point) - distanceToOrigin;
         }
 
+        /// <summary>
+        /// Checks whether the plane is valid by verifiying if the normal is non-zero.
+        /// </summary>
+        /// <returns></returns>
         public bool IsValid() => normal.SquareLength() > 0.0;
 
         public Plane Flip() => new Plane(-normal, -distanceToOrigin);
