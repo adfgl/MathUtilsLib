@@ -63,5 +63,64 @@ namespace GeometryLib
             intersection = ray.PointAlong(t);
             return true;
         }
+
+        public static bool Intersect(this Ray ray1, Ray ray2, out Vec3 intersection, double tolerance = 0)
+        {
+            /* 
+             R1(t) = O1 + t * D1
+             R2(s) = O2 + s * D2
+
+            The goal is to find such 't' and 's' which will satisfy this condition:
+             O1 + t * D1 = O2 + s * D2
+
+            Let's break the equtions into components and solve them for evey plane:
+            > x = x1 + t * Dx1 = x2 + s * Dx2
+            > y = y1 + t * Dy1 = y2 + s * Dy2
+            > z = z1 + t * Dz1 = z2 + s * Dz2
+             */
+
+            // nominal coordiante pairs (X,Y), (Y,Z), (Z,X)
+            double x1, y1, x2, y2; // ray origin
+            double a1, a2, b1, b2; // ray direction
+
+            /* Projections XY, YZ, ZX */
+            int next;
+            double denominator;
+            for (int curr = 0; curr < 3; curr++)
+            {
+                next = (curr + 1) % 3;
+
+                /*
+                    R1(t) = O1 + t * D1
+                    R2(s) = O2 + s * D2 
+
+                    x = x1 + t * a1 = x2 + s * b1 >> t = (x2 + s * b1 - x1) / a1
+                    y = y1 + t * a2 = y2 + s * b2 >> s = (y1 + t * a2 - y2) / b2
+                */
+
+                x1 = ray1.origin[curr];
+                y1 = ray1.origin[next];
+
+                a1 = ray1.direction[curr];
+                a2 = ray1.direction[next];
+
+                x2 = ray2.origin[curr];
+                y2 = ray2.origin[next];
+
+                b1 = ray2.direction[curr];
+                b2 = ray2.direction[next];
+
+                denominator = a1 * b2 - a2 * b1;
+                if (false == MathHelper.IsZero(denominator, tolerance))
+                {
+                    double numerator = b2 * (x2 - x1) - b1 * (y2 - y1);
+                    intersection = ray1.PointAlong(numerator / denominator);
+                    return true;
+                }
+            }
+
+            intersection = Vec3.NaN;
+            return false;
+        }
     }
 }
