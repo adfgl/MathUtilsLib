@@ -8,7 +8,6 @@ namespace MathUtilsConsole
     {
         static void Main(string[] args)
         {
-
         }
     }
 }
