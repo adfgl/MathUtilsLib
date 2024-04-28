@@ -47,6 +47,22 @@ namespace GeometryLib
             }
         }
 
+        public Vec3[] GetPoints()
+        {
+            return
+            [
+                new Vec3(minX, minY, minZ),
+                new Vec3(minX, minY, maxZ),
+                new Vec3(minX, maxY, minZ),
+                new Vec3(minX, maxY, maxZ),
+
+                new Vec3(maxX, minY, minZ),
+                new Vec3(maxX, minY, maxZ),
+                new Vec3(maxX, maxY, minZ),
+                new Vec3(maxX, maxY, maxZ),
+            ];
+        }
+
         public void Deconstruct(out Vec3 min, out Vec3 max)
         {
             min = new Vec3(minX, minY, minZ);
