@@ -10,7 +10,7 @@ namespace GeometryLib
         
         }
 
-        static Tuple<Face[], int[]> InitialTetrahedron(Vec3[] uniquePoints, double eps)
+        public static Tuple<Face[], int[]> InitialTetrahedron(Vec3[] uniquePoints, double eps)
         {
             if (uniquePoints.Length < 4) throw new InvalidOperationException("Convex hull requires at least 4 points.");
 
@@ -84,7 +84,7 @@ namespace GeometryLib
             throw new InvalidOperationException("Logic error.");
         }
 
-        readonly struct Face
+        public readonly struct Face
         {
             public readonly int a;
             public readonly int b;
