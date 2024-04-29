@@ -36,12 +36,12 @@ namespace MathUtilsConsole
         {
             public List<Vec3> Points { get; set; } = new List<Vec3>();
 
-            public Vec3 GetPoint(int index)
+            public Vec3 GetVertex(int index)
             {
                 return Points[index];
             }
 
-            public int AddPoint(Vec3 point)
+            public int AddVertex(Vec3 point)
             {
                 Points.Add(point);
                 return Points.Count;

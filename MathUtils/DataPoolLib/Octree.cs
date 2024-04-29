@@ -5,8 +5,8 @@ namespace DataPoolLib
 {
     public interface IPointsContainer
     {
-        Vec3 GetPoint(int index);
-        int AddPoint(Vec3 point);
+        Vec3 GetVertex(int index);
+        int AddVertex(Vec3 vertex);
         int Count { get; }
     }
 
@@ -39,7 +39,7 @@ namespace DataPoolLib
             int index = Insert(s_root, point, _initialSize, 0, tolerance);
             if (index >= m_pool.Count)
             {
-                m_pool.AddPoint(point);
+                m_pool.AddVertex(point);
             }
             return index;
         }
@@ -60,7 +60,7 @@ namespace DataPoolLib
             int index = -1;
             for (int i = 0; i < node.Indices.Count; i++)
             {
-                if (m_pool.GetPoint(node.Indices[i]).AlmostEquals(point, tolerance))
+                if (m_pool.GetVertex(node.Indices[i]).AlmostEquals(point, tolerance))
                 {
                     index = i;
                     break;
@@ -102,7 +102,7 @@ namespace DataPoolLib
                     int existingIndex = GetPointIndexInsideNode(node, point, tolerance);
                     if (existingIndex == -1)
                     {
-                        int newIndex = m_pool.AddPoint(point);
+                        int newIndex = m_pool.AddVertex(point);
                         node.Indices.Add(newIndex);
                         return newIndex;
                     }
