@@ -2,15 +2,15 @@
 
 namespace GeometryLib
 {
-    public class ConvexHull
+    public static class ConvexHull
     {
-        public static void Calculate(Vec3[] uniquePoints, double eps)
+        public static void Calculate(Vec3[] uniquePoints, double tolerance)
         {
-            Tuple<Face[], int[]> tetrahedron = InitialTetrahedron(uniquePoints, eps);
+            Tuple<Face[], int[]> tetrahedron = InitialTetrahedron(uniquePoints, tolerance);
         
         }
 
-        public static Tuple<Face[], int[]> InitialTetrahedron(Vec3[] uniquePoints, double eps)
+        public static Tuple<Face[], int[]> InitialTetrahedron(Vec3[] uniquePoints, double tolerance)
         {
             if (uniquePoints.Length < 4) throw new InvalidOperationException("Convex hull requires at least 4 points.");
 
@@ -32,7 +32,7 @@ namespace GeometryLib
                 c = uniquePoints[i];
 
                 // check if points are coliniar
-                if (false == MathHelper.IsZero(ab.Cross(c - a).SquareLength(), eps))
+                if (false == MathHelper.IsZero(ab.Cross(c - a).SquareLength(), tolerance))
                 {
                     p3 = i;
                     break;
@@ -46,7 +46,7 @@ namespace GeometryLib
             {
                 if (i == p1 || i == p2 || i == p3) continue;
 
-                if (false == MathHelper.IsZero(plane.SignedDistanceTo(uniquePoints[i]), eps))
+                if (false == MathHelper.IsZero(plane.SignedDistanceTo(uniquePoints[i]), tolerance))
                 {
                     p4 = i;
                     break;
@@ -59,25 +59,25 @@ namespace GeometryLib
 
             Face[] faces =
             [
-                GetValidFace(uniquePoints, centroid, p1, p2, p3, eps),
-                GetValidFace(uniquePoints, centroid, p1, p3, p4, eps),
-                GetValidFace(uniquePoints, centroid, p1, p4, p2, eps),
-                GetValidFace(uniquePoints, centroid, p2, p4, p3, eps)
+                GetValidFace(uniquePoints, centroid, p1, p2, p3, tolerance),
+                GetValidFace(uniquePoints, centroid, p1, p3, p4, tolerance),
+                GetValidFace(uniquePoints, centroid, p1, p4, p2, tolerance),
+                GetValidFace(uniquePoints, centroid, p2, p4, p3, tolerance)
             ];
             return new Tuple<Face[], int[]>(faces, [p1, p2, p3, p4]);
         }
 
-        static Face GetValidFace(Vec3[] points, Vec3 centroid, int fa, int fb, int fc, double eps)
+        public static Face GetValidFace(Vec3[] points, Vec3 centroid, int indexA, int indexB, int indexC, double tolerance)
         {
-            Plane plane = new Plane(points[fa], points[fb], points[fc]);
-            Face face = new Face(fa, fb, fc, plane);
+            Plane plane = new Plane(points[indexA], points[indexB], points[indexC]);
+            Face face = new Face(indexA, indexB, indexC, plane);
 
             double distance = plane.SignedDistanceTo(centroid);
-            if (distance > eps)
+            if (distance > tolerance)
             {
                 return face.Invert();
             }
-            else if (distance < -eps)
+            else if (distance < -tolerance)
             {
                 return face;
             }
