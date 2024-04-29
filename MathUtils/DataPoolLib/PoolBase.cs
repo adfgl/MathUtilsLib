@@ -11,7 +11,7 @@
         int _capacity;
         int _count;
         int _sizeIncrement = 10;
-        bool _useAutoIncrement = false;
+        bool _useAutoIncrement = true;
 
         internal ESort s_sortState = ESort.Undefined;
         internal int s_sortColumn = -1;

@@ -18,18 +18,18 @@ namespace MathUtilsConsole
             //var s_points = GenerateRandomPoints(points, -size, size, -size, size, -size, size);
             var s_points = new List<Vec3>
             {
-                new Vec3(-500, -500, -500),
+                new Vec3(-500, -500, 500),
                 new Vec3(-500, 500, -500),
                 new Vec3(500, -500, 500),
                 new Vec3(500, 500, 500),
             };
 
             PointsContainer s_pointsContainer = new PointsContainer();
-            Octree s_octtreeContainer = new Octree(s_pointsContainer, Vec3.Zero, 2.5 * size, s_points.Count);
+            Octree s_octtreeContainer = new Octree(Vec3.Zero, size, s_points.Count);
 
             foreach (var item in s_points)
             {
-                s_octtreeContainer.Insert(item, 0);
+                s_octtreeContainer.Insert(s_pointsContainer, item, 0);
             }
         }
         public class PointsContainer : IPointsContainer

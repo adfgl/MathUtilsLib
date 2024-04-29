@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataPoolLib\DataPoolLib.csproj" />
     <ProjectReference Include="..\LinearAlgebraLib\LinearAlgebraLib.csproj" />
   </ItemGroup>
 

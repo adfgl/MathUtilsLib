@@ -15,14 +15,12 @@ namespace DataPoolLib
         public const int MIN_LEVEL = 2;
         public const int MAX_LEVEL = 10;
 
-        readonly IPointsContainer m_pool;
         OctreeNode s_root;
         double _initialSize;
         int _maxLevel;
 
-        public Octree(IPointsContainer container, Vec3 center, double size, int expectedNumberOfPoints)
+        public Octree(Vec3 center, double size, int expectedNumberOfPoints)
         {
-            m_pool = container;
             s_root = new OctreeNode(center.x, center.y, center.z, 0);
             _initialSize = size;
             _maxLevel = CalculateMaxLevel(expectedNumberOfPoints);
@@ -34,33 +32,47 @@ namespace DataPoolLib
             return Math.Clamp(levels, MIN_LEVEL, MAX_LEVEL);
         }
 
-        public int Insert(Vec3 point, double tolerance)
+        public int Insert(IPointsContainer container, Vec3 point, double tolerance)
         {
-            int index = Insert(s_root, point, _initialSize, 0, tolerance);
-            if (index >= m_pool.Count)
+            if (false == IsPointWithinBounds(point))
             {
-                m_pool.AddVertex(point);
+                throw new InvalidOperationException("Point must be inside bounds.");
+            }
+
+            int index = Insert(container, s_root, point, _initialSize, 0, tolerance);
+            if (index >= container.Count)
+            {
+                container.AddVertex(point);
             }
             return index;
         }
 
-        public int IndexOf(Vec3 point, double tolerance)
+        public int IndexOf(IPointsContainer container, Vec3 point, double tolerance)
         {
-            int index = IndexOf(s_root, point, tolerance);
+            int index = IndexOf(container, s_root, point, tolerance);
             return index;
         }
 
-        public bool Contains(Vec3 point, double tolerance)
+        public bool Contains(IPointsContainer container, Vec3 point, double tolerance)
         {
-            return IndexOf(s_root, point, tolerance) != -1;
+            return IndexOf(container, s_root, point, tolerance) != -1;
         }
 
-        int GetPointIndexInsideNode(OctreeNode node, Vec3 point, double tolerance)
+        bool IsPointWithinBounds(Vec3 point)
+        {
+            double halfSize = _initialSize / 2.0;
+            return 
+                Math.Abs(point.x) <= halfSize && 
+                Math.Abs(point.y) <= halfSize && 
+                Math.Abs(point.z) <= halfSize;
+        }
+
+        int GetPointIndexInsideNode(IPointsContainer container, OctreeNode node, Vec3 point, double tolerance)
         {
             int index = -1;
             for (int i = 0; i < node.Indices.Count; i++)
             {
-                if (m_pool.GetVertex(node.Indices[i]).AlmostEquals(point, tolerance))
+                if (container.GetVertex(node.Indices[i]).AlmostEquals(point, tolerance))
                 {
                     index = i;
                     break;
@@ -69,11 +81,11 @@ namespace DataPoolLib
             return index;
         }
 
-        int IndexOf(OctreeNode node, Vec3 point, double tolerance)
+        int IndexOf(IPointsContainer container, OctreeNode node, Vec3 point, double tolerance)
         {
             if (node.IsLeaf)
             {
-                int existingIndex = GetPointIndexInsideNode(node, point, tolerance);
+                int existingIndex = GetPointIndexInsideNode(container, node, point, tolerance);
                 if (existingIndex != -1)
                 {
                     return node.Indices[existingIndex];
@@ -83,11 +95,11 @@ namespace DataPoolLib
             else
             {
                 int childIndex = GetChildIndex(node, point);
-                return IndexOf(node.Children[childIndex], point, tolerance);
+                return IndexOf(container, node.Children[childIndex], point, tolerance);
             }
         }
 
-        int Insert(OctreeNode node, Vec3 point, double size, int level, double tolerance)
+        int Insert(IPointsContainer container, OctreeNode node, Vec3 point, double size, int level, double tolerance)
         {
             if (node.IsLeaf)
             {
@@ -95,14 +107,14 @@ namespace DataPoolLib
                 {
                     Split(node, size, level);
                     int childIndex = GetChildIndex(node, point);
-                    return Insert(node.Children[childIndex], point, size / 2, level + 1, tolerance);
+                    return Insert(container, node.Children[childIndex], point, size / 2, level + 1, tolerance);
                 }
                 else
                 {
-                    int existingIndex = GetPointIndexInsideNode(node, point, tolerance);
+                    int existingIndex = GetPointIndexInsideNode(container, node, point, tolerance);
                     if (existingIndex == -1)
                     {
-                        int newIndex = m_pool.AddVertex(point);
+                        int newIndex = container.AddVertex(point);
                         node.Indices.Add(newIndex);
                         return newIndex;
                     }
@@ -112,7 +124,7 @@ namespace DataPoolLib
             else
             {
                 int childIndex = GetChildIndex(node, point);
-                return Insert(node.Children[childIndex], point, size / 2, level + 1, tolerance);
+                return Insert(container, node.Children[childIndex], point, size / 2, level + 1, tolerance);
             }
         }
 
