@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LinearAlgebraLib\LinearAlgebraLib.csproj" />
+  </ItemGroup>
+
 </Project>

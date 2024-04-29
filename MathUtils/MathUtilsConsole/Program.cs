@@ -15,7 +15,14 @@ namespace MathUtilsConsole
         {
             int points = 5;
             int size = 1000;
-            var s_points = GenerateRandomPoints(points, -size, size, -size, size, -size, size);
+            //var s_points = GenerateRandomPoints(points, -size, size, -size, size, -size, size);
+            var s_points = new List<Vec3>
+            {
+                new Vec3(-500, -500, -500),
+                new Vec3(-500, 500, -500),
+                new Vec3(500, -500, 500),
+                new Vec3(500, 500, 500),
+            };
 
             PointsContainer s_pointsContainer = new PointsContainer();
             Octree s_octtreeContainer = new Octree(s_pointsContainer, Vec3.Zero, 2.5 * size, s_points.Count);
