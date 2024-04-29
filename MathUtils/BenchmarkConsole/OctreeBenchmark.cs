@@ -1,7 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
-using GeometryLib;
+using DataPoolLib;
 using LinearAlgebraLib;
-using System.Drawing;
 
 namespace BenchmarkConsole
 {

@@ -1,7 +1,7 @@
 ﻿using LinearAlgebraLib;
 using System.Diagnostics;
 
-namespace GeometryLib
+namespace DataPoolLib
 {
     public interface IPointsContainer
     {
@@ -22,7 +22,7 @@ namespace GeometryLib
             m_pool = populatedContainer;
             s_root = new OctreeNode(center.x, center.y, center.z, 0);
             _initialSize = size;
-            _maxLevel = maxLevel;
+            _maxLevel = Math.Max(2, maxLevel);
         }
 
         public Octree(IPointsContainer populatedContainer, Vec3 center, double size) 
