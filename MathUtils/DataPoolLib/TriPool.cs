@@ -34,6 +34,14 @@ namespace DataPoolLib
             return difference;
         }
 
+        public void Invert(int index)
+        {
+            int a = GetComponent(index, 0);
+            int c = GetComponent(index, 2);
+            SetComponent(index, 0, c);
+            SetComponent(index, 2, a);
+        }
+
         public void AddTriangle(int a, int b, int c, int color)
         {
             AddItem(a, b, c, color);

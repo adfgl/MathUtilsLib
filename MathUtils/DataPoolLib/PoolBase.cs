@@ -129,7 +129,7 @@
             _count = 0;
         }
 
-        public T[] ToArray()
+        public T[] ToBufferArray()
         {
             T[] newValues = new T[_count * m_numComponents];
             Buffer.BlockCopy(_values, 0, newValues, 0, newValues.Length * m_itemMemberSize);
@@ -139,7 +139,7 @@
         public bool TrimExcess()
         {
             if (_values.Length == _count * m_numComponents) return false;
-            _values = ToArray();
+            _values = ToBufferArray();
             return true;
         }
 

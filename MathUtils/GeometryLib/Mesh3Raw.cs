@@ -15,9 +15,9 @@ namespace GeometryLib
 
         public Mesh3Raw(Mesh3 mesh)
         {
-            Points3 = mesh.Vertices.ToArray();
-            Indices = mesh.Triangles.ToArray();
-            Normals = mesh.Normals.ToArray();
+            Points3 = mesh.Vertices.ToBufferArray();
+            Indices = mesh.Triangles.ToBufferArray();
+            Normals = mesh.Normals.ToBufferArray();
         }
 
         public Mesh3Raw(double[] points3, int[] indices, double[]? normals)

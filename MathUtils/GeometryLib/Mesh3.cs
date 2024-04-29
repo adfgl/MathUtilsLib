@@ -36,6 +36,12 @@ namespace GeometryLib
             }
         }
 
+        public void Invert(int index)
+        {
+            _triangles.Invert(index);
+            _normals.SetVertex(index, -_normals.GetVertex(index));
+        }
+
         public int AddTriangle(Octree octree, Vec3 p1, Vec3 p2, Vec3 p3, int color, double tolerance = 0)
         {
             int a = octree.IndexOf(_vertices, p1, tolerance);
