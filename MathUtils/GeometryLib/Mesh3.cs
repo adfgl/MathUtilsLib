@@ -36,22 +36,52 @@ namespace GeometryLib
             }
         }
 
+        public int AddTriangle(Octree octree, Vec3 p1, Vec3 p2, Vec3 p3, int color, double tolerance = 0)
+        {
+            int a = octree.IndexOf(_vertices, p1, tolerance);
+            if (a == -1)
+            {
+                a = _vertices.AddVertex(p1);
+                s_boundingBoxCalculated = false;
+            }
+
+            int b = octree.IndexOf(_vertices, p2, tolerance);
+            if (b == -1)
+            {
+                b = _vertices.AddVertex(p2);
+                s_boundingBoxCalculated = false;
+            }
+
+            int c = octree.IndexOf(_vertices, p3, tolerance);
+            if (c == -1)
+            {
+                c = _vertices.AddVertex(p3);
+                s_boundingBoxCalculated = false;
+            }
+
+            _triangles.AddTriangle(a, b, c, color);
+            _normals.AddVertex((p2 - p1).Cross(p3 - p1).Normalize());
+
+            return _triangles.Count;
+        }
+
         public int AddTriangle(Vec3 p1, Vec3 p2, Vec3 p3, int color, double tolerance = 0)
         {
             int a = _vertices.IndexOf(p1, tolerance);
-            int b = _vertices.IndexOf(p2, tolerance);
-            int c = _vertices.IndexOf(p3, tolerance);
-
             if (a == -1)
             {
                 _vertices.AddVertex(p1);
                 s_boundingBoxCalculated = false;
             }
+
+            int b = _vertices.IndexOf(p2, tolerance);
             if (b == -1)
             {
                 _vertices.AddVertex(p2);
                 s_boundingBoxCalculated = false;
             }
+
+            int c = _vertices.IndexOf(p3, tolerance);
             if (c == -1)
             {
                 _vertices.AddVertex(p3);
@@ -61,7 +91,7 @@ namespace GeometryLib
             _triangles.AddTriangle(a, b, c, color);
             _normals.AddVertex((p2 - p1).Cross(p3 - p1).Normalize());
 
-            return _triangles.Count - 1;
+            return _triangles.Count;
         }
 
         public void Clear()
