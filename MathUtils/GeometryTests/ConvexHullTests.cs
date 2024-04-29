@@ -1,11 +1,37 @@
 ﻿using GeometryLib;
 using LinearAlgebraLib;
+using System;
 using static GeometryLib.ConvexHull;
 
 namespace GeometryTests
 {
     public class ConvexHullTests
     {
+        public static List<Vec3> GenerateRandomPoints(int count, double size)
+        {
+            Random random = new Random();
+
+            List<Vec3> points = new List<Vec3>();
+
+            double minX = -size;
+            double maxX = size;
+            double minY = -size;
+            double maxY = size;
+            double minZ = -size;
+            double maxZ = size;
+
+            for (int i = 0; i < count; i++)
+            {
+                double randomX = random.NextDouble() * (maxX - minX) + minX;
+                double randomY = random.NextDouble() * (maxY - minY) + minY;
+                double randomZ = random.NextDouble() * (maxZ - minZ) + minZ;
+
+                points.Add(new Vec3(randomX, randomY, randomZ));
+            }
+
+            return points;
+        }
+
         [Fact]
         public void GetValidFace_ThrowsErrorWhenCentroidLiesOnFace()
         {
@@ -62,6 +88,51 @@ namespace GeometryTests
 
             // Assert
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void InitialTetrahedronIsBuiltCorrectly()
+        {
+            // Arrange
+            Vec3 a = new Vec3(-100, -100, -50);
+            Vec3 b = new Vec3(0, +100, -50);
+            Vec3 c = new Vec3(+100, -100, -50);
+            Vec3 d = new Vec3(0, 0, 100);
+            
+            Plane plane = new Plane(a, d, c);
+
+            Vec3[] points = [a, b, c, d];
+            Face abc = new Face(0, 1, 2, new Plane());
+            Face adc = new Face(0, 3, 2, new Plane());
+            Face bda = new Face(1, 3, 0, new Plane());
+            Face cdb = new Face(1, 3, 2, new Plane());
+
+            // Act
+            Tuple<Face[], int[]> actual = ConvexHull.InitialTetrahedron(points, 0);
+
+            // Assert
+            Assert.Equal(4, actual.Item1.Length);
+            Assert.Equal(4, actual.Item2.Length);
+
+            static void assertFace(Face expected, Face[] faces)
+            {
+                int index = -1;
+                for (int i = 0; i < 4; i++)
+                {
+                    Face face = faces[i];
+                    if (face.a == expected.a && face.b == expected.b && face.c == expected.c)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+                Assert.True(index != -1);
+            }
+
+            assertFace(abc, actual.Item1);
+            assertFace(adc, actual.Item1);
+            //assertFace(abd, actual.Item1);
+            //assertFace(bcd, actual.Item1);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using LinearAlgebraLib;
+using System.Diagnostics;
 
 namespace GeometryLib
 {
@@ -84,6 +85,7 @@ namespace GeometryLib
             throw new InvalidOperationException("Logic error.");
         }
 
+        [DebuggerDisplay("{a} {b} {c}")]
         public readonly struct Face
         {
             public readonly int a;
