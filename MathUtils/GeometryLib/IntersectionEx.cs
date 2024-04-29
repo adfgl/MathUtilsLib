@@ -4,6 +4,52 @@ namespace GeometryLib
 {
     public static class IntersectionEx
     {
+        public static bool Intersect(this Mesh3 mesh, Ray ray, out Vec3 intersection, double tolerance = 0)
+        {
+            intersection = Vec3.NaN;
+
+            Vec3 p1, p2, p3;
+            Plane plane;
+            for (int i = 0; i < mesh.Triangles.Count; i++)
+            {
+                mesh.Triangles.GetTriangle(i, out int a, out int b, out int c, out int color);
+
+                p1 = mesh.Vertices.GetVertex(a);
+                p2 = mesh.Vertices.GetVertex(b);
+                p3 = mesh.Vertices.GetVertex(c);
+
+                plane = new Plane(p1, p2, p3);
+                if (plane.Intersect(ray, out intersection, tolerance))
+                {
+                   if (IsPointInTriangle(intersection, p1, p2, p3)) return true; 
+                }
+            }
+            return false;
+        }
+
+        public static bool IsPointInTriangle(Vec3 point, Vec3 a, Vec3 b, Vec3 c)
+        {
+            // Compute vectors
+            Vec3 v0 = c - a;
+            Vec3 v1 = b - a;
+            Vec3 v2 = point - a;
+
+            // Compute dot products
+            double dot00 = v0.Dot(v0);
+            double dot01 = v0.Dot(v1);
+            double dot02 = v0.Dot(v2);
+            double dot11 = v1.Dot(v1);
+            double dot12 = v1.Dot(v2);
+
+            // Compute barycentric coordinates
+            double invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
+            double u = (dot11 * dot02 - dot01 * dot12) * invDenom;
+            double v = (dot00 * dot12 - dot01 * dot02) * invDenom;
+
+            // Check if point is in triangle
+            return (u >= 0) && (v >= 0) && (u + v <= 1);
+        }
+
         public static bool Intersects(this Box box, Plane plane)
         {
             /* check if at least two points are on different sides of the plane */
