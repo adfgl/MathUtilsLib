@@ -85,6 +85,14 @@ namespace LinearAlgebraLib
         /// <returns></returns>
         public bool Equals(Vec3 other) => x == other.x && y == other.y && z == other.z;
 
+        public bool AlmostEquals(Vec3 other, double tolerance)
+        {
+            return
+                MathHelper.AreEqual(x, other.x, tolerance) &&
+                MathHelper.AreEqual(y, other.y, tolerance) &&
+                MathHelper.AreEqual(z, other.z, tolerance);
+        }
+
         public static Vec3 operator +(Vec3 a, Vec3 b) => new Vec3(a.x + b.x, a.y + b.y, a.z + b.z);
 
         public static Vec3 operator -(Vec3 a, Vec3 b) => new Vec3(a.x - b.x, a.y - b.y, a.z - b.z);

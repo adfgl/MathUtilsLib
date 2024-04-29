@@ -1,10 +1,12 @@
-﻿namespace BenchmarkConsole
+﻿using BenchmarkDotNet.Running;
+
+namespace BenchmarkConsole
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            BenchmarkRunner.Run<OctreeBenchmark>();
         }
     }
 }

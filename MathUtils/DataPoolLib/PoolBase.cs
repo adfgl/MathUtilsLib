@@ -136,10 +136,11 @@
             return newValues;
         }
 
-        public void TrimExcess()
+        public bool TrimExcess()
         {
-            if (_values.Length == _count * m_numComponents) return;
+            if (_values.Length == _count * m_numComponents) return false;
             _values = ToArray();
+            return true;
         }
 
         public int AddRange(PoolBase<T> other)
@@ -154,8 +155,7 @@
 
             int bytesToCopy = other._count * m_numComponents * m_itemMemberSize;
             Buffer.BlockCopy(other._values, 0, _values, _count * m_numComponents * m_itemMemberSize, bytesToCopy);
-            _count += other._count;
-            return _count;
+            return _count += other._count;
         }
 
         public T GetComponent(int index, int component)

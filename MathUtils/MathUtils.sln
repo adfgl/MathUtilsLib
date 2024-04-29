@@ -11,11 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinearAlgebraTests", "Linea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkConsole", "BenchmarkConsole\BenchmarkConsole.csproj", "{804B307E-AA52-4B16-97F3-30C9202442C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeometryLib", "GeometryLib\GeometryLib.csproj", "{0F8D13D5-A5FF-45CA-8891-8D280E53CD44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometryLib", "GeometryLib\GeometryLib.csproj", "{0F8D13D5-A5FF-45CA-8891-8D280E53CD44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeometryTests", "GeometryTests\GeometryTests.csproj", "{7F16305B-5443-4F4B-9281-094E865339A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeometryTests", "GeometryTests\GeometryTests.csproj", "{7F16305B-5443-4F4B-9281-094E865339A0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EAA557A7-5E32-4834-9D43-249E4CC042F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataPoolLib", "DataPoolLib\DataPoolLib.csproj", "{B347C20D-A20F-4D43-A678-8908EE95B4D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,12 +49,17 @@ Global
 		{7F16305B-5443-4F4B-9281-094E865339A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F16305B-5443-4F4B-9281-094E865339A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F16305B-5443-4F4B-9281-094E865339A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B347C20D-A20F-4D43-A678-8908EE95B4D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B347C20D-A20F-4D43-A678-8908EE95B4D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B347C20D-A20F-4D43-A678-8908EE95B4D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B347C20D-A20F-4D43-A678-8908EE95B4D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0C5DBF30-FFD7-46A0-A322-B94CE0D6E8D6} = {EAA557A7-5E32-4834-9D43-249E4CC042F6}
+		{804B307E-AA52-4B16-97F3-30C9202442C7} = {EAA557A7-5E32-4834-9D43-249E4CC042F6}
 		{7F16305B-5443-4F4B-9281-094E865339A0} = {EAA557A7-5E32-4834-9D43-249E4CC042F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
