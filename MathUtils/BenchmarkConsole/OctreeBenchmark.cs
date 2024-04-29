@@ -25,7 +25,7 @@ namespace BenchmarkConsole
         {
             s_points =  GenerateRandomPoints(s_numPoints, -s_size, s_size, -s_size, s_size, -s_size, s_size);
             s_pointsContainer = new PointsContainer();
-            s_octtreeContainer = new Octree(s_pointsContainer, Vec3.Zero, 2.5 * s_size);
+            s_octtreeContainer = new Octree(s_pointsContainer, Vec3.Zero, 2.5 * s_size, s_numPoints);
             foreach (Vec3 point in s_points)
             {
                 s_pointsContainer.AddPoint(point);

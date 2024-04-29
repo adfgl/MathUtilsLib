@@ -12,27 +12,26 @@ namespace DataPoolLib
 
     public class Octree
     {
+        public const int MIN_LEVEL = 2;
+        public const int MAX_LEVEL = 10;
+
         readonly IPointsContainer m_pool;
         OctreeNode s_root;
         double _initialSize;
         int _maxLevel;
 
-        public Octree(IPointsContainer populatedContainer, Vec3 center, double size, int maxLevel)
+        public Octree(IPointsContainer container, Vec3 center, double size, int expectedNumberOfPoints)
         {
-            m_pool = populatedContainer;
+            m_pool = container;
             s_root = new OctreeNode(center.x, center.y, center.z, 0);
             _initialSize = size;
-            _maxLevel = Math.Max(2, maxLevel);
+            _maxLevel = CalculateMaxLevel(expectedNumberOfPoints);
         }
 
-        public Octree(IPointsContainer populatedContainer, Vec3 center, double size) 
-            : this(populatedContainer, center, size, CalculateMaxLevel(populatedContainer.Count))
+        public static int CalculateMaxLevel(int count)
         {
-        }
-
-        static int CalculateMaxLevel(int count)
-        {
-            return Math.Max(2, (int)Math.Pow(count, 0.125));
+            int levels = (int)Math.Pow(count, 0.125);
+            return Math.Clamp(levels, MIN_LEVEL, MAX_LEVEL);
         }
 
         public int Insert(Vec3 point, double tolerance)

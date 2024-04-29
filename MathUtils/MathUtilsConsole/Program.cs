@@ -18,7 +18,7 @@ namespace MathUtilsConsole
             var s_points = GenerateRandomPoints(points, -size, size, -size, size, -size, size);
 
             PointsContainer s_pointsContainer = new PointsContainer();
-            Octree s_octtreeContainer = new Octree(s_pointsContainer, Vec3.Zero, 2.5 * size);
+            Octree s_octtreeContainer = new Octree(s_pointsContainer, Vec3.Zero, 2.5 * size, s_points.Count);
 
             foreach (var item in s_points)
             {
