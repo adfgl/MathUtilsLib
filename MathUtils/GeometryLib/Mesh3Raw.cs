@@ -15,8 +15,8 @@ namespace GeometryLib
 
         public Mesh3Raw(Mesh3 mesh)
         {
-            Points3 = mesh.Vertices.ToBufferArray();
-            Indices = mesh.Triangles.ToBufferArray();
+            Vertices = mesh.Vertices.ToBufferArray();
+            Triangles = mesh.Triangles.ToBufferArray();
             Normals = mesh.Normals.ToBufferArray();
         }
 
@@ -28,8 +28,8 @@ namespace GeometryLib
             if (indices.Length % 3 != 0)
                 throw new ArgumentException("Indices must be a multiple of 3");
 
-            Points3 = points3;
-            Indices = indices;
+            Vertices = points3;
+            Triangles = indices;
 
             if (normals is not null && normals.Length != 0)
             {
@@ -40,11 +40,11 @@ namespace GeometryLib
             }
         }
 
-        public int PointsCount => Indices.Length / 3;
-        public int TriangleCount => Indices.Length / 3;
+        public int PointsCount => Triangles.Length / 3;
+        public int TriangleCount => Triangles.Length / 3;
 
-        public double[] Points3 { get; set; } = Array.Empty<double>();
-        public int[] Indices { get; set; } = Array.Empty<int>();
+        public double[] Vertices { get; set; } = Array.Empty<double>();
+        public int[] Triangles { get; set; } = Array.Empty<int>();
         public double[] Normals { get; set; } = Array.Empty<double>();
     }
 }

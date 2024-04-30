@@ -19,6 +19,13 @@ namespace GeometryLib
             _vertices = new Vec3Pool(expectedVertices);
         }
 
+        public Mesh3(Mesh3Raw raw)
+        {
+            _triangles = new TriPool(raw.Triangles);
+            _normals = new Vec3Pool(raw.Normals);
+            _vertices = new Vec3Pool(raw.Vertices);
+        }
+
         public TriPool Triangles { get { return _triangles; } }
         public Vec3Pool Vertices { get { return _vertices; } }
         public Vec3Pool Normals { get { return _normals; } }
