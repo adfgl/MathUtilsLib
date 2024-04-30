@@ -17,11 +17,17 @@ namespace MathUtilsConsole
                 new Vec3(0, 0, 150),
             };
 
-            ConvexHull.Mesh mesh = ConvexHull.Calculate(points.ToArray());
-            foreach (ConvexHull.Face item in mesh.Faces)
-            {
-                Console.WriteLine(item);
-            }
+            var a = points[0];
+            var b = points[1];
+            var c = points[2];
+
+            var plane = new Plane(a, b, c);
+
+            //ConvexHull.Mesh mesh = ConvexHull.Calculate(points.ToArray());
+            //foreach (ConvexHull.Face item in mesh.Faces)
+            //{
+            //    Console.WriteLine(item);
+            //}
 
         }
     }
