@@ -1,70 +1,39 @@
-﻿using DataPoolLib;
-using GeometryLib;
-using LinearAlgebraLib;
-using Newtonsoft.Json;
-using System;
-using System.Drawing;
+﻿using LinearAlgebraLib;
 
 namespace MathUtilsConsole
 {
     internal class Program
     {
-        static Random random = new Random(42);
 
         static void Main(string[] args)
         {
-            int points = 5;
-            int size = 1000;
-            //var s_points = GenerateRandomPoints(points, -size, size, -size, size, -size, size);
-            var s_points = new List<Vec3>
+            List<Vec3> points = new List<Vec3>()
             {
-                new Vec3(-500, -500, 500),
-                new Vec3(-500, 500, -500),
-                new Vec3(500, -500, 500),
-                new Vec3(500, 500, 500),
+                new Vec3(0, 0, 0),
+                new Vec3(1, 0, 0),
+                new Vec3(0, 1, 0),
+                new Vec3(0, 0, 1),
+                new Vec3(1, 1, 0),
+                new Vec3(1, 0, 1),
+                new Vec3(1, 0, 1),
             };
 
-            PointsContainer s_pointsContainer = new PointsContainer();
-            Octree s_octtreeContainer = new Octree(Vec3.Zero, size, s_points.Count);
+            TriMesh mesh = new TriMesh(points);
+            mesh.Add(0, 1, 2);
+            mesh.Add(3, 1, 2);
 
-            foreach (var item in s_points)
+            mesh.Add(2, 4, 3);
+            mesh.Add(5, 4, 2);
+            mesh.Add(0, 2, 5);
+            mesh.Add(0, 6, 5);
+
+            mesh.Kill(4);
+
+
+            foreach (Face item in mesh.Triangles)
             {
-                s_octtreeContainer.Insert(s_pointsContainer, item, 0);
+                Console.WriteLine(item);
             }
-        }
-        public class PointsContainer : IPointsContainer
-        {
-            public List<Vec3> Points { get; set; } = new List<Vec3>();
-
-            public Vec3 GetVertex(int index)
-            {
-                return Points[index];
-            }
-
-            public int AddVertex(Vec3 point)
-            {
-                Points.Add(point);
-                return Points.Count;
-            }
-
-            public int Count => Points.Count;
-        }
-
-
-        public static List<Vec3> GenerateRandomPoints(int count, double minX, double maxX, double minY, double maxY, double minZ, double maxZ)
-        {
-            List<Vec3> points = new List<Vec3>();
-
-            for (int i = 0; i < count; i++)
-            {
-                double randomX = random.NextDouble() * (maxX - minX) + minX;
-                double randomY = random.NextDouble() * (maxY - minY) + minY;
-                double randomZ = random.NextDouble() * (maxZ - minZ) + minZ;
-
-                points.Add(new Vec3(randomX, randomY, randomZ));
-            }
-
-            return points;
         }
     }
 }

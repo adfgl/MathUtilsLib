@@ -5,105 +5,53 @@ namespace GeometryLib
 {
     public static class ConvexHull
     {
+        public const int NO_ADJACENT = -1;
+
         public static void Calculate(Vec3[] uniquePoints, double tolerance)
         {
-            Tuple<Face[], int[]> tetrahedron = InitialTetrahedron(uniquePoints, tolerance);
+         
+        }
+
         
-        }
-
-        public static Tuple<Face[], int[]> InitialTetrahedron(Vec3[] uniquePoints, double tolerance)
+        public class Face
         {
-            if (uniquePoints.Length < 4) throw new InvalidOperationException("Convex hull requires at least 4 points.");
-
-            int p1 = 0;
-            int p2 = 1;
-            int p3 = -1;
-            int p4 = -1;
-
-            Vec3 a = uniquePoints[p1];
-            Vec3 b = uniquePoints[p2];
-            Vec3 c;
-            if (a == b) throw new InvalidOperationException();
-
-            Vec3 ab = b - a;
-            for (int i = 0; i < uniquePoints.Length; i++)
-            {
-                if (i == p1 || i == p2) continue;
-
-                c = uniquePoints[i];
-
-                // check if points are coliniar
-                if (false == MathHelper.IsZero(ab.Cross(c - a).SquareLength(), tolerance))
-                {
-                    p3 = i;
-                    break;
-                }
-            }
-
-            if (p3 == -1) throw new InvalidOperationException("All points are colliniar.");
-
-            Plane plane = new Plane(uniquePoints[p1], uniquePoints[p2], uniquePoints[p3]);
-            for (int i = 0; i < uniquePoints.Length; i++)
-            {
-                if (i == p1 || i == p2 || i == p3) continue;
-
-                if (false == MathHelper.IsZero(plane.SignedDistanceTo(uniquePoints[i]), tolerance))
-                {
-                    p4 = i;
-                    break;
-                }
-            }
-
-            if (p4 == -1) throw new InvalidOperationException("All points are on the same plane.");
-
-            Vec3 centroid = (uniquePoints[p1] + uniquePoints[p2] + uniquePoints[p3] + uniquePoints[p4]) / 4;
-
-            Face[] faces =
-            [
-                GetValidFace(uniquePoints, centroid, p1, p2, p3, tolerance),
-                GetValidFace(uniquePoints, centroid, p1, p3, p4, tolerance),
-                GetValidFace(uniquePoints, centroid, p1, p4, p2, tolerance),
-                GetValidFace(uniquePoints, centroid, p2, p4, p3, tolerance)
-            ];
-            return new Tuple<Face[], int[]>(faces, [p1, p2, p3, p4]);
-        }
-
-        public static Face GetValidFace(Vec3[] points, Vec3 centroid, int indexA, int indexB, int indexC, double tolerance)
-        {
-            Plane plane = new Plane(points[indexA], points[indexB], points[indexC]);
-            Face face = new Face(indexA, indexB, indexC, plane);
-
-            double distance = plane.SignedDistanceTo(centroid);
-            if (distance > tolerance)
-            {
-                return face.Invert();
-            }
-            else if (distance < -tolerance)
-            {
-                return face;
-            }
-            throw new InvalidOperationException("Logic error.");
-        }
-
-        [DebuggerDisplay("{a} {b} {c}")]
-        public readonly struct Face
-        {
-            public readonly int a;
-            public readonly int b;
-            public readonly int c;
-            public readonly Plane plane;
+            readonly int[] _indices = new int[3];
+            readonly int[] _adjacent = new int[3];
+            Plane _plane;
 
             public Face(int a, int b, int c, Plane plane)
             {
-                this.a = a;
-                this.b = b;
-                this.c = c;
-                this.plane = plane;
+                _plane = plane;
+
+                _indices[0] = a;
+                _indices[1] = b;
+                _indices[2] = c;
+
+                _adjacent[0] = NO_ADJACENT;
+                _adjacent[1] = NO_ADJACENT;
+                _adjacent[2] = NO_ADJACENT;
             }
 
-            public Face Invert()
+            public int[] Indices => _indices;
+            public int[] Adjacent => _adjacent;
+            public Plane Plane => _plane;
+
+            public void Flip()
             {
-                return new Face(c, b, a, plane.Flip());
+                _plane = Plane.Flip();
+
+                int temp = _indices[0];
+                _indices[0] = _indices[2];
+                _indices[2] = temp;
+
+                temp = _adjacent[0];
+                _adjacent[0] = _adjacent[1];
+                _adjacent[1] = temp;
+            }
+
+            public override string ToString()
+            {
+                return $"pts: {_indices[0]} {_indices[1]} {_indices[2]} adj: {_adjacent[0]} {_adjacent[1]} {_adjacent[2]}";
             }
         }
     }

@@ -98,7 +98,7 @@ namespace GeometryTests
             Vec3 b = new Vec3(0, +100, -50);
             Vec3 c = new Vec3(+100, -100, -50);
             Vec3 d = new Vec3(0, 0, 100);
-            
+
             Plane plane = new Plane(a, d, c);
 
             Vec3[] points = [a, b, c, d];
