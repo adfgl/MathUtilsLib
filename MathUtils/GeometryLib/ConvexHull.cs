@@ -374,6 +374,11 @@ namespace GeometryLib
                 _adjacent[0] = _adjacent[1];
                 _adjacent[1] = tempFace;
             }
+
+            public override string ToString()
+            {
+                return $"pts: {_indices[0]} {_indices[1]} {_indices[2]}";
+            }
         }
     }
 }
