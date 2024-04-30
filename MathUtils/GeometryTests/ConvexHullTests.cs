@@ -1,138 +1,86 @@
-﻿//using GeometryLib;
-//using LinearAlgebraLib;
-//using System;
-//using static GeometryLib.ConvexHull;
+﻿using LinearAlgebraLib;
 
-//namespace GeometryTests
-//{
-//    public class ConvexHullTests
-//    {
-//        public static List<Vec3> GenerateRandomPoints(int count, double size)
-//        {
-//            Random random = new Random();
+namespace GeometryTests
+{
+    using static GeometryLib.ConvexHull;
 
-//            List<Vec3> points = new List<Vec3>();
+    public class ConvexHullTests
+    {
+        readonly Vec3[] m_vertices;
+        readonly static Random _random = new Random(42);
 
-//            double minX = -size;
-//            double maxX = size;
-//            double minY = -size;
-//            double maxY = size;
-//            double minZ = -size;
-//            double maxZ = size;
+        public static void Shuffle<T>(T[] array)
+        {
+            int n = array.Length;
+            while (n > 1)
+            {
+                n--;
+                int k = _random.Next(n + 1);
+                T value = array[k];
+                array[k] = array[n];
+                array[n] = value;
+            }
+        }
 
-//            for (int i = 0; i < count; i++)
-//            {
-//                double randomX = random.NextDouble() * (maxX - minX) + minX;
-//                double randomY = random.NextDouble() * (maxY - minY) + minY;
-//                double randomZ = random.NextDouble() * (maxZ - minZ) + minZ;
+        public ConvexHullTests()
+        {
+            m_vertices =
+            [
+                new Vec3(28.903, 142.162, 0),
+                new Vec3(72.446, 229.837, 0),
+                new Vec3(130.01, 138.694, 0),
+                new Vec3(215.397, 137.735, 0),
+                new Vec3(217.795, 205.852, 0),
+                new Vec3(258.57, 274.45, 0),
+                new Vec3(172.224, 280.206, 0),
+            ];
+        }
 
-//                points.Add(new Vec3(randomX, randomY, randomZ));
-//            }
+        [Fact]
+        public void MeshFindsNeigboursCorrectlyAllOrderedCorrectly_TwoFaces()
+        {
+            // Arrange
+            Mesh mesh = new Mesh(m_vertices);
 
-//            return points;
-//        }
+            // Act
+            mesh.Add(0, 1, 2);
+            mesh.Add(2, 1, 6);
 
-//        [Fact]
-//        public void GetValidFace_ThrowsErrorWhenCentroidLiesOnFace()
-//        {
-//            // Arrange
-//            Vec3[] points =
-//            [
-//                new Vec3(0, 100, 0),
-//                new Vec3(-100, -100, 0),
-//                new Vec3(+100, -100, 0),
-//            ];
+            // Assert
+            Assert.Equal(2, mesh.Faces.Count);
 
-//            // Act
-//            Action act = () => ConvexHull.GetValidFace(points, Vec3.Zero, 0, 1, 2, 0);
+            Face target;
 
-//            // Assert
-//            Assert.Throws<InvalidOperationException>(act);
-//        }
+            target = mesh.Faces[0];
+            Assert.Null(target.Adjacent[0]);
+            Assert.Equal(mesh.Faces[1], target.Adjacent[1]);
+            Assert.Null(target.Adjacent[2]);
 
-//        [Fact]
-//        public void GetValidFace_FaceIsInvertedCorrectlyWhenReferencePointIsInFrontOfFace()
-//        {
-//            // Arrange
-//            Vec3[] points =
-//            [
-//                new Vec3(0, 100, 0),
-//                new Vec3(-100, -100, 0),
-//                new Vec3(+100, -100, 0),
-//            ];
-//            Vec3 centroid = new Vec3(0, 0, 100);
-//            Face expected = new Face(2, 1, 0, new Plane(new Vec3(0, 0, -1), 0));
+            target = mesh.Faces[1];
+            Assert.Equal(mesh.Faces[0], target.Adjacent[0]);
+            Assert.Null(target.Adjacent[1]);
+            Assert.Null(target.Adjacent[2]);
+        }
 
-//            // Act
-//            Face actual = ConvexHull.GetValidFace(points, centroid, 0, 1, 2, 0);
+        [Fact]
+        public void MeshFindsNeigboursCorrectlyIncorrectOrder_TwoFaces()
+        {
+            // Arrange
+            Mesh mesh = new Mesh(m_vertices);
 
-//            // Assert
-//            Assert.Equal(expected, actual);
-//        }
+            // Act
+            mesh.Add(1, 2, 0);
+            mesh.Add(1, 2, 6);
 
-//        [Fact]
-//        public void GetValidFace_FaceIsNotInvertedWhenReferencePointIsBehindFace()
-//        {
-//            // Arrange
-//            Vec3[] points =
-//            [
-//                new Vec3(+100, -100, 0),
-//                new Vec3(-100, -100, 0),
-//                new Vec3(0, 100, 0),
-//            ];
-//            Vec3 centroid = new Vec3(0, 0, 100);
-//            Face expected = new Face(0, 1, 2, new Plane(new Vec3(0, 0, -1), 0));
+            // Assert
+            Assert.Equal(2, mesh.Faces.Count);
 
-//            // Act
-//            Face actual = ConvexHull.GetValidFace(points, centroid, 0, 1, 2, 0);
+            Face target;
 
-//            // Assert
-//            Assert.Equal(expected, actual);
-//        }
-
-//        [Fact]
-//        public void InitialTetrahedronIsBuiltCorrectly()
-//        {
-//            // Arrange
-//            Vec3 a = new Vec3(-100, -100, -50);
-//            Vec3 b = new Vec3(0, +100, -50);
-//            Vec3 c = new Vec3(+100, -100, -50);
-//            Vec3 d = new Vec3(0, 0, 100);
-
-//            Plane plane = new Plane(a, d, c);
-
-//            Vec3[] points = [a, b, c, d];
-//            Face abc = new Face(0, 1, 2, new Plane());
-//            Face adc = new Face(0, 3, 2, new Plane());
-//            Face bda = new Face(1, 3, 0, new Plane());
-//            Face cdb = new Face(1, 3, 2, new Plane());
-
-//            // Act
-//            Tuple<Face[], int[]> actual = ConvexHull.InitialTetrahedron(points, 0);
-
-//            // Assert
-//            Assert.Equal(4, actual.Item1.Length);
-//            Assert.Equal(4, actual.Item2.Length);
-
-//            static void assertFace(Face expected, Face[] faces)
-//            {
-//                int index = -1;
-//                for (int i = 0; i < 4; i++)
-//                {
-//                    Face face = faces[i];
-//                    if (face.a == expected.a && face.b == expected.b && face.c == expected.c)
-//                    {
-//                        index = i;
-//                        break;
-//                    }
-//                }
-//                Assert.True(index != -1);
-//            }
-
-//            assertFace(abc, actual.Item1);
-//            assertFace(adc, actual.Item1);
-//            //assertFace(abd, actual.Item1);
-//            //assertFace(bcd, actual.Item1);
-//        }
-//    }
-//}
+            target = mesh.Faces[0];
+            Assert.Equal(mesh.Faces[1], target.Adjacent[0]);
+            Assert.Null(target.Adjacent[1]);
+            Assert.Null(target.Adjacent[2]);
+        }
+    }
+}

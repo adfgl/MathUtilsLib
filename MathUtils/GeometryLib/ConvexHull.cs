@@ -258,12 +258,6 @@ namespace GeometryLib
                 _points = points;
             }
 
-            public Mesh(Mesh mesh)
-            {
-                _points = mesh._points;
-                _triangles = new List<Face>(mesh._triangles);
-            }
-
             public List<Face> Faces => _triangles;
             public Vec3[] Points => _points;
 
@@ -372,13 +366,13 @@ namespace GeometryLib
             {
                 _plane = Plane.Flip();
 
-                int temp = _indices[0];
+                int tempIndex = _indices[0];
                 _indices[0] = _indices[2];
-                _indices[2] = temp;
+                _indices[2] = tempIndex;
 
-                Face? tf = _adjacent[0];
+                Face? tempFace = _adjacent[0];
                 _adjacent[0] = _adjacent[1];
-                _adjacent[1] = tf;
+                _adjacent[1] = tempFace;
             }
         }
     }
