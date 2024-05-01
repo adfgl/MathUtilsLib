@@ -40,7 +40,7 @@ namespace GeometryLib
                     {
                         int a = face.Indices[j];
                         int b = face.Indices[(j + 1) % 3];
-                        mesh.Add(a, b, newIndex);
+                        mesh.ConnectAndAdd(a, b, newIndex, face);
                     }
                 }
             }
@@ -60,6 +60,176 @@ namespace GeometryLib
             }
         }
 
+        public class Mesh
+        {
+            List<Face> _triangles = new List<Face>();
+            readonly Vec3[] _points;
+
+            public Mesh(Vec3[] points)
+            {
+                _points = points;
+            }
+
+            public List<Face> Faces => _triangles;
+            public Vec3[] Points => _points;
+
+            public void ConnectAndAdd(int a, int b, int c, Face neigbour)
+            {
+                Plane plane = new Plane(_points[a], _points[b], _points[c]);
+                Face tri = new Face(a, b, c, plane);
+                Connect(tri, neigbour);
+                _triangles.Add(tri);
+            }
+
+            public void Kill(int index)
+            {
+                Face tri = _triangles[index];
+                for (int i = 0; i < 3; i++)
+                {
+                    Face? adj = tri.Adjacent[i];
+                    if (adj != null)
+                    {
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (adj.Adjacent[j] == tri)
+                            {
+                                adj.Adjacent[j] = null;
+                                break;
+                            }
+                        }
+                    }
+                }
+                _triangles.RemoveAt(index);
+            }
+
+            void Connect(Face newTriangle, Face knownNeigbour)
+            {
+                int start = ConnectFirstTwo(newTriangle, knownNeigbour);
+                if (start == -1)
+                {
+                    throw new Exception("LOGIC ERROR: Triangle not connected to neighbour.");
+                }
+
+                for (int thisCurr = 0; thisCurr < 3; thisCurr++)
+                {
+                    if (newTriangle.Adjacent[thisCurr] != null)
+                    {
+                        continue;
+                    }
+
+                    int thisNext = (thisCurr + 1) % 3;
+
+                    int a1 = newTriangle.Indices[thisCurr];
+                    int b1 = newTriangle.Indices[thisNext];
+
+                    for (int j = 0; j < _triangles.Count; j++)
+                    {
+                        if (newTriangle == _triangles[j]) continue;
+
+                        Face triTest = _triangles[j];
+                        for (int testCurr = 0; testCurr < 3; testCurr++)
+                        {
+                            int testNext = (testCurr + 1) % 3;
+
+                            int a2 = triTest.Indices[testCurr];
+                            int b2 = triTest.Indices[testNext];
+
+                            if (a1 == b2 && b1 == a2)
+                            {
+                                newTriangle.Adjacent[thisCurr] = triTest;
+                                triTest.Adjacent[testCurr] = newTriangle;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            int ConnectFirstTwo(Face newTriangle, Face knownNeigbour)
+            {
+                for (int thisCurr = 0; thisCurr < 3; thisCurr++)
+                {
+                    int thisNext = (thisCurr + 1) % 3;
+
+                    int a1 = newTriangle.Indices[thisCurr];
+                    int b1 = newTriangle.Indices[thisNext];
+
+                    for (int testCurr = 0; testCurr < 3; testCurr++)
+                    {
+                        int testNext = (testCurr + 1) % 3;
+
+                        int a2 = knownNeigbour.Indices[testCurr];
+                        int b2 = knownNeigbour.Indices[testNext];
+
+                        if (a1 == b2 && b1 == a2)
+                        {
+                            newTriangle.Adjacent[thisCurr] = knownNeigbour;
+                            knownNeigbour.Adjacent[testCurr] = newTriangle;
+                            return thisCurr;
+                        }
+
+                        if (a1 == a2 && b1 == b2)
+                        {
+                            newTriangle.Adjacent[thisCurr] = knownNeigbour;
+                            knownNeigbour.Adjacent[testCurr] = newTriangle;
+                            newTriangle.Flip();
+                            return thisCurr;
+                        }
+                    }
+                }
+                return -1;
+            }
+        }
+
+        [DebuggerDisplay("{_indices[0]} {_indices[1]} {_indices[2]}")]
+        public class Face
+        {
+            readonly int[] _indices = new int[3];
+            readonly Face?[] _adjacent = new Face?[3];
+            Plane _plane;
+
+            public Face(int a, int b, int c, Plane plane)
+            {
+                _plane = plane;
+
+                _indices[0] = a;
+                _indices[1] = b;
+                _indices[2] = c;
+
+                _adjacent[0] = null;
+                _adjacent[1] = null;
+                _adjacent[2] = null;
+            }
+
+            public static Face FromPoints(int a, int b, int c, Vec3[] points)
+            {
+                Plane plane = new Plane(points[a], points[b], points[c]);
+                return new Face(a, b, c, plane);
+            }
+
+            public int[] Indices => _indices;
+            public Face?[] Adjacent => _adjacent;
+            public Plane Plane => _plane;
+
+            public void Flip()
+            {
+                _plane = Plane.Flip();
+
+                int tempIndex = _indices[0];
+                _indices[0] = _indices[2];
+                _indices[2] = tempIndex;
+
+                Face? tempFace = _adjacent[0];
+                _adjacent[0] = _adjacent[1];
+                _adjacent[1] = tempFace;
+            }
+
+            public override string ToString()
+            {
+                return $"pts: {_indices[0]} {_indices[1]} {_indices[2]}";
+            }
+        }
+
         public static Tuple<Mesh, int[], double> InitialTetrahedron(Vec3[] points)
         {
             if (points.Length < 4) throw new InvalidOperationException("Convex hull requires at least 4 points.");
@@ -72,10 +242,11 @@ namespace GeometryLib
             Vec3 centroid = (points[p1] + points[p2] + points[p3] + points[p4]) / 4;
 
             Mesh mesh = new Mesh(points);
-            mesh.Add(p1, p2, p3);
-            mesh.Add(p1, p3, p4);
-            mesh.Add(p1, p4, p2);
-            mesh.Add(p2, p4, p3);
+            mesh.Faces.Add(Face.FromPoints(p2, p3, p4, points));
+
+            mesh.ConnectAndAdd(p1, p3, p4, mesh.Faces[0]);
+            mesh.ConnectAndAdd(p1, p2, p3, mesh.Faces[0]);
+            mesh.ConnectAndAdd(p1, p2, p4, mesh.Faces[0]);
 
             foreach (Face face in mesh.Faces)
             {
@@ -248,137 +419,6 @@ namespace GeometryLib
                    Math.Max(Math.Abs(minZ), Math.Abs(maxZ)));
         }
 
-        public class Mesh
-        {
-            List<Face> _triangles = new List<Face>();
-            readonly Vec3[] _points;
-
-            public Mesh(Vec3[] points)
-            {
-                _points = points;
-            }
-
-            public List<Face> Faces => _triangles;
-            public Vec3[] Points => _points;
-
-            public void Add(int a, int b, int c)
-            {
-                Plane plane = new Plane(_points[a], _points[b], _points[c]);
-                Face tri = new Face(a, b, c, plane);
-                ConnectNeighbours(tri);
-                _triangles.Add(tri);
-            }
-
-            public void Kill(int index)
-            {
-                Face tri = _triangles[index];
-                for (int i = 0; i < 3; i++)
-                {
-                    Face? adj = tri.Adjacent[i];
-                    if (adj != null)
-                    {
-                        for (int j = 0; j < 3; j++)
-                        {
-                            if (adj.Adjacent[j] == tri)
-                            {
-                                adj.Adjacent[j] = null;
-                                break;
-                            }
-                        }
-                    }
-                }
-                _triangles.RemoveAt(index);
-            }
-
-            void ConnectNeighbours(Face tri)
-            {
-                bool needsToBeFlipped = false;
-                for (int i = 0; i < 3; i++)
-                {
-                    int thisNext = (i + 1) % 3;
-
-                    int a1 = tri.Indices[i];
-                    int b1 = tri.Indices[thisNext];
-
-                    for (int j = 0; j < _triangles.Count; j++)
-                    {
-                        if (tri == _triangles[j]) continue;
-
-                        Face triTest = _triangles[j];
-
-                        for (int k = 0; k < 3; k++)
-                        {
-                            int testNext = (k + 1) % 3;
-
-                            int a2 = triTest.Indices[k];
-                            int b2 = triTest.Indices[testNext];
-
-                            if (a1 == b2 && b1 == a2)
-                            {
-                                tri.Adjacent[i] = triTest;
-                                triTest.Adjacent[k] = tri;
-                                break;
-                            }
-
-                            if (a1 == a2 && b1 == b2)
-                            {
-                                needsToBeFlipped = true;
-                                tri.Adjacent[i] = triTest;
-                                triTest.Adjacent[k] = tri;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (needsToBeFlipped)
-                {
-                    tri.Flip();
-                }
-            }
-        }
-
-        [DebuggerDisplay("{_indices[0]} {_indices[1]} {_indices[2]}")]
-        public class Face
-        {
-            readonly int[] _indices = new int[3];
-            readonly Face?[] _adjacent = new Face?[3];
-            Plane _plane;
-
-            public Face(int a, int b, int c, Plane plane)
-            {
-                _plane = plane;
-
-                _indices[0] = a;
-                _indices[1] = b;
-                _indices[2] = c;
-
-                _adjacent[0] = null;
-                _adjacent[1] = null;
-                _adjacent[2] = null;
-            }
-
-            public int[] Indices => _indices;
-            public Face?[] Adjacent => _adjacent;
-            public Plane Plane => _plane;
-
-            public void Flip()
-            {
-                _plane = Plane.Flip();
-
-                int tempIndex = _indices[0];
-                _indices[0] = _indices[2];
-                _indices[2] = tempIndex;
-
-                Face? tempFace = _adjacent[0];
-                _adjacent[0] = _adjacent[1];
-                _adjacent[1] = tempFace;
-            }
-
-            public override string ToString()
-            {
-                return $"pts: {_indices[0]} {_indices[1]} {_indices[2]}";
-            }
-        }
+    
     }
 }
