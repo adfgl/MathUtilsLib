@@ -75,10 +75,9 @@ namespace GeometryLib
 
             public void ConnectAndAdd(int a, int b, int c, Face neigbour)
             {
-                Plane plane = new Plane(_points[a], _points[b], _points[c]);
-                Face tri = new Face(a, b, c, plane);
-                Connect(tri, neigbour);
-                _triangles.Add(tri);
+                Face face = Face.FromPoints(a, b, c, _points);
+                Connect(face, neigbour);
+                _triangles.Add(face);
             }
 
             public void Kill(int index)
@@ -104,24 +103,14 @@ namespace GeometryLib
 
             void Connect(Face newTriangle, Face knownNeigbour)
             {
-                int start = ConnectFirstTwo(newTriangle, knownNeigbour);
-                if (start == -1)
-                {
-                    throw new Exception("LOGIC ERROR: Triangle not connected to neighbour.");
-                }
+                ConnectFirstTwo(newTriangle, knownNeigbour);
 
                 for (int thisCurr = 0; thisCurr < 3; thisCurr++)
                 {
-                    if (newTriangle.Adjacent[thisCurr] != null)
-                    {
-                        continue;
-                    }
-
-                    int thisNext = (thisCurr + 1) % 3;
+                    if (newTriangle.Adjacent[thisCurr] != null) continue;
 
                     int a1 = newTriangle.Indices[thisCurr];
-                    int b1 = newTriangle.Indices[thisNext];
-
+                    int b1 = newTriangle.Indices[(thisCurr + 1) % 3];
                     for (int j = 0; j < _triangles.Count; j++)
                     {
                         if (newTriangle == _triangles[j]) continue;
@@ -129,11 +118,10 @@ namespace GeometryLib
                         Face triTest = _triangles[j];
                         for (int testCurr = 0; testCurr < 3; testCurr++)
                         {
-                            int testNext = (testCurr + 1) % 3;
+                            if (triTest.Adjacent[testCurr] != null) continue;
 
                             int a2 = triTest.Indices[testCurr];
-                            int b2 = triTest.Indices[testNext];
-
+                            int b2 = triTest.Indices[(testCurr + 1) % 3];
                             if (a1 == b2 && b1 == a2)
                             {
                                 newTriangle.Adjacent[thisCurr] = triTest;
@@ -145,27 +133,23 @@ namespace GeometryLib
                 }
             }
 
-            int ConnectFirstTwo(Face newTriangle, Face knownNeigbour)
+            void ConnectFirstTwo(Face newTriangle, Face knownNeigbour)
             {
                 for (int thisCurr = 0; thisCurr < 3; thisCurr++)
                 {
-                    int thisNext = (thisCurr + 1) % 3;
-
                     int a1 = newTriangle.Indices[thisCurr];
-                    int b1 = newTriangle.Indices[thisNext];
-
+                    int b1 = newTriangle.Indices[(thisCurr + 1) % 3];
                     for (int testCurr = 0; testCurr < 3; testCurr++)
                     {
-                        int testNext = (testCurr + 1) % 3;
+                        if (knownNeigbour.Adjacent[testCurr] != null) continue;
 
                         int a2 = knownNeigbour.Indices[testCurr];
-                        int b2 = knownNeigbour.Indices[testNext];
-
+                        int b2 = knownNeigbour.Indices[(testCurr + 1) % 3];
                         if (a1 == b2 && b1 == a2)
                         {
                             newTriangle.Adjacent[thisCurr] = knownNeigbour;
                             knownNeigbour.Adjacent[testCurr] = newTriangle;
-                            return thisCurr;
+                            return;
                         }
 
                         if (a1 == a2 && b1 == b2)
@@ -173,11 +157,11 @@ namespace GeometryLib
                             newTriangle.Adjacent[thisCurr] = knownNeigbour;
                             knownNeigbour.Adjacent[testCurr] = newTriangle;
                             newTriangle.Flip();
-                            return thisCurr;
+                            return;
                         }
                     }
                 }
-                return -1;
+                throw new Exception("LOGIC ERROR: Triangle not connected to neighbour.");
             }
         }
 
@@ -203,8 +187,7 @@ namespace GeometryLib
 
             public static Face FromPoints(int a, int b, int c, Vec3[] points)
             {
-                Plane plane = new Plane(points[a], points[b], points[c]);
-                return new Face(a, b, c, plane);
+                return new Face(a, b, c, new Plane(points[a], points[b], points[c]));
             }
 
             public int[] Indices => _indices;
