@@ -47,7 +47,7 @@ namespace LinearAlgebraTests
         [InlineData(-1, -1, 3.926990818)] // 225
         [InlineData(+0, -1, 4.712388981)] // 270
         [InlineData(+1, -1, 5.497787144)] // 315
-        public void ResultantAngle_WhenCalled_ReturnsCorrectValue(double x, double y, double expected)
+        public void ResultantAngleReturnsCorrectValue(double x, double y, double expected)
         {
             // Act
             double result = MathHelper.ResultantAngle(x, y);
