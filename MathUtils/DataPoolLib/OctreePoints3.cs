@@ -10,7 +10,7 @@ namespace DataPoolLib
         int Count { get; }
     }
 
-    public class Octree
+    public class OctreePoints3
     {
         public const int MIN_LEVEL = 2;
         public const int MAX_LEVEL = 10;
@@ -19,7 +19,7 @@ namespace DataPoolLib
         double _initialSize;
         int _maxLevel;
 
-        public Octree(Vec3 center, double size, int expectedNumberOfPoints)
+        public OctreePoints3(Vec3 center, double size, int expectedNumberOfPoints)
         {
             s_root = new OctreeNode(center.x, center.y, center.z, 0);
             _initialSize = size;
