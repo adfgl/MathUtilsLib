@@ -54,21 +54,21 @@ namespace GeometryLib
             int a = octree.IndexOf(_vertices, p1, tolerance);
             if (a == -1)
             {
-                a = _vertices.AddVertex(p1);
+                octree.Insert(_vertices, p1, tolerance);
                 s_boundingBoxCalculated = false;
             }
 
             int b = octree.IndexOf(_vertices, p2, tolerance);
             if (b == -1)
             {
-                b = _vertices.AddVertex(p2);
+                octree.Insert(_vertices, p2, tolerance);
                 s_boundingBoxCalculated = false;
             }
 
             int c = octree.IndexOf(_vertices, p3, tolerance);
             if (c == -1)
             {
-                c = _vertices.AddVertex(p3);
+                octree.Insert(_vertices, p3, tolerance);
                 s_boundingBoxCalculated = false;
             }
 

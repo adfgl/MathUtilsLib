@@ -1,8 +1,6 @@
-﻿
+﻿using GeometryLib;
 
-using GeometryLib;
-
-namespace DataStructuresLib
+namespace GeometryLib
 {
     public class OctreeTriangle3
     {

@@ -1,7 +1,7 @@
 ﻿using LinearAlgebraLib;
 using System.Diagnostics;
 
-namespace DataStructuresLib
+namespace GeometryLib
 {
     public interface IPointsContainer
     {

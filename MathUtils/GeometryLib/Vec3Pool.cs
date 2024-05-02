@@ -1,9 +1,10 @@
-﻿using LinearAlgebraLib;
+﻿using DataPoolLib;
+using LinearAlgebraLib;
 using System.Collections;
 
-namespace DataPoolLib
+namespace GeometryLib
 {
-    public class Vec3Pool : PoolBase<double>, IPointsContainer, IEnumerable<Vec3>
+    public class Vec3Pool : PoolBase<double>, IEnumerable<Vec3>, IPointsContainer
     {
         public Vec3Pool(double[] values) : base(values, 3)
         {

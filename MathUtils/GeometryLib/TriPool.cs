@@ -1,10 +1,11 @@
-﻿using System;
+﻿using DataPoolLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataPoolLib
+namespace GeometryLib
 {
     public class TriPool : PoolBase<int>
     {
