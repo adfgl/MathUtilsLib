@@ -1,6 +1,8 @@
 ﻿
 
-namespace DataPoolLib
+using GeometryLib;
+
+namespace DataStructuresLib
 {
     public class OctreeTriangle3
     {
