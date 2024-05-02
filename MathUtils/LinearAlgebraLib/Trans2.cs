@@ -70,6 +70,7 @@
             OnSourceMatrixChanged();
             return this;
         }
+        public Trans2 Translate(Vec2 v) => Translate(v.x, v.y);
 
         public Trans2 Rotate(double rad)
         {

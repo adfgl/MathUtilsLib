@@ -54,6 +54,10 @@ namespace GeometryLib
             return box;
         }
 
+        public double Width() => maxX - minX;
+        public double Height() => maxY - minY;
+        public double Area() => Width() * Height();
+
         public bool Contains(double x, double y)
         {
             return
@@ -66,6 +70,13 @@ namespace GeometryLib
             return
                 minX <= other.minX && other.maxX <= maxX &&
                 minY <= other.minY && other.maxY <= maxY;
+        }
+
+        public bool Intersects(Rectangle other)
+        {
+            return
+                minX <= other.maxX && other.minX <= maxX &&
+                minY <= other.maxY && other.minY <= maxY;
         }
 
         public Rectangle Expand(double x, double y)

@@ -98,6 +98,18 @@ namespace GeometryLib
                 maxZ >= other.maxZ;
         }
 
+        public bool Intersects(Box other)
+        {
+            return
+                minX <= other.maxX &&
+                minY <= other.maxY &&
+                minZ <= other.maxZ &&
+                maxX >= other.minX &&
+                maxY >= other.minY &&
+                maxZ >= other.minZ;
+        }
+
+
         public Box Expand(double x, double y, double z)
         {
             return new Box(
