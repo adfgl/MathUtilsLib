@@ -11,23 +11,6 @@ namespace GeometryLib
             return (b - a).Cross(c - a);
         }
 
-        static OctreePoints3 BuildOctree(Mesh3 mesh)
-        {
-            var (min, max) = mesh.BoundingBox;
-
-            Vec3 center = (min + max) * 0.5;
-            double maxSize = double.MinValue;
-            for (int i = 0; i < 3; i++)
-            {
-                double size = max[i] - min[i];
-                if (size > maxSize) maxSize = size;
-            }
-
-            if (maxSize < 0) throw new Exception("LOGIC ERROR: Invalid bounding box.");
-
-            return new OctreePoints3(center, maxSize * 1.1, mesh.Vertices.Count);
-        }
-
         public static Mesh3 Clip(this Mesh3 mesh, Plane[] planes, double tolerance = 0)
         {
             Plane[] planesToUse = new Plane[planes.Length];
@@ -44,7 +27,7 @@ namespace GeometryLib
             if (planesToUseCount == 0) return mesh;
 
             Mesh3 clipped = new Mesh3(mesh.Triangles.Count, mesh.Vertices.Count);
-            OctreePoints3 octree = BuildOctree(mesh);
+            OctreePoints3 octree = new OctreePoints3(mesh.BoundingBox, mesh.Vertices.Count);
 
             Vec3[] newVertices = new Vec3[6];
 

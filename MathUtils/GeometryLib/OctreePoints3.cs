@@ -1,5 +1,6 @@
 ﻿using LinearAlgebraLib;
 using System.Diagnostics;
+using static GeometryLib.ConvexHull;
 
 namespace GeometryLib
 {
@@ -19,10 +20,19 @@ namespace GeometryLib
         double _initialSize;
         int _maxLevel;
 
-        public OctreePoints3(Vec3 center, double size, int expectedNumberOfPoints)
+        public OctreePoints3(Box box, int expectedNumberOfPoints)
         {
+            var (min, max) = box;
+            Vec3 center = (min + max) * 0.5;
+            double maxSize = double.MinValue;
+            for (int i = 0; i < 3; i++)
+            {
+                double size = max[i] - min[i];
+                if (size > maxSize) maxSize = size;
+            }
+
             s_root = new OctreeNode(center.x, center.y, center.z, 0);
-            _initialSize = size;
+            _initialSize = maxSize * 1.1;
             _maxLevel = CalculateMaxLevel(expectedNumberOfPoints);
         }
 
