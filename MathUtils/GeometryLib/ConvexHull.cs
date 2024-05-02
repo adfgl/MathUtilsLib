@@ -24,6 +24,10 @@ namespace GeometryLib
 
                 KillVisibleFaces(mesh, i, tolerance);
                 AddNewTriangles(mesh, i);
+                if (mesh.Faces.Count > points.Length * 10)
+                {
+                    throw new Exception("Infinite loop");
+                }
             }
             return mesh;
         }
