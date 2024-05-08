@@ -1,39 +1,29 @@
-﻿using DataPoolLib;
-using GeometryLib;
-using LinearAlgebraLib;
+﻿using LinearAlgebraLib;
 using System.Collections;
 
-namespace MathUtilsConsole
+namespace GeometryLib
 {
-    internal class Program
+    public class HalfEdgeMesh3
     {
-        static void Main(string[] args)
+        readonly List<Vertex3> _vertices;
+        readonly List<Face3> _faces;
+
+        public HalfEdgeMesh3()
         {
-            var mesh = new Mesh();
-
-            // Add vertices
-            mesh.AddVertex(new Vec3(41.625, 104.128, 0));
-            mesh.AddVertex(new Vec3(115.676, 170.504, 0));
-            mesh.AddVertex(new Vec3(210.657, 154.673, 0));
-            mesh.AddVertex(new Vec3(133.425, 87.036, 0));
-
-            // Add faces
-            mesh.AddFace(mesh.Vertices[3], mesh.Vertices[0], mesh.Vertices[1]);
-            mesh.AddFace(mesh.Vertices[3], mesh.Vertices[1], mesh.Vertices[2]);
-        }
-    }
-
-    public class HEDS3
-    {
-        readonly List<Vertex3> _vertices = new List<Vertex3>();
-        readonly List<Face3> _faces = new List<Face3>();
-
-        public class Mesh3
-        {
-
+            _vertices = new List<Vertex3>();
+            _faces = new List<Face3>();
         }
 
-        public Vertex3 AddVertex(Vec3 position)
+        public List<Vertex3> Vertices => _vertices;
+        public List<Face3> Faces => _faces;
+
+        public HalfEdgeMesh3(int expectedVertices, int expectedFaces)
+        {
+            _vertices = new List<Vertex3>(expectedVertices);
+            _faces = new List<Face3>(expectedFaces);
+        }
+
+        public void AddVertex(Vec3 position)
         {
             Vertex3 vertex = new Vertex3()
             {
@@ -42,12 +32,11 @@ namespace MathUtilsConsole
                 HalfEdge = null
             };
             _vertices.Add(vertex);
-            return vertex;
         }
 
         public Face3 AddFace(Vertex3 a, Vertex3 b, Vertex3 c)
         {
-            Face3 face = new Face3();
+            Face3 face = new Face3() { Index = _faces.Count };
 
             HalfEdge3 ab = new HalfEdge3(a, face);
             HalfEdge3 bc = new HalfEdge3(b, face);

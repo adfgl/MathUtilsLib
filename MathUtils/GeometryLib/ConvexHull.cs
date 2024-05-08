@@ -405,7 +405,5 @@ namespace GeometryLib
                    Math.Max(Math.Abs(minY), Math.Abs(maxY)) +
                    Math.Max(Math.Abs(minZ), Math.Abs(maxZ)));
         }
-
-    
     }
 }
