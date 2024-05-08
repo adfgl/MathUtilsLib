@@ -1,4 +1,5 @@
-﻿using LinearAlgebraLib;
+﻿using GeometryLib.DataStrcutures;
+using LinearAlgebraLib;
 
 namespace GeometryLib
 {

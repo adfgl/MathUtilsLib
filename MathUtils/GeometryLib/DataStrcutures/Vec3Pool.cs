@@ -2,7 +2,7 @@
 using LinearAlgebraLib;
 using System.Collections;
 
-namespace GeometryLib
+namespace GeometryLib.DataStrcutures
 {
     public class Vec3Pool : PoolBase<double>, IEnumerable<Vec3>, IPointsContainer
     {
@@ -23,7 +23,7 @@ namespace GeometryLib
         public int RemoveDuplicates()
         {
             PoolBase<double> unique = PoolDuplicatesEx.RemoveDuplicates(this);
-            int difference = this.Count - unique.Count;
+            int difference = Count - unique.Count;
             if (difference != 0)
             {
                 Clear();

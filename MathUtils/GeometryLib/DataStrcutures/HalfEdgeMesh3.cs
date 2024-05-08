@@ -1,7 +1,7 @@
 ﻿using LinearAlgebraLib;
 using System.Collections;
 
-namespace GeometryLib
+namespace GeometryLib.DataStrcutures
 {
     // https://jerryyin.info/geometry-processing-algorithms/half-edge/
 
@@ -219,7 +219,7 @@ namespace GeometryLib
             public override string ToString()
             {
                 int[] indices = this.Select(h => h.Vertex.Index).ToArray();
-                return $"({Index}) {String.Join(',', indices)}";
+                return $"({Index}) {string.Join(',', indices)}";
             }
         }
     }

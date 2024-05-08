@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using static GeometryLib.ConvexHull;
 
-namespace GeometryLib
+namespace GeometryLib.DataStrcutures
 {
     public interface IPointsContainer
     {
@@ -71,9 +71,9 @@ namespace GeometryLib
         bool IsPointWithinBounds(Vec3 point)
         {
             double halfSize = _initialSize / 2.0;
-            return 
-                Math.Abs(point.x) <= halfSize && 
-                Math.Abs(point.y) <= halfSize && 
+            return
+                Math.Abs(point.x) <= halfSize &&
+                Math.Abs(point.y) <= halfSize &&
                 Math.Abs(point.z) <= halfSize;
         }
 

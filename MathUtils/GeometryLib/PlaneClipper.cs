@@ -1,4 +1,5 @@
 ﻿using DataPoolLib;
+using GeometryLib.DataStrcutures;
 using LinearAlgebraLib;
 using System.Drawing;
 

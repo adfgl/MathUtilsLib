@@ -1,7 +1,7 @@
 ﻿using DataPoolLib;
 using LinearAlgebraLib;
 
-namespace GeometryLib
+namespace GeometryLib.DataStrcutures
 {
     public class Mesh3
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeometryLib
+namespace GeometryLib.DataStrcutures
 {
     public class Mesh3Raw
     {

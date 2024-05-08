@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GeometryLib
+namespace GeometryLib.DataStrcutures
 {
     public class TriPool : PoolBase<int>
     {
@@ -26,7 +26,7 @@ namespace GeometryLib
         public int RemoveDuplicates()
         {
             PoolBase<int> unique = PoolDuplicatesEx.RemoveDuplicates(this);
-            int difference = this.Count - unique.Count;
+            int difference = Count - unique.Count;
             if (difference != 0)
             {
                 Clear();
