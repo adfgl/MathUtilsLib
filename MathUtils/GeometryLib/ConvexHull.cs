@@ -5,7 +5,7 @@ namespace GeometryLib
 {
     public static class ConvexHull
     {
-        public const double EPS = double.Epsilon;
+        public const double EPS = 1e-12;
 
         public static Mesh Calculate(Vec3[] points)
         {

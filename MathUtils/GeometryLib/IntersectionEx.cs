@@ -4,7 +4,7 @@ namespace GeometryLib
 {
     public static class IntersectionEx
     {
-        public static bool Intersect(this Mesh3 mesh, Ray ray, out Vec3 intersection, double tolerance = 0)
+        public static bool Intersect(this Mesh3 mesh, Ray3 ray, out Vec3 intersection, double tolerance = 0)
         {
             intersection = Vec3.NaN;
 
@@ -67,7 +67,7 @@ namespace GeometryLib
             return false;
         }
 
-        public static bool Intersect(this Plane plane, Ray ray, out Vec3 intersection, double tolerance = 0)
+        public static bool Intersect(this Plane plane, Ray3 ray, out Vec3 intersection, double tolerance = 0)
         {
             /* 
                 R(t) = O + t * D
@@ -141,7 +141,7 @@ namespace GeometryLib
             return true;
         }
 
-        public static bool Intersect(this Ray ray1, Ray ray2, out Vec3 intersection, double tolerance = 0)
+        public static bool Intersect(this Ray3 ray1, Ray3 ray2, out Vec3 intersection, double tolerance = 0)
         {
             /* 
              R1(t) = O1 + t * D1

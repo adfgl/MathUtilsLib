@@ -118,6 +118,11 @@ namespace GeometryLib
                 return -1;
             }
 
+            public bool Contains(Vertex3 vertex)
+            {
+                return IndexOf(vertex) != -1;
+            }
+
             public Vertex3 GetVertex(int index)
             {
                 switch (index)
@@ -165,6 +170,11 @@ namespace GeometryLib
                     }
                 }
                 return -1;
+            }
+
+            public bool Contains(Vertex3 vertex)
+            {
+                return IndexOf(vertex) != -1;
             }
 
             public Vertex3 GetVertex(int index)
