@@ -3,6 +3,8 @@ using System.Collections;
 
 namespace GeometryLib
 {
+    // https://jerryyin.info/geometry-processing-algorithms/half-edge/
+
     public class HalfEdgeMesh3
     {
         readonly List<Vertex3> _vertices;
@@ -65,19 +67,20 @@ namespace GeometryLib
 
         HalfEdge3? FindTwinEdge(Vertex3 start, Vertex3 end)
         {
-            foreach (Vertex3 vertex in _vertices)
+            foreach (Face3 face in _faces)
             {
-                if (vertex == start || vertex == end || vertex.HalfEdge is null) continue;
-
-                HalfEdge3 current = vertex.HalfEdge;
-                do
+                for (int i = 0; i < 3; i++)
                 {
-                    if (current.Vertex == end && current.Next.Vertex == start)
+                    HalfEdge3 edge = face.GetEdge(i);
+                    if (edge.Twin is null)
                     {
-                        return current;
+                        if (edge.Vertex == start && edge.Next.Vertex == end)
+                        {
+                            edge.Twin = end.HalfEdge;
+                            return edge;
+                        }
                     }
-                    current = current.Next;
-                } while (current != vertex.HalfEdge);
+                }
             }
             return null;
         }
@@ -98,17 +101,22 @@ namespace GeometryLib
         {
             public HalfEdge3(Vertex3 vertex, Face3 face)
             {
-                vertex.HalfEdge = this;
                 Vertex = vertex;
                 Face = face;
-                Index = vertex.HalfEdge == null ? 0 : vertex.HalfEdge.Index + 1;
+                vertex.HalfEdge = this;
             }
 
-            public int Index { get; set; }
             public Vertex3 Vertex { get; set; }
             public Face3 Face { get; set; }
             public HalfEdge3 Next { get; set; } = null!;
             public HalfEdge3? Twin { get; set; } = null!;
+
+            public int IndexOf(Vertex3 vertex)
+            {
+                if (Vertex == vertex) return 0;
+                if (Next.Vertex == vertex) return 1;
+                return -1;
+            }
 
             public Vertex3 GetVertex(int index)
             {
@@ -138,7 +146,7 @@ namespace GeometryLib
 
             public override string ToString()
             {
-                return $"({Index}) {Vertex.Index},{Next.Vertex.Index}";
+                return $"{Vertex.Index},{Next.Vertex.Index}";
             }
         }
 
@@ -146,6 +154,18 @@ namespace GeometryLib
         {
             public int Index { get; set; }
             public HalfEdge3 HalfEdge { get; set; }
+
+            public int IndexOf(Vertex3 vertex)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (GetVertex(i) == vertex)
+                    {
+                        return i;
+                    }
+                }
+                return -1;
+            }
 
             public Vertex3 GetVertex(int index)
             {

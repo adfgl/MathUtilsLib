@@ -24,7 +24,7 @@ namespace GeometryTests
         {
             // Arrange
             Plane plane = new Plane(Vec3.UnitY, 50);
-            Ray ray = new Ray(new Vec3(px, py, pz), new Vec3(nx, ny, nz));
+            Ray3 ray = new Ray3(new Vec3(px, py, pz), new Vec3(nx, ny, nz));
 
             // Act
             bool actual = plane.Intersect(ray, out Vec3 intersection);
@@ -52,8 +52,8 @@ namespace GeometryTests
         public void RayRayIntersectionWorksCorrectly_UnitY_Zero_Ray(double px, double py, double pz, double nx, double ny, double nz, bool expected, double x, double y, double z)
         {
             // Arrange
-            Ray ray1 = new Ray(new Vec3(0, 0, 0), Vec3.UnitY);
-            Ray ray2 = new Ray(new Vec3(px, py, pz), new Vec3(nx, ny, nz));
+            Ray3 ray1 = new Ray3(new Vec3(0, 0, 0), Vec3.UnitY);
+            Ray3 ray2 = new Ray3(new Vec3(px, py, pz), new Vec3(nx, ny, nz));
 
             // Act
             bool actual = ray1.Intersect(ray2, out Vec3 intersection);
