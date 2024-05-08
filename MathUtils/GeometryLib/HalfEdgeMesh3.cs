@@ -23,6 +23,14 @@ namespace GeometryLib
             _faces = new List<Face3>(expectedFaces);
         }
 
+        public void GetTriangle(Face3 face, out Vec3 a, out Vec3 b, out Vec3 c)
+        {
+            HalfEdge3 edge = face.HalfEdge;
+            a = edge.Vertex.Position;
+            b = edge.Next.Vertex.Position;
+            c = edge.Next.Next.Vertex.Position;
+        }
+
         public void AddVertex(Vec3 position)
         {
             Vertex3 vertex = new Vertex3()
@@ -51,6 +59,7 @@ namespace GeometryLib
             ca.Twin = FindTwinEdge(a, c);
 
             face.HalfEdge = ab;
+            _faces.Add(face);
             return face;
         }
 
@@ -78,6 +87,11 @@ namespace GeometryLib
             public int Index { get; set; }
             public Vec3 Position { get; set; }
             public HalfEdge3 HalfEdge { get; set; }
+
+            public override string ToString()
+            {
+                return $"({Index}) {Position.ToRoundedString(2)}";
+            }
         }
 
         public class HalfEdge3 : IEnumerable<Vertex3>
@@ -96,6 +110,17 @@ namespace GeometryLib
             public HalfEdge3 Next { get; set; } = null!;
             public HalfEdge3? Twin { get; set; } = null!;
 
+            public Vertex3 GetVertex(int index)
+            {
+                switch (index)
+                {
+                    case 0: return Vertex;
+                    case 1: return Next.Vertex;
+                    default:
+                        throw new IndexOutOfRangeException($"Invalid index '{index}'. Edge has only two vertices.");
+                }
+            }
+
             public IEnumerator<Vertex3> GetEnumerator()
             {
                 Vertex3 current = Vertex;
@@ -110,12 +135,41 @@ namespace GeometryLib
             {
                 return GetEnumerator();
             }
+
+            public override string ToString()
+            {
+                return $"({Index}) {Vertex.Index},{Next.Vertex.Index}";
+            }
         }
 
         public class Face3 : IEnumerable<HalfEdge3>
         {
             public int Index { get; set; }
             public HalfEdge3 HalfEdge { get; set; }
+
+            public Vertex3 GetVertex(int index)
+            {
+                switch (index)
+                {
+                    case 0: return HalfEdge.Vertex;
+                    case 1: return HalfEdge.Next.Vertex;
+                    case 2: return HalfEdge.Next.Next.Vertex;
+                    default:
+                        throw new IndexOutOfRangeException($"Invalid index '{index}'. Face has only three vertices.");
+                }
+            }
+
+            public HalfEdge3 GetEdge(int index)
+            {
+                switch (index)
+                {
+                    case 0: return HalfEdge;
+                    case 1: return HalfEdge.Next;
+                    case 2: return HalfEdge.Next.Next;
+                    default:
+                        throw new IndexOutOfRangeException($"Invalid index '{index}'. Face has only three edges.");
+                }
+            }
 
             public IEnumerator<HalfEdge3> GetEnumerator()
             {
@@ -130,6 +184,12 @@ namespace GeometryLib
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return GetEnumerator();
+            }
+
+            public override string ToString()
+            {
+                int[] indices = this.Select(h => h.Vertex.Index).ToArray();
+                return $"({Index}) {String.Join(',', indices)}";
             }
         }
     }
