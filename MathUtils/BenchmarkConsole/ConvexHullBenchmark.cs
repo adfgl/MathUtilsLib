@@ -19,6 +19,7 @@ namespace BenchmarkConsole
         {
             points = PointsGenerator.Sphere(20, 500);
             points = PointsGenerator.RandomPointCloud(1000, 500);
+            points = Onion.Points;
         }
 
         [Benchmark]
@@ -29,9 +30,9 @@ namespace BenchmarkConsole
         }
 
         [Benchmark]
-        public HalfEdgeMesh NewMethod()
+        public ConvexHull2 NewMethod()
         {
-            HalfEdgeMesh hull = new ConvexHull2(points).Triangulate();
+            ConvexHull2 hull = new ConvexHull2(points).Triangulate();
             return hull;
         }
     }
