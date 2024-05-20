@@ -7,6 +7,8 @@ namespace GeometryLib
         public readonly Vec3 normal;
         public readonly double distanceToOrigin;
 
+        public static Plane Zero => new Plane(Vec3.Zero, 0.0);
+
         public Plane(Vec3 normal, double distanceToOrigin)
         {
             this.normal = normal.Normalize();

@@ -6,7 +6,7 @@ namespace BenchmarkConsole
     {
         static void Main(string[] args)
         {
-            //BenchmarkRunner.Run<OctreeBenchmark>();
+            BenchmarkRunner.Run<ConvexHullBenchmark>();
         }
     }
 }

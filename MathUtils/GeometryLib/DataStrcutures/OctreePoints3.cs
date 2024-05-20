@@ -1,6 +1,5 @@
 ﻿using LinearAlgebraLib;
 using System.Diagnostics;
-using static GeometryLib.ConvexHull;
 
 namespace GeometryLib.DataStrcutures
 {

@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Cvx\CvxLib\CvxLib.csproj" />
     <ProjectReference Include="..\GeometryLib\GeometryLib.csproj" />
     <ProjectReference Include="..\LinearAlgebraLib\LinearAlgebraLib.csproj" />
   </ItemGroup>
