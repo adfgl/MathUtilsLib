@@ -22,7 +22,7 @@ namespace GeometryLib
             {
                 if (i == p1 || i == p2 || i == p3 || i == p4) continue;
 
-                KillVisibleFaces(mesh, i, tolerance);
+                if (KillVisibleFaces(mesh, i, tolerance) == 0) continue;
                 AddNewTriangles(mesh, i);
                 if (mesh.Faces.Count > points.Length * 10)
                 {
@@ -50,8 +50,9 @@ namespace GeometryLib
             }
         }
 
-        public static void KillVisibleFaces(Mesh mesh, int newIndex, double tolerance)
+        public static int KillVisibleFaces(Mesh mesh, int newIndex, double tolerance)
         {
+            int killed = 0;
             Vec3 point = mesh.Points[newIndex];
             for (int i = mesh.Faces.Count - 1; i >= 0; i--)
             {
@@ -60,8 +61,10 @@ namespace GeometryLib
                 if (distance > tolerance)
                 {
                     mesh.Kill(i);
+                    killed++;
                 }
             }
+            return killed;
         }
 
         public class Mesh

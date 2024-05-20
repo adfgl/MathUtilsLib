@@ -18,7 +18,7 @@ namespace BenchmarkConsole
         public ConvexHullBenchmark()
         {
             points = PointsGenerator.Sphere(20, 500);
-            Console.WriteLine(points.Length);
+            points = PointsGenerator.RandomPointCloud(1000, 500);
         }
 
         [Benchmark]
