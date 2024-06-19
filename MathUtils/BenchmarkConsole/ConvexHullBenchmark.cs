@@ -14,26 +14,35 @@ namespace BenchmarkConsole
     public class ConvexHullBenchmark
     {
         Vec3[] points;
+        int rounds = 10;
 
         public ConvexHullBenchmark()
         {
-            points = PointsGenerator.Sphere(20, 500);
+            points = PointsGenerator.Sphere(50, 500);
             points = PointsGenerator.RandomPointCloud(1000, 500);
             points = Onion.Points;
         }
 
         [Benchmark]
-        public Mesh OldMethod()
+        public Mesh[] OldMethod()
         {
-            Mesh hull = ConvexHull.Calculate(points);
-            return hull;
+            Mesh[] meshes = new Mesh[rounds];
+            for (int i = 0; i < meshes.Length; i++)
+            {
+                meshes[i] = ConvexHull.Calculate(points);
+            }
+            return meshes;
         }
 
         [Benchmark]
-        public ConvexHull2 NewMethod()
+        public CVX[] NewMethod()
         {
-            ConvexHull2 hull = new ConvexHull2(points).Triangulate();
-            return hull;
+            CVX[] meshes = new CVX[rounds];
+            for (int i = 0; i < meshes.Length; i++)
+            {
+                meshes[i] = new CVX(points).Triangulate();
+            }
+            return meshes;
         }
     }
 }
